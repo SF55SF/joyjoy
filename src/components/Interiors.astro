@@ -1,0 +1,16 @@
+---
+import { relativePath } from "../lib/paths";
+import { getLangFromPath, siteText } from "../lib/i18n";
+const currentPath = Astro.url.pathname;
+const lang = getLangFromPath(currentPath);
+const copy = siteText[lang].gallery;
+const files = ["/images/building-1.jpg", "/images/building-2.jpg", "/images/building-3.jpg", "/images/building-4.jpg", "/images/building-5.jpg"];
+---
+<section id="gallery" class="section">
+  <div class="container">
+    <div class="section-heading"><p class="eyebrow">{copy.eyebrow}</p><h2>{copy.heading}</h2><p>{copy.description}</p></div>
+    <div class="gallery-grid">
+      {files.map((src, index) => { const imageSrc = relativePath(src, currentPath); const alt = copy.alts[index]; return <div class={index === 0 ? "gallery-item large" : "gallery-item"}><button class="image-open-button" type="button" data-lightbox-src={imageSrc} data-lightbox-alt={alt} aria-label={copy.open + ": " + alt}><img src={imageSrc} alt={alt} /></button></div>; })}
+    </div>
+  </div>
+</section>
