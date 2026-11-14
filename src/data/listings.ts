@@ -1,6 +1,6 @@
 // JOYJOY_CMWP_IMPORT_V1 — проверенные карточки из раздела «Продажа» cmwp.uz, 14.11.2026.
 // Предложения и цены могут меняться. Обновлять по источнику перед публикацией.
-export type PropertyType = 'office' | 'retail' | 'warehouse' | 'land' | 'other';
+export type PropertyType = 'office' | 'retail' | 'warehouse' | 'industrial' | 'building' | 'land' | 'other';
 export type PropertyStatus = 'available' | 'reserved' | 'sold';
 export interface Listing {
  slug: string; title: string; city: string; district: string; address: string;
