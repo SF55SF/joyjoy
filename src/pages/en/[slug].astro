@@ -1,11 +1,5 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import OfficeDetailPage from "../../components/OfficeDetailPage.astro";
-import { isOfficePublic } from "../../lib/offices";
-export async function getStaticPaths() {
-  const offices = (await getCollection("offices")).filter((office) => isOfficePublic(office.data));
-  return offices.map((office) => ({ params: { slug: office.data.pageSlug }, props: { office } }));
-}
-const { office } = Astro.props as { office: CollectionEntry<"offices"> };
+// JOYJOY_REBRAND_V2
+// Old Trilliant property routes are deliberately disabled until JoyJoy content is defined.
+export function getStaticPaths() { return []; }
 ---
-<OfficeDetailPage office={office} lang="en" />

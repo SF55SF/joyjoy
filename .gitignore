@@ -1,1 +1,5 @@
 node_modules
+
+# JOYJOY_REBRAND_V2 - generated artifacts
+dist/
+.astro/

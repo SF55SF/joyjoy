@@ -1,18 +1,11 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import Hero from "../../components/Hero.astro";
-import Stats from "../../components/Stats.astro";
-import Offices from "../../components/Offices.astro";
-import Interiors from "../../components/Interiors.astro";
-import Restaurants from "../../components/Restaurants.astro";
-import Location from "../../components/Location.astro";
-import Contact from "../../components/Contact.astro";
-import Footer from "../../components/Footer.astro";
+// JOYJOY_REBRAND_V2
+import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-
-<BaseLayout lang="uz" title="Trilliant biznes markazi — Toshkentda tayyor A toifali ofislar ijarasi" description="Toshkent markazidagi Trilliant biznes markazida ta’mirlangan va mebelli tayyor ofislar ijarasi." canonical="https://www.trilliant.uz/uz/" image="https://www.trilliant.uz/images/hero-bg.jpg">
-  <Header />
-  <main><Hero /><Stats /><Offices /><Interiors /><Restaurants /><Location /><Contact /></main>
-  <Footer />
+<BaseLayout lang="uz">
+  <div class="joy-wrap">
+    <header class="joy-nav"><a href="/uz/" class="joy-logo">JoyJoy</a><nav class="joy-languages" aria-label="Languages"><a href="/" >RU</a><a href="/uz/" aria-current="page">UZ</a><a href="/en/" >EN</a></nav></header>
+    <main><section class="joy-hero"><div class="joy-kicker">Yangi loyiha</div><h1>JoyJoy</h1><p>Yangi g‘oyalar uchun makon.</p></section><section class="joy-info joy-rule" id="about"><h2>Loyiha haqida</h2><p>JoyJoy — yangi loyiha. Uning imkoniyatlari, jamoasi va aloqa ma’lumotlari tasdiqlangach qo‘shiladi.</p></section></main>
+    <footer class="joy-footer"><span>JoyJoy</span><span>© {new Date().getFullYear()}</span></footer>
+  </div>
 </BaseLayout>

@@ -1,37 +1,43 @@
 ---
-// JOYJOY_LIVE_LAYOUT_V1
+// JOYJOY_REBRAND_V2
 import '../styles/global.css';
-import { relativePath } from '../lib/paths';
-import { getLangFromPath, languageAlternates } from '../lib/i18n';
-import Seo from '../components/Seo.astro';
-
-const currentPath = Astro.url.pathname;
-const lang = Astro.props.lang ?? getLangFromPath(currentPath);
-const alternates = languageAlternates(currentPath);
-const locale = lang === 'ru' ? 'ru_RU' : lang === 'uz' ? 'uz_UZ' : 'en_US';
-const {
-  title = 'JoyJoy',
-  description = '',
-  canonical = alternates[lang],
-  image = '/images/hero-bg.jpg',
-} = Astro.props;
-const siteScript = relativePath('/js/site.js', currentPath);
+const lang = Astro.props.lang ?? (Astro.url.pathname.startsWith('/en/') ? 'en' : Astro.url.pathname.startsWith('/uz/') ? 'uz' : 'ru');
+const titles = { ru:'JoyJoy — главная', uz:'JoyJoy — bosh sahifa', en:'JoyJoy — home' };
+const descriptions = { ru:'Официальный сайт JoyJoy.', uz:'JoyJoy rasmiy sayti.', en:'The official JoyJoy website.' };
+const title=Astro.props.title ?? titles[lang];
+const description=Astro.props.description ?? descriptions[lang];
 ---
 <!doctype html>
 <html lang={lang}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <Seo title={title} description={description} canonical={canonical} image={image} locale={locale} />
-    <link rel="alternate" hreflang="ru" href={alternates.ru} />
-    <link rel="alternate" hreflang="uz" href={alternates.uz} />
-    <link rel="alternate" hreflang="en" href={alternates.en} />
-    <link rel="alternate" hreflang="x-default" href={alternates.ru} />
-    <link rel="icon" type="image/png" sizes="48x48" href={relativePath('/favicon-48x48.png', currentPath)} />
-    <link rel="icon" type="image/svg+xml" href={relativePath('/favicon.svg', currentPath)} />
-  </head>
-  <body>
-    <slot />
-    <script is:inline src={siteScript}></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#101014" />
+  <title>{title}</title>
+  <style is:global>
+    :root { color-scheme: dark; font-family: Inter, Arial, sans-serif; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; min-height:100vh; background:#101014; color:#f8f8f8; }
+    .joy-wrap { width:min(1160px,calc(100% - 48px)); margin:auto; }
+    .joy-nav { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:28px 0; }
+    .joy-logo { font-weight:800; font-size:26px; letter-spacing:-.06em; }
+    .joy-nav a { color:inherit; text-decoration:none; }
+    .joy-languages { display:flex; gap:16px; font-size:13px; }
+    .joy-languages a[aria-current="page"] { text-decoration:underline; text-underline-offset:5px; }
+    .joy-hero { min-height: min(73vh,760px); display:flex; flex-direction:column; justify-content:center; padding:96px 0 130px; }
+    .joy-kicker { color:#c5b9f4; font-size:13px; letter-spacing:.18em; text-transform:uppercase; }
+    .joy-hero h1 { font-size:clamp(84px,20vw,260px); line-height:.9; letter-spacing:-.09em; margin:22px 0 32px; }
+    .joy-hero p { color:#d0d0d7; font-size:clamp(20px,3vw,32px); max-width:710px; line-height:1.35; }
+    .joy-rule { border-top:1px solid #393941; }
+    .joy-info { display:grid; grid-template-columns:1fr 2fr; gap:32px; padding:70px 0 100px; }
+    .joy-info h2 { margin:0; font-size:18px; font-weight:500; }
+    .joy-info p { margin:0; color:#d0d0d7; line-height:1.6; font-size:clamp(18px,2vw,25px); }
+    .joy-footer { border-top:1px solid #393941; padding:28px 0 45px; color:#9a9aa3; display:flex; justify-content:space-between; gap:24px; }
+    @media(max-width:640px) { .joy-hero { min-height:55vh; padding:80px 0; } .joy-info { display:block; padding:45px 0 70px; } .joy-info h2 { margin-bottom:24px; } }
+  </style>
+</head>
+<body><slot /></body>
 </html>
