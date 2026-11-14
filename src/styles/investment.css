@@ -124,6 +124,15 @@
 @media(max-width:700px){.jj-ref-home .jj-ref-panels .jj-ref-panel,.jj-ref-home .jj-ref-panels .jj-ref-panel:first-child,.jj-ref-home .jj-ref-panels .jj-ref-panel:last-child{width:calc(100% + 24px);margin-left:-12px;margin-right:-12px}.jj-ref-home .jj-ref-panels .jj-ref-panel:nth-child(odd){clip-path:polygon(0 0,100% 0,91% 100%,0 100%)}.jj-ref-home .jj-ref-panels .jj-ref-panel:nth-child(even){clip-path:polygon(9% 0,100% 0,100% 100%,0 100%)}.jj-ref-home .jj-ref-panels::before{height:21px;background-size:48px 23px}}
 /* JOY2_HERO_WAVE_CLOSE_V1_END */
 
+/* JOY2_PANEL_SPACING_V1_START */
+/* Add a small visual gap between the four diagonal hero panels while preserving the wave and angled composition. */
+.jj-ref-home .jj-ref-panels{column-gap:10px;padding-inline:6px}
+.jj-ref-home .jj-ref-panels .jj-ref-panel{width:calc(100% + 54px);margin-left:-27px;margin-right:-27px}
+.jj-ref-home .jj-ref-panels .jj-ref-panel:first-child{margin-left:0;width:calc(100% + 27px)}
+.jj-ref-home .jj-ref-panels .jj-ref-panel:last-child{margin-right:0;width:calc(100% + 27px)}
+@media(max-width:700px){.jj-ref-home .jj-ref-panels{column-gap:6px;padding-inline:4px}.jj-ref-home .jj-ref-panels .jj-ref-panel,.jj-ref-home .jj-ref-panels .jj-ref-panel:first-child,.jj-ref-home .jj-ref-panels .jj-ref-panel:last-child{width:calc(100% + 18px);margin-left:-9px;margin-right:-9px}.jj-ref-home .jj-ref-panels .jj-ref-panel:first-child{margin-left:0}.jj-ref-home .jj-ref-panels .jj-ref-panel:last-child{margin-right:0}}
+/* JOY2_PANEL_SPACING_V1_END */
+
 /* JOYJOY_UNSLOP_POLISH_V1_START */
 /* Unslop polish by Damir Sokolovsky (@heydamir), CC BY 4.0. Existing Joy2 direction retained. */
 :root{--ink:#171717;--secondary:#34443b;--muted:#38483f;--canvas:#fafafa;--paper:#fff;--soft:#f2f2f2;--accent:#b60014}
