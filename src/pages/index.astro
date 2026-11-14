@@ -1,11 +1,6 @@
 ---
-// JOYJOY_REBRAND_V2
+// JOYJOY_MARKETPLACE_HOME_V1
 import BaseLayout from '../layouts/BaseLayout.astro';
+import JoyCatalog from '../components/JoyCatalog.astro';
 ---
-<BaseLayout lang="ru">
-  <div class="joy-wrap">
-    <header class="joy-nav"><a href="/" class="joy-logo">JoyJoy</a><nav class="joy-languages" aria-label="Languages"><a href="/" aria-current="page">RU</a><a href="/uz/" >UZ</a><a href="/en/" >EN</a></nav></header>
-    <main><section class="joy-hero"><div class="joy-kicker">Новый проект</div><h1>JoyJoy</h1><p>Пространство для новых идей.</p></section><section class="joy-info joy-rule" id="about"><h2>О проекте</h2><p>JoyJoy — новый проект. Информация о его возможностях, команде и контактах будет добавлена после согласования.</p></section></main>
-    <footer class="joy-footer"><span>JoyJoy</span><span>© {new Date().getFullYear()}</span></footer>
-  </div>
-</BaseLayout>
+<BaseLayout lang="ru" title="JoyJoy — коммерческая недвижимость на продажу"><JoyCatalog lang="ru" /></BaseLayout>
