@@ -1,18 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Trilliant">
-  <g fill="none" stroke="#111820" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M256 48
-             C270 48 282 53 292 63
-             L449 220
-             C469 240 469 272 449 292
-             L383 358"/>
-    <path d="M347 394
-             L292 449
-             C272 469 240 469 220 449
-             L63 292
-             C43 272 43 240 63 220
-             L220 63
-             C230 53 242 48 256 48"/>
-    <path d="M172 176 H340 V236 H284 V356 H228 V236 H172 Z"/>
-  </g>
-  <circle cx="365" cy="376" r="12" fill="#111820"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Joy squared"><title>Joy²</title><path fill="#D90016" d="M48 16H77V84C77 112 62 124 38 124S4 107 4 88H30C30 97 32 101 40 101S48 96 48 85Z"/><path fill="#D90016" d="M86 29C87 18 96 11 107 11C121 11 126 19 126 29C126 37 121 43 113 50L102 59H127V75H82V60L101 43C109 36 113 32 113 28C113 23 110 21 106 21C101 21 98 25 97 29Z"/></svg>

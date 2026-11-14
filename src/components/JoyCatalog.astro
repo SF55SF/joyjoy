@@ -27,7 +27,7 @@ const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US'
 
 ---
 <header class="jj-sitebar"><div class="jj-shell jj-sitebar-in">
-  <a href={base} class="jj-wordmark" aria-label="JoyJoy">joy<span>joy</span><b>.</b></a>
+  <a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a>
   <nav class="jj-primary-nav" aria-label={labels.catalog}><a class="is-current" href="#catalog">{copy.market}</a></nav>
   <div class="jj-sitebar-right"><button class="jj-saved-link" id="jj-saved-only" type="button" aria-pressed="false"><JoyIcon name="heart"/><span>{copy.favorites}</span><small id="jj-saved-count">0</small></button>
   <div class="jj-lang" aria-label="Language"><a href="/" lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a><a href="/uz/" lang="uz" aria-current={lang==='uz'?'page':undefined}>UZ</a><a href="/en/" lang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div></div>
@@ -57,7 +57,7 @@ const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US'
     </article>)}</div>
     <aside class="jj-map-panel"><div class="jj-map-top"><strong>{copy.mapTitle}</strong><span id="jj-map-count">0 / {listings.length}</span></div><div class="jj-map-wrap"><div id="jj-map" role="region" aria-label={copy.mapTitle} data-map-provider="openfreemap"></div><div class="jj-map-empty" id="jj-map-state"><JoyIcon name="pin"/><p>{labels.mapHelp}</p></div><button type="button" id="jj-map-search-area" hidden>{copy.searchArea}</button></div><div class="jj-map-foot"><button id="jj-map-reset-area" type="button" hidden>{copy.resetArea}</button><small>{copy.mapNote}</small></div></aside>
     </div><div class="jj-no-results" id="jj-empty" hidden><h3>{copy.nothing}</h3><button type="button" id="jj-clear-empty">{copy.clear}</button></div></section>
-</main><footer class="jj-bottom"><div class="jj-shell"><a href={base} class="jj-wordmark">joy<span>joy</span><b>.</b></a><p>{copy.disclaimer}</p><span>© {new Date().getFullYear()}</span></div></footer>
+</main><footer class="jj-bottom"><div class="jj-shell"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><p>{copy.disclaimer}</p><span>© {new Date().getFullYear()}</span></div></footer>
 <script type="application/json" id="jj-map-data" set:html={JSON.stringify(mapData).replace(/</g,'\\u003c')}></script>
 <script type="application/json" id="jj-i18n-data" set:html={JSON.stringify({found:copy.found,mapMissing:copy.mapMissing,mapFailed:copy.mapFailed,noCoords:labels.mapHelp,price:copy.price,detail:copy.detail,total:listings.length,lang})}></script>
 <script src="/js/joyjoy-marketplace.js" defer></script>
