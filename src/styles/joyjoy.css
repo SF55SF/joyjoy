@@ -211,3 +211,9 @@
 /* JOYJOY_UNSLOP_CATALOG_DENSITY_V1_END */
 /* JOY2_BRAND_PATCH_V1 */
 .jj-wordmark{display:inline-flex;align-items:center;justify-content:flex-start;line-height:1;flex-shrink:0}.jj-brand-logo{display:block;width:116px;height:auto;max-height:44px;object-fit:contain}.jj-sitebar .jj-wordmark{color:#D90016}@media(max-width:700px){.jj-brand-logo{width:102px;max-height:40px}}
+
+/* JOYJOY_MAP_COORDINATES_CTRL_V1_START */
+/* JOYJOY_MAP_COORDINATES_CTRL_V1 — quiet map interaction guidance. */
+.jj-map-gesture-help{position:absolute;left:16px;bottom:32px;z-index:3;max-width:calc(100% - 72px);padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);pointer-events:none;display:flex;flex-direction:column;gap:4px;flex-basis:100%;color:var(--ink);font-size:13px;line-height:20px}.jj-map-touch-help{color:var(--secondary);font-size:12px}.jj-map-foot{flex-wrap:wrap}.jj-detail-map+.jj-map-gesture-help{margin-top:12px}.jj-map-wrap .maplibregl-canvas{cursor:default}.jj-map-wrap.is-ctrl-ready .maplibregl-canvas{cursor:grab}.jj-map-wrap.is-ctrl-dragging .maplibregl-canvas{cursor:grabbing}.jj-map-popup-address{color:var(--secondary);line-height:1.45;margin:8px 0}.jj-map-wrap .maplibregl-cooperative-gesture-screen{font-family:inherit}
+@media(pointer:coarse){.jj-map-gesture-help>span:first-child{display:none}.jj-map-touch-help{color:var(--ink);font-size:13px}}
+/* JOYJOY_MAP_COORDINATES_CTRL_V1_END */

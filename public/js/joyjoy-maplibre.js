@@ -13,15 +13,57 @@
   const mapLabel=t.noCoords||'Нет объектов с подтверждёнными координатами';
   const allBySlug=new Map(items.map(x=>[x.slug,x]));
   const priceLabel=n=>n==null?'⌖':n>=1000000?'$'+Number((n/1000000).toFixed(1))+'M':'$'+Math.round(n/1000)+'K';
+  const gestures={
+    ru:{drag:'Зажмите Ctrl и перетащите карту',touch:'На телефоне перемещайте карту двумя пальцами',wheel:'Зажмите Ctrl и прокрутите для изменения масштаба',macWheel:'Зажмите ⌘ и прокрутите для изменения масштаба',zoomIn:'Приблизить',zoomOut:'Отдалить',close:'Закрыть'},
+    uz:{drag:'Ctrl tugmasini bosib xaritani suring',touch:'Telefonda xaritani ikki barmoq bilan suring',wheel:'Masshtab uchun Ctrl va aylantirishdan foydalaning',macWheel:'Masshtab uchun ⌘ va aylantirishdan foydalaning',zoomIn:'Yaqinlashtirish',zoomOut:'Uzoqlashtirish',close:'Yopish'},
+    en:{drag:'Hold Ctrl and drag to move the map',touch:'On mobile, move the map with two fingers',wheel:'Hold Ctrl and scroll to zoom the map',macWheel:'Hold ⌘ and scroll to zoom the map',zoomIn:'Zoom in',zoomOut:'Zoom out',close:'Close'}
+  }[document.documentElement.lang]||{drag:'Hold Ctrl and drag to move the map',touch:'Use two fingers on mobile',wheel:'Hold Ctrl and scroll to zoom',macWheel:'Hold ⌘ and scroll to zoom',zoomIn:'Zoom in',zoomOut:'Zoom out',close:'Close'};
+  const gestureLocale={'CooperativeGesturesHandler.WindowsHelpText':gestures.wheel,'CooperativeGesturesHandler.MacHelpText':gestures.macWheel,'CooperativeGesturesHandler.MobileHelpText':gestures.touch,'NavigationControl.ZoomIn':gestures.zoomIn,'NavigationControl.ZoomOut':gestures.zoomOut,'Popup.Close':gestures.close};
   let map,markers=[],selectedSlug=null,syncingView=false,regionApplied=false,interactiveReady=false;
+  function installMapGestures(){
+    const wrap=container.closest('.jj-map-wrap');
+    const help=document.createElement('div');help.id='jj-map-gesture-help';help.className='jj-map-gesture-help';
+    const desktop=document.createElement('span');desktop.textContent=gestures.drag;
+    const touch=document.createElement('span');touch.textContent=gestures.touch;touch.className='jj-map-touch-help';help.append(desktop,touch);
+    wrap?.append(help);
+    container.setAttribute('aria-describedby',help.id);
+    const canvas=map.getCanvasContainer();let active=null;
+    const stop=()=>{if(active){try{canvas.releasePointerCapture(active.id)}catch{}if(active.moved&&search&&items.length)search.hidden=false;active=null}wrap?.classList.remove('is-ctrl-dragging')};
+    // MapLibre treats Ctrl + left drag as rotation, so desktop panning is handled explicitly.
+    map.dragPan.disable();
+    canvas.addEventListener('touchstart',()=>map.dragPan.enable(),{capture:true,passive:true});
+    canvas.addEventListener('pointerdown',event=>{
+      if(event.pointerType==='touch'){map.dragPan.enable();return}
+      map.dragPan.disable();
+      if(event.button!==0||!event.ctrlKey||event.target.closest('button,a,input,select'))return;
+      event.preventDefault();event.stopPropagation();map.stop();
+      active={id:event.pointerId,x:event.clientX,y:event.clientY,moved:false};canvas.setPointerCapture(event.pointerId);wrap?.classList.add('is-ctrl-dragging');
+    },true);
+    canvas.addEventListener('pointermove',event=>{
+      if(!active||active.id!==event.pointerId)return;
+      if(!event.ctrlKey){stop();return}
+      const dx=event.clientX-active.x,dy=event.clientY-active.y;
+      active.x=event.clientX;active.y=event.clientY;
+      if(dx||dy){active.moved=true;map.panBy([-dx,-dy],{duration:0})}
+      event.preventDefault();
+    },true);
+    canvas.addEventListener('pointerup',stop,true);canvas.addEventListener('pointercancel',stop,true);
+    const keydown=event=>{if(event.key==='Control')wrap?.classList.add('is-ctrl-ready')};
+    const keyup=event=>{if(event.key==='Control'){stop();wrap?.classList.remove('is-ctrl-ready')}};
+    const blur=()=>{stop();wrap?.classList.remove('is-ctrl-ready')};
+    document.addEventListener('keydown',keydown);document.addEventListener('keyup',keyup);window.addEventListener('blur',blur);
+    map.on('remove',()=>{document.removeEventListener('keydown',keydown);document.removeEventListener('keyup',keyup);window.removeEventListener('blur',blur);help.remove()});
+  }
   const locale=location.pathname.startsWith('/en/')?'en':location.pathname.startsWith('/uz/')?'uz':'ru';
   const tell=(message,small=false)=>{if(!panel)return;panel.hidden=false;panel.classList.toggle('has-map',small);const text=panel.querySelector('p');if(text)text.textContent=message};
   const hide=()=>{if(panel)panel.hidden=true};
+  if(items.length){tell(({ru:'Загружаем карту…',uz:'Xarita yuklanmoqda…',en:'Loading map…'})[locale]);if(count)count.textContent=items.length+' / '+(t.total??items.length)}
   const visible=()=>new Set(window.joyjoyVisibleSlugs?.()||items.map(x=>x.slug));
   function showCount(n){if(count){const all=document.querySelectorAll('.jj-property-card').length;count.textContent=n+' / '+(t.total??(all||items.length))}}
   function cleanup(){markers.forEach(m=>m.remove());markers=[]}
   function popup(item){const wrap=document.createElement('div');wrap.className='jj-map-popup';if(item.image){const img=document.createElement('img');img.src=item.image;img.alt='';img.loading='lazy';wrap.append(img)}
     const title=document.createElement('strong');title.textContent=item.title;wrap.append(title);
+    if(item.address){const address=document.createElement('p');address.className='jj-map-popup-address';address.textContent=item.address;wrap.append(address)}
     const meta=document.createElement('p');meta.textContent=Number(item.area).toLocaleString(locale==='en'?'en-US':locale==='uz'?'uz-UZ':'ru-RU')+' m² · '+(item.price==null?t.price:'$'+Number(item.price).toLocaleString('en-US'));wrap.append(meta);
     const link=document.createElement('a');link.href=item.url;link.textContent=(t.detail||'Подробнее')+' →';wrap.append(link);return wrap;
   }
@@ -34,13 +76,13 @@
       const lat=group.reduce((v,i)=>v+i.lat,0)/group.length,lng=group.reduce((v,i)=>v+i.lng,0)/group.length;
       const item=group[0];const cluster=group.length>1;
       const el=markerElement(cluster?String(group.length):priceLabel(item.price),cluster);
-      if(!cluster){el.dataset.slug=item.slug;el.classList.toggle('is-selected',selectedSlug===item.slug);
+      if(!cluster){el.dataset.slug=item.slug;el.setAttribute('aria-label',item.title+(item.address?' · '+item.address:''));el.classList.toggle('is-selected',selectedSlug===item.slug);
         el.addEventListener('mouseenter',()=>window.dispatchEvent(new CustomEvent('joyjoy:highlight-card',{detail:{slug:item.slug,scroll:false}})));
         el.addEventListener('mouseleave',()=>window.dispatchEvent(new CustomEvent('joyjoy:highlight-card',{detail:{slug:null,scroll:false}})));
       }
       const marker=new window.maplibregl.Marker({element:el,anchor:'center'}).setLngLat([lng,lat]).addTo(map);
       if(cluster){el.addEventListener('click',()=>map.easeTo({center:[lng,lat],zoom:Math.min(18,map.getZoom()+2)}))}
-      else {el.addEventListener('click',()=>{new window.maplibregl.Popup({offset:18,maxWidth:'235px'}).setLngLat([lng,lat]).setDOMContent(popup(item)).addTo(map);window.dispatchEvent(new CustomEvent('joyjoy:highlight-card',{detail:{slug:item.slug,scroll:true}}))})}
+      else {marker.setPopup(new window.maplibregl.Popup({offset:18,maxWidth:'235px'}).setDOMContent(popup(item)));el.setAttribute('aria-label',item.title+(item.address?' · '+item.address:''));el.addEventListener('click',()=>{window.dispatchEvent(new CustomEvent('joyjoy:highlight-card',{detail:{slug:item.slug,scroll:true}}))})}
       markers.push(marker);
     }
     if(!items.length)tell(mapLabel,true);else if(!selected.length)tell(t.noCoords||'Нет объектов на карте',true);else hide();
@@ -57,7 +99,8 @@
   script.onerror=()=>tell(t.mapFailed||'Не удалось загрузить карту');
   script.onload=()=>{if(!window.maplibregl){tell(t.mapFailed||'Библиотека карты недоступна');return}
     try{
-      map=new window.maplibregl.Map({container,style:'https://tiles.openfreemap.org/styles/positron',center:[69.2401,41.2995],zoom:11,attributionControl:true,dragRotate:false,pitchWithRotate:false});
+      map=new window.maplibregl.Map({container,style:'https://tiles.openfreemap.org/styles/positron',center:[69.2401,41.2995],zoom:11,attributionControl:true,dragRotate:false,pitchWithRotate:false,cooperativeGestures:true,locale:gestureLocale});
+      installMapGestures();
       map.addControl(new window.maplibregl.NavigationControl({showCompass:false}),'top-right');
       map.on('load',()=>{interactiveReady=true;render();fitVisible();});
       map.on('error',e=>{console.warn('OpenFreeMap',e.error);if(!interactiveReady)tell(t.mapFailed||'Не удалось загрузить картографические данные')});
