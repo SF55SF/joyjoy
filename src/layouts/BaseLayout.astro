@@ -1,27 +1,37 @@
 ---
-// JOYJOY_MAINTENANCE_LAYOUT_V1
-// Keep the copied Trilliant pages hidden until JoyJoy content is ready.
-const lang = Astro.props.lang ?? 'ru';
+// JOYJOY_LIVE_LAYOUT_V1
+import '../styles/global.css';
+import { relativePath } from '../lib/paths';
+import { getLangFromPath, languageAlternates } from '../lib/i18n';
+import Seo from '../components/Seo.astro';
+
+const currentPath = Astro.url.pathname;
+const lang = Astro.props.lang ?? getLangFromPath(currentPath);
+const alternates = languageAlternates(currentPath);
+const locale = lang === 'ru' ? 'ru_RU' : lang === 'uz' ? 'uz_UZ' : 'en_US';
+const {
+  title = 'JoyJoy',
+  description = '',
+  canonical = alternates[lang],
+  image = '/images/hero-bg.jpg',
+} = Astro.props;
+const siteScript = relativePath('/js/site.js', currentPath);
 ---
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex,nofollow" />
-    <title>JoyJoy — сайт в разработке</title>
-    <style>
-      html, body { margin: 0; min-height: 100%; background: #000; }
-      body { min-height: 100vh; display: grid; place-items: center; color: #fff; font-family: Arial, Helvetica, sans-serif; }
-      main { padding: 24px; text-align: center; }
-      h1 { margin: 0 0 12px; font-size: clamp(38px, 7vw, 72px); }
-      p { margin: 0; font-size: clamp(18px, 3vw, 28px); }
-    </style>
+    <Seo title={title} description={description} canonical={canonical} image={image} locale={locale} />
+    <link rel="alternate" hreflang="ru" href={alternates.ru} />
+    <link rel="alternate" hreflang="uz" href={alternates.uz} />
+    <link rel="alternate" hreflang="en" href={alternates.en} />
+    <link rel="alternate" hreflang="x-default" href={alternates.ru} />
+    <link rel="icon" type="image/png" sizes="48x48" href={relativePath('/favicon-48x48.png', currentPath)} />
+    <link rel="icon" type="image/svg+xml" href={relativePath('/favicon.svg', currentPath)} />
   </head>
   <body>
-    <main>
-      <h1>JoyJoy</h1>
-      <p>Сайт в разработке</p>
-    </main>
+    <slot />
+    <script is:inline src={siteScript}></script>
   </body>
 </html>
