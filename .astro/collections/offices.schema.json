@@ -1,0 +1,225 @@
+{
+  "$ref": "#/definitions/offices",
+  "definitions": {
+    "offices": {
+      "type": "object",
+      "properties": {
+        "published": {
+          "type": "boolean",
+          "default": true
+        },
+        "pageSlug": {
+          "type": "string"
+        },
+        "block": {
+          "type": "string",
+          "default": "Trilliant"
+        },
+        "floor": {
+          "type": "string"
+        },
+        "area": {
+          "type": "number"
+        },
+        "rentRate": {
+          "type": "number",
+          "default": 0
+        },
+        "rentTax": {
+          "type": "string",
+          "enum": [
+            "НДС",
+            "НДФЛ"
+          ],
+          "default": "НДС"
+        },
+        "workplaces": {
+          "type": "string"
+        },
+        "workplacesUz": {
+          "type": "string",
+          "default": ""
+        },
+        "workplacesEn": {
+          "type": "string",
+          "default": ""
+        },
+        "ready": {
+          "type": "string"
+        },
+        "readyUz": {
+          "type": "string",
+          "default": ""
+        },
+        "readyEn": {
+          "type": "string",
+          "default": ""
+        },
+        "officeLayout": {
+          "type": "string"
+        },
+        "officeLayoutUz": {
+          "type": "string",
+          "default": ""
+        },
+        "officeLayoutEn": {
+          "type": "string",
+          "default": ""
+        },
+        "title": {
+          "type": "string"
+        },
+        "titleUz": {
+          "type": "string",
+          "default": ""
+        },
+        "titleEn": {
+          "type": "string",
+          "default": ""
+        },
+        "detailTitle": {
+          "type": "string"
+        },
+        "detailTitleUz": {
+          "type": "string",
+          "default": ""
+        },
+        "detailTitleEn": {
+          "type": "string",
+          "default": ""
+        },
+        "seoTitle": {
+          "type": "string"
+        },
+        "seoTitleUz": {
+          "type": "string",
+          "default": ""
+        },
+        "seoTitleEn": {
+          "type": "string",
+          "default": ""
+        },
+        "description": {
+          "type": "string"
+        },
+        "descriptionUz": {
+          "type": "string",
+          "default": ""
+        },
+        "descriptionEn": {
+          "type": "string",
+          "default": ""
+        },
+        "imageAlt": {
+          "type": "string",
+          "default": "Офис в бизнес-центре Trilliant, Ташкент"
+        },
+        "imageAltUz": {
+          "type": "string",
+          "default": ""
+        },
+        "imageAltEn": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string"
+        },
+        "introUz": {
+          "type": "string",
+          "default": ""
+        },
+        "introEn": {
+          "type": "string",
+          "default": ""
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "featuresUz": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "featuresEn": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "detailFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "detailFeaturesUz": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "detailFeaturesEn": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "planImage": {
+          "type": "string"
+        },
+        "mainImage": {
+          "type": "string"
+        },
+        "gallery": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "presentationFile": {
+          "type": "string",
+          "default": "/files/placeholder-presentation-1.pdf"
+        },
+        "translationLocks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pageSlug",
+        "floor",
+        "area",
+        "workplaces",
+        "ready",
+        "officeLayout",
+        "title",
+        "detailTitle",
+        "seoTitle",
+        "description",
+        "intro",
+        "planImage",
+        "mainImage"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
