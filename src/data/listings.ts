@@ -2,8 +2,8 @@ import {validateProperty,isPublishedProject} from '../../public/js/joyjoy-invest
 // Location coordinates below come from the individual CMWP property map embeds, checked 2026-11-14.
 // JOYJOY_CMWP_IMPORT_V1 — проверенные карточки из раздела «Продажа» cmwp.uz, 14.11.2026.
 // Предложения и цены могут меняться. Обновлять по источнику перед публикацией.
-export type PropertyType = 'office' | 'retail' | 'warehouse' | 'industrial' | 'building' | 'land' | 'other';
-export type PropertyStatus = 'available' | 'reserved' | 'sold';
+export type PropertyType = 'office' | 'retail' | 'warehouse' | 'land';
+export type PropertyStatus = 'existing' | 'under_construction' | null;
 export interface Listing {
  published?: boolean; showCatalog?: boolean; showProjects?: boolean; order?: number;
  translations?: Partial<Record<'uz'|'en',Partial<Pick<Listing,'title'|'city'|'district'|'address'|'description'|'features'>>>>;

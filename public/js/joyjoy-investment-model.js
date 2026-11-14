@@ -35,8 +35,8 @@ export function validateProperty(p) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.slug||'') || p.slug.length>100) errors.push('slug');
   for (const key of ['title','city','address','description']) if(typeof p[key]!=='string'||!p[key].trim()||p[key].length>20000)errors.push(key);
   if(typeof p.district!=='string')errors.push('district');
-  if(!['office','retail','warehouse','industrial','building','land','other'].includes(p.type))errors.push('type');
-  if(!['available','reserved','sold'].includes(p.status))errors.push('status');
+  if(!['office','retail','warehouse','land'].includes(p.type))errors.push('type');
+  if(p.status!==null&&!['existing','under_construction'].includes(p.status))errors.push('status');
   if(typeof p.area!=='number'||!Number.isFinite(p.area)||p.area<=0||p.area>1e9)errors.push('area');
   if(p.priceUsd!==null&&(typeof p.priceUsd!=='number'||!Number.isFinite(p.priceUsd)||p.priceUsd<=0||p.priceUsd>1e12))errors.push('priceUsd');
   for(const key of ['published','showCatalog','showProjects'])if(p[key]!==undefined&&typeof p[key]!=='boolean')errors.push(key);

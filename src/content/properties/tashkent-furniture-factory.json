@@ -1,0 +1,28 @@
+{
+  "slug": "tashkent-furniture-factory",
+  "title": "Мебельный завод в Ташкенте",
+  "city": "Ташкент",
+  "district": "",
+  "address": "2-й тупик Олтинводий",
+  "lat": 41.2561706,
+  "lng": 69.2417376,
+  "type": "warehouse",
+  "status": null,
+  "area": 87000,
+  "priceUsd": null,
+  "images": [
+    "https://api.cmwp.uz/storage/projects/previews/ncPUvnE8tLGIOfohZSSBUZLAppinhIB3u1Fu4Tp3.webp"
+  ],
+  "description": "Производственный комплекс Built-to-Suit на участке 8,7 га вблизи международного аэропорта. Есть подъезд железнодорожной ветки, система пожаротушения и доклевеллеры. На сайте также упоминается возможность краткосрочной аренды.",
+  "features": [
+    "Земельный участок 8,7 га",
+    "Производственное назначение",
+    "Железнодорожный подъезд",
+    "Автоматическое пожаротушение"
+  ],
+  "sourceUrl": "https://cmwp.uz/sales/tashkent-furniture-factory",
+  "order": 1,
+  "published": true,
+  "showCatalog": true,
+  "showProjects": false
+}

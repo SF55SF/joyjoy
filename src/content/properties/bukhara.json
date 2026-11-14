@@ -1,0 +1,28 @@
+{
+  "slug": "bukhara",
+  "title": "Бухаро",
+  "city": "Ташкент",
+  "district": "",
+  "address": "ул. Бухара, 1",
+  "lat": 41.3083236,
+  "lng": 69.2777413,
+  "type": "office",
+  "status": null,
+  "area": 14760,
+  "priceUsd": null,
+  "images": [
+    "https://api.cmwp.uz/storage/projects/previews/aNwrPqAYxY9n8aySh2RZnBn3G2MDXvuRPny4DpbG.webp"
+  ],
+  "description": "Офисное здание в центральной части Ташкента с четырьмя лифтами, системой чиллер-фанкойл и центральным инженерным обеспечением.",
+  "features": [
+    "2014 год",
+    "Четыре лифта",
+    "Центральное водоснабжение",
+    "Климатические системы"
+  ],
+  "sourceUrl": "https://cmwp.uz/sales/bukhara",
+  "order": 10,
+  "published": true,
+  "showCatalog": true,
+  "showProjects": false
+}

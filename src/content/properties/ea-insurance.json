@@ -1,0 +1,29 @@
+{
+  "slug": "ea-insurance",
+  "title": "EA Insurance",
+  "city": "Ташкент",
+  "district": "",
+  "address": "ул. Абдуллы Кадыри, 3а",
+  "lat": 41.321696,
+  "lng": 69.284203,
+  "type": "office",
+  "status": null,
+  "area": 3891,
+  "priceUsd": 10000000,
+  "images": [
+    "https://api.cmwp.uz/storage/projects/previews/XEWPucaGYCBDeiahf8B0YPlpQ6vzaswETgQwOPG8.webp"
+  ],
+  "description": "Офисное здание рядом с Алайским рынком, продаётся целиком. В здании предусмотрены рабочие пространства, подземный паркинг и ресторанная зона.",
+  "features": [
+    "Здание целиком",
+    "Класс B+",
+    "2019 год",
+    "Потолки 3 м",
+    "Подземный паркинг"
+  ],
+  "sourceUrl": "https://cmwp.uz/sales/ea-insurance",
+  "order": 0,
+  "published": true,
+  "showCatalog": true,
+  "showProjects": false
+}
