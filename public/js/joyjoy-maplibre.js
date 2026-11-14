@@ -18,14 +18,14 @@
   const tell=(message,small=false)=>{if(!panel)return;panel.hidden=false;panel.classList.toggle('has-map',small);const text=panel.querySelector('p');if(text)text.textContent=message};
   const hide=()=>{if(panel)panel.hidden=true};
   const visible=()=>new Set(window.joyjoyVisibleSlugs?.()||items.map(x=>x.slug));
-  function showCount(n){if(count)count.textContent=n+' / '+items.length}
+  function showCount(n){if(count){const all=document.querySelectorAll('.jj-property-card').length;count.textContent=n+' / '+(t.total??(all||items.length))}}
   function cleanup(){markers.forEach(m=>m.remove());markers=[]}
   function popup(item){const wrap=document.createElement('div');wrap.className='jj-map-popup';if(item.image){const img=document.createElement('img');img.src=item.image;img.alt='';img.loading='lazy';wrap.append(img)}
     const title=document.createElement('strong');title.textContent=item.title;wrap.append(title);
-    const meta=document.createElement('p');meta.textContent=Number(item.area).toLocaleString('ru-RU')+' м² · '+(item.price==null?t.price:'$'+Number(item.price).toLocaleString('en-US'));wrap.append(meta);
+    const meta=document.createElement('p');meta.textContent=Number(item.area).toLocaleString(locale==='en'?'en-US':locale==='uz'?'uz-UZ':'ru-RU')+' m² · '+(item.price==null?t.price:'$'+Number(item.price).toLocaleString('en-US'));wrap.append(meta);
     const link=document.createElement('a');link.href=item.url;link.textContent=(t.detail||'Подробнее')+' →';wrap.append(link);return wrap;
   }
-  function markerElement(text,cluster=false){const el=document.createElement('button');el.type='button';el.className='jj-geo-pin'+(cluster?' is-cluster':'');el.textContent=text;el.setAttribute('aria-label',cluster?'Группа из '+text+' объектов':text);return el}
+  function markerElement(text,cluster=false){const el=document.createElement('button');el.type='button';el.className='jj-geo-pin'+(cluster?' is-cluster':'');el.textContent=text;el.setAttribute('aria-label',cluster?(locale==='en'?'Group of '+text+' properties':locale==='uz'?text+' ta obyekt guruhi':'Группа из '+text+' объектов'):text);return el}
   function render(){if(!map)return;cleanup();const slugs=visible();const selected=items.filter(x=>slugs.has(x.slug));showCount(selected.length);
     // Group nearby listings visually; separate them automatically when zooming in.
     const zoom=map.getZoom();const cell=zoom<9?.065:zoom<11?.025:zoom<13?.009:zoom<15?.003:.0001;
@@ -51,7 +51,7 @@
   window.addEventListener('joyjoy:highlight-map',e=>{selectedSlug=e.detail.slug;for(const marker of markers){const el=marker.getElement();el.classList.toggle('is-selected',el.dataset.slug===selectedSlug)}});
   window.addEventListener('joyjoy:map-resize',()=>{if(map)setTimeout(()=>{map.resize();render()},150)});
   window.addEventListener('joyjoy:clear-map-bounds',clearRegion);
-  if(search)search.addEventListener('click',()=>{if(!map)return;const b=map.getBounds();regionApplied=true;search.hidden=true;window.dispatchEvent(new CustomEvent('joyjoy:apply-map-bounds',{detail:{north:b.getNorth(),south:b.getSouth(),east:b.getEast(),west:b.getWest()}}))});
+  if(search)search.addEventListener('click',()=>{if(!map||!items.length)return;const b=map.getBounds();regionApplied=true;search.hidden=true;window.dispatchEvent(new CustomEvent('joyjoy:apply-map-bounds',{detail:{north:b.getNorth(),south:b.getSouth(),east:b.getEast(),west:b.getWest()}}))});
   const css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css';document.head.append(css);
   const script=document.createElement('script');script.src='https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js';script.async=true;
   script.onerror=()=>tell(t.mapFailed||'Не удалось загрузить карту');
@@ -62,8 +62,8 @@
       map.on('load',()=>{interactiveReady=true;render();fitVisible();});
       map.on('error',e=>{console.warn('OpenFreeMap',e.error);if(!interactiveReady)tell(t.mapFailed||'Не удалось загрузить картографические данные')});
       map.on('zoomend',()=>render());
-      map.on('dragend',()=>{if(!syncingView&&search)search.hidden=false});
-      map.on('moveend',()=>{if(!syncingView&&search&&regionApplied)search.hidden=false});
+      map.on('dragend',()=>{if(!syncingView&&search&&items.length)search.hidden=false});
+      map.on('moveend',()=>{if(!syncingView&&search&&items.length&&regionApplied)search.hidden=false});
       setTimeout(()=>{map.resize()},250);
     }catch(error){console.warn('JoyJoy map initialization error',error);tell(t.mapFailed||'Не удалось открыть карту')}
   };

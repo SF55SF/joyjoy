@@ -3,9 +3,10 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import JoyDetail from '../../../components/JoyDetail.astro';
 import { listings } from '../../../data/listings';
+import { localizeListing } from '../../../data/listing-translations';
 export function getStaticPaths() {
   return listings.map((listing)=>({params:{slug:listing.slug},props:{listing}}));
 }
-const {listing} = Astro.props;
+const listing = localizeListing(Astro.props.listing, 'en');
 ---
 <BaseLayout lang="en" title={listing.title+' — JoyJoy'} description={listing.description}><JoyDetail listing={listing} lang="en" /></BaseLayout>
