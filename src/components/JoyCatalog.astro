@@ -28,16 +28,19 @@ const labels = {
 const cardFeature = (features: string[]) => features.find(feature => !/^(?:19|20)\d{2}/.test(feature)) || features[0];
 const areaNeedsCheck = (index: number) => sourceListings[index].features.some(feature => /площад.*(уточн|провер)/i.test(feature));
 const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US';
+const categoryCount=(type:string)=>sourceListings.filter(item=>item.type===type).length;
+const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='en'?'No properties yet':'Hozircha obyektlar yo‘q';
 // OpenFreeMap requires no API key. Unverified coordinates are never invented.
 
 ---
 <header class:list={["jj-sitebar",{"jj-ref-header":!projects}]}><div class="jj-shell jj-sitebar-in">
   <a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a>
-  <nav class="jj-primary-nav" aria-label={labels.catalog}><a class="is-current" href={base+'#catalog'}>{investmentText.estate}</a><a href={base+'projects/'}>{investmentText.projects}</a></nav>
+  <nav class="jj-primary-nav" aria-label={labels.catalog}><a class:list={{'is-current':!projects}} aria-current={!projects?'page':undefined} href={base+'#catalog'}>{investmentText.estate}</a><a class:list={{'is-current':projects}} aria-current={projects?'page':undefined} href={base+'projects/'}>{investmentText.projects}</a></nav>
   <div class="jj-sitebar-right"><button class="jj-saved-link" id="jj-saved-only" type="button" aria-label={copy.favorites} aria-pressed="false"><JoyIcon name="heart"/><span>{copy.favorites}</span><small id="jj-saved-count">0</small></button>
   <div class="jj-lang" aria-label="Language"><a href={projects?'/projects/':'/'} lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a><a href={projects?'/uz/projects/':'/uz/'} lang="uz" aria-current={lang==='uz'?'page':undefined}>UZ</a><a href={projects?'/en/projects/':'/en/'} lang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div></div>
 </div></header>
 <main class:list={[{"jj-ref-home":!projects}]}>
+  <nav class="jj-mobile-sections jj-shell" aria-label={lang==='ru'?'Разделы сайта':lang==='en'?'Site sections':'Sayt bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{lang==='ru'?'Недвижимость':lang==='en'?'Properties':'Obyektlar'}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{lang==='ru'?'Инвестиции':lang==='en'?'Investments':'Investitsiyalar'}</a></nav>
   <!-- JOY2_HOME_REFERENCE_V1 -->
   {!projects?<section class="jj-ref-hero jj-shell" aria-label={lang==='ru'?'Недвижимость и инвестиции':lang==='uz'?'Ko‘chmas mulk va investitsiyalar':'Real estate and investments'}>
     <h1>{lang==='ru'?<>Недвижимость<span>.</span><br/>Инвестиции<span>.</span></>:lang==='uz'?<>Ko‘chmas mulk<span>.</span><br/>Investitsiyalar<span>.</span></>:<>Real Estate<span>.</span><br/>Investments<span>.</span></>}</h1>
@@ -46,19 +49,7 @@ const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US'
   </section>:<section class="jj-intro jj-shell">
     <div class="jj-intro-copy"><p class="jj-crumb">{copy.sale}<span>/</span>{lang==='ru'?'Узбекистан':lang==='uz'?'O‘zbekiston':'Uzbekistan'}</p><h1 class="jj-market-heading"><span class="jj-market-full">{projects?investmentText.projects:investmentText.heading}</span><span class="jj-market-short">{projects?investmentText.projects:lang==='ru'?'Недвижимость и инвестиции':lang==='en'?'Property and investment':'Ko‘chmas mulk va investitsiyalar'}</span></h1><p class="jj-intro-text">{projects?investmentText.projectIntro:investmentText.intro}</p></div>
   </section>}
-  {!projects&&<nav class="jj-ref-panels" aria-label={lang==='ru'?'Категории недвижимости':lang==='uz'?'Mulk toifalari':'Property categories'}>
-    {([
-      {type:'office',ru:'Офисы',uz:'Ofislar',en:'Offices',photo:sourceListings.find(x=>x.type==='office')?.images?.[0]},
-      {type:'retail',ru:'Ритейл',uz:'Savdo',en:'Retail',photo:sourceListings.find(x=>x.type==='retail')?.images?.[0]},
-      {type:'warehouse',ru:'Склады',uz:'Omborlar',en:'Warehouses',photo:sourceListings.find(x=>x.type==='warehouse')?.images?.[0]},
-      {type:'land',ru:'Участки',uz:'Yer uchastkalari',en:'Land',photo:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80'}
-    ] as const).map(item=><a class="jj-ref-panel" href="#catalog" data-jj-hero-type={item.type} aria-label={lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}>
-      {item.photo&&<img src={item.photo} alt="" loading="eager" decoding="async"/>}
-      <strong>{lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}</strong>
-    </a>)}
-  </nav>}
-  <nav class="jj-shell jj-market-nav" aria-label={lang==='ru'?'Разделы каталога':lang==='en'?'Catalog sections':'Katalog bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{investmentText.estate}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{investmentText.projects}</a></nav>
-  {projects&&listings.length===0&&<section class="jj-shell jj-project-empty"><h2>{investmentText.empty}</h2><p>{investmentText.emptyNote}</p><a href={base}>{investmentText.catalog} →</a></section>}
+  <!-- JOYJOY_UNSLOP_SEARCH_FIRST_V1 -->
   <section class="jj-filter-shell" hidden={projects&&listings.length===0}><div class="jj-shell"><form id="jj-filters" class="jj-filter-form" role="search" aria-label={copy.search}>
     <label class="jj-field jj-field-search"><span>{labels.location}</span><div class="jj-input-icon"><JoyIcon name="search"/><input id="jj-q" type="search" placeholder={lang==='ru'?'Например, Ташкент или Trilliant':lang==='uz'?'Masalan, Toshkent yoki Trilliant':'Try Tashkent or Trilliant'} autocomplete="off"/></div></label>
     <label class="jj-field"><span>{copy.category}</span><select id="jj-type"><option value="">{copy.all}</option>{types.map(type=><option value={type}>{names[type]}</option>)}</select></label>
@@ -71,6 +62,20 @@ const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US'
     </div>
     <div id="jj-active-filters" class="jj-active-filters" hidden aria-live="polite"></div>
   </form></div></section>
+  {!projects&&<nav class="jj-ref-panels" aria-label={lang==='ru'?'Категории недвижимости':lang==='uz'?'Mulk toifalari':'Property categories'}>
+    {([
+      {type:'office',ru:'Офисы',uz:'Ofislar',en:'Offices',photo:sourceListings.find(x=>x.type==='office')?.images?.[0]},
+      {type:'retail',ru:'Ритейл',uz:'Savdo',en:'Retail',photo:sourceListings.find(x=>x.type==='retail')?.images?.[0]},
+      {type:'warehouse',ru:'Склады',uz:'Omborlar',en:'Warehouses',photo:sourceListings.find(x=>x.type==='warehouse')?.images?.[0]},
+      {type:'land',ru:'Участки',uz:'Yer uchastkalari',en:'Land',photo:sourceListings.find(x=>x.type==='land')?.images?.[0]}
+    ] as const).map(item=><a class="jj-ref-panel" href="#catalog" data-jj-hero-type={item.type} aria-label={lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}>
+      {item.photo?<img src={item.photo} alt="" loading="eager" decoding="async"/>:<span class="jj-category-empty">{noCategoryObjects}</span>}
+      <strong>{lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}<small> · {categoryCount(item.type)}</small></strong>
+    </a>)}
+  </nav>}
+  <nav class="jj-shell jj-market-nav" aria-label={lang==='ru'?'Разделы каталога':lang==='en'?'Catalog sections':'Katalog bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{investmentText.estate}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{investmentText.projects}</a></nav>
+  {projects&&listings.length===0&&<section class="jj-shell jj-project-empty"><h2>{investmentText.empty}</h2><p>{investmentText.emptyNote}</p><a href={base}>{investmentText.catalog} →</a></section>}
+
   <section class="jj-shell jj-listing-section" id="catalog" hidden={projects&&listings.length===0}><div class="jj-catalog-toolbar"><div class="jj-listing-heading"><div class="jj-results-title"><h2>{labels.catalog}</h2><p id="jj-count" aria-live="polite">{copy.found}: {listings.length}</p></div><div class="jj-listing-actions"><label><span class="jj-sort-label">{copy.sort}</span><select id="jj-sort" aria-label={copy.sort}><option value="default">{copy.default}</option><option value="priceAsc">{copy.priceAsc}</option><option value="priceDesc">{copy.priceDesc}</option><option value="areaDesc">{copy.areaDesc}</option><option value="areaAsc">{copy.areaAsc}</option></select></label><button type="button" id="jj-reset" hidden>{copy.reset}</button></div></div>
     <div class="jj-catalog-tools"><div class="jj-view-switch" role="group" aria-label={labels.catalog}><button type="button" data-jj-view="list" aria-pressed="true"><JoyIcon name="grid"/><span>{labels.list}</span></button><button type="button" data-jj-view="split" aria-pressed="false"><JoyIcon name="split"/><span>{labels.split}</span></button><button type="button" data-jj-view="map" aria-pressed="false"><JoyIcon name="map"/><span>{labels.map}</span></button></div></div>
     </div><div class="jj-workspace" data-jj-mode="list"><div class="jj-card-grid" id="jj-results">{listings.map((item,index)=><article class="jj-property-card" data-slug={item.slug} data-index={index} data-search={(item.title+' '+item.city+' '+item.district+' '+item.address+' '+item.description+' '+sourceListings[index].title+' '+sourceListings[index].address).toLocaleLowerCase()} data-type={item.type} data-status={item.status} data-area={item.area} data-price={item.priceUsd??''}>

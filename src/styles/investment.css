@@ -123,3 +123,54 @@
 .jj-ref-home .jj-ref-panels::before{content:"";position:absolute;inset:0 0 auto;z-index:8;height:31px;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='31' viewBox='0 0 64 31'%3E%3Cpath d='M0 0H64V10Q48 32 32 10Q16 32 0 10Z' fill='%23ffffff'/%3E%3C/svg%3E");background-repeat:repeat-x;background-position:left top;background-size:64px 31px}
 @media(max-width:700px){.jj-ref-home .jj-ref-panels .jj-ref-panel,.jj-ref-home .jj-ref-panels .jj-ref-panel:first-child,.jj-ref-home .jj-ref-panels .jj-ref-panel:last-child{width:calc(100% + 24px);margin-left:-12px;margin-right:-12px}.jj-ref-home .jj-ref-panels .jj-ref-panel:nth-child(odd){clip-path:polygon(0 0,100% 0,91% 100%,0 100%)}.jj-ref-home .jj-ref-panels .jj-ref-panel:nth-child(even){clip-path:polygon(9% 0,100% 0,100% 100%,0 100%)}.jj-ref-home .jj-ref-panels::before{height:21px;background-size:48px 23px}}
 /* JOY2_HERO_WAVE_CLOSE_V1_END */
+
+/* JOYJOY_UNSLOP_POLISH_V1_START */
+/* Unslop polish by Damir Sokolovsky (@heydamir), CC BY 4.0. Existing Joy2 direction retained. */
+:root{--ink:#171717;--secondary:#34443b;--muted:#38483f;--canvas:#fafafa;--paper:#fff;--soft:#f2f2f2;--accent:#b60014}
+.jj-mobile-sections{display:none}
+.jj-ref-home .jj-ref-hero{min-height:0;padding-top:32px;padding-bottom:24px}
+.jj-ref-hero h1{font-size:clamp(56px,5.5vw,88px);letter-spacing:-.035em;margin-bottom:16px;line-height:1.02}
+.jj-ref-hero p{color:var(--secondary);font-size:22px;line-height:28px;margin-bottom:24px;max-width:720px}
+.jj-ref-cta{background:var(--accent);min-height:52px;font-size:18px;padding:12px 24px;gap:24px}
+.jj-ref-cta:hover{background:#940010}
+.jj-ref-home .jj-filter-shell{padding:0 0 24px}
+.jj-ref-home .jj-field>span{color:var(--secondary);font-size:14px;line-height:20px}
+.jj-ref-home .jj-field input::placeholder{color:var(--secondary);opacity:1}
+.jj-ref-home .jj-field,.jj-ref-home .jj-more-filters{min-height:64px;border-color:#9aa69e}
+.jj-ref-home .jj-search-submit{min-height:64px;background:var(--accent);border-color:var(--accent);font-size:16px}
+.jj-ref-home .jj-search-submit:hover{background:#940010;border-color:#940010}
+.jj-ref-home .jj-ref-panels{height:224px}
+.jj-ref-home .jj-ref-panel::after{background:none}
+.jj-ref-home .jj-ref-panel img,.jj-ref-home .jj-ref-panel:hover img{transform:none;transition:none}
+.jj-ref-panel strong{bottom:16px;padding:8px 12px;font-size:20px;line-height:24px}
+.jj-ref-panel strong small{font-size:14px;font-weight:400;color:var(--secondary);white-space:nowrap}
+.jj-category-empty{height:100%;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--canvas);color:var(--secondary);font-size:15px;line-height:24px;text-align:center}
+.jj-source-button{background:var(--paper);color:var(--ink);border:1px solid #9aa69e;font-size:15px;font-weight:500}
+.jj-source-button:hover{background:var(--soft)}
+.jj-ref-header .jj-primary-nav a[aria-current=page]{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:8px}
+.jj-geo-pin{font-size:15px}
+@media(max-width:1100px){.jj-ref-home .jj-ref-hero{min-height:0}.jj-ref-home .jj-ref-panels{height:200px}.jj-ref-header .jj-sitebar-in{gap:24px}.jj-ref-header .jj-primary-nav{gap:16px}.jj-ref-header .jj-sitebar-right{gap:16px}}
+@media(max-width:700px){
+ .jj-sitebar .jj-primary-nav{display:none}
+ .jj-ref-header .jj-sitebar-in{gap:12px}
+ .jj-ref-header .jj-sitebar-right{margin-left:auto;gap:12px}
+ .jj-ref-header .jj-lang a{font-size:14px;min-width:32px;min-height:44px}
+ .jj-ref-header .jj-saved-link{min-width:44px;justify-content:center}
+ .jj-mobile-sections{display:grid;grid-template-columns:1fr 1fr;gap:16px;border-bottom:1px solid var(--line);margin-bottom:0}
+ .jj-mobile-sections a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:8px 0;font-size:14px;line-height:20px;color:var(--secondary);border-bottom:2px solid transparent}
+ .jj-mobile-sections a[aria-current=page]{border-color:var(--accent);color:var(--ink);font-weight:500}
+ .jj-mobile-sections~.jj-market-nav{display:none}
+ .jj-ref-home .jj-ref-hero{min-height:0;padding-top:16px;padding-bottom:16px}
+ .jj-ref-hero h1{font-size:34px;letter-spacing:-.03em;line-height:1.04;margin-bottom:12px}
+ .jj-ref-hero p{font-size:16px;line-height:24px;margin:0}
+ .jj-ref-home .jj-ref-cta{display:none}
+ .jj-ref-home .jj-filter-shell{padding:0 0 16px}
+ .jj-ref-home .jj-filter-form{grid-template-columns:minmax(0,1fr) 108px}
+ .jj-ref-home .jj-filter-form>.jj-field,.jj-ref-home .jj-filter-form>.jj-more-filters,.jj-ref-home .jj-filter-form>.jj-search-submit{min-height:64px}
+ .jj-ref-home .jj-filter-form>.jj-search-submit{font-size:16px;padding-inline:12px}
+ .jj-ref-home .jj-ref-panels{height:176px}
+ .jj-ref-home .jj-ref-panel strong,.jj-ref-home .jj-ref-panel:first-child strong{left:12px;bottom:8px;font-size:15px;line-height:20px;padding:4px 8px}
+ .jj-category-empty{font-size:14px;line-height:20px;padding:12px 12px 36px}
+ .jj-listing-section{padding-top:20px}
+}
+/* JOYJOY_UNSLOP_POLISH_V1_END */
