@@ -31,16 +31,32 @@ const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US'
 // OpenFreeMap requires no API key. Unverified coordinates are never invented.
 
 ---
-<header class="jj-sitebar"><div class="jj-shell jj-sitebar-in">
+<header class:list={["jj-sitebar",{"jj-ref-header":!projects}]}><div class="jj-shell jj-sitebar-in">
   <a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a>
-  <nav class="jj-primary-nav" aria-label={labels.catalog}><a class="is-current" href={base+'#catalog'}>{investmentText.estate}</a></nav>
+  <nav class="jj-primary-nav" aria-label={labels.catalog}><a class="is-current" href={base+'#catalog'}>{investmentText.estate}</a><a href={base+'projects/'}>{investmentText.projects}</a></nav>
   <div class="jj-sitebar-right"><button class="jj-saved-link" id="jj-saved-only" type="button" aria-label={copy.favorites} aria-pressed="false"><JoyIcon name="heart"/><span>{copy.favorites}</span><small id="jj-saved-count">0</small></button>
   <div class="jj-lang" aria-label="Language"><a href={projects?'/projects/':'/'} lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a><a href={projects?'/uz/projects/':'/uz/'} lang="uz" aria-current={lang==='uz'?'page':undefined}>UZ</a><a href={projects?'/en/projects/':'/en/'} lang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div></div>
 </div></header>
-<main>
-  <section class="jj-intro jj-shell">
+<main class:list={[{"jj-ref-home":!projects}]}>
+  <!-- JOY2_HOME_REFERENCE_V1 -->
+  {!projects?<section class="jj-ref-hero jj-shell" aria-label={lang==='ru'?'Недвижимость и инвестиции':lang==='uz'?'Ko‘chmas mulk va investitsiyalar':'Real estate and investments'}>
+    <h1>{lang==='ru'?<>Недвижимость<span>.</span><br/>Инвестиции<span>.</span></>:lang==='uz'?<>Ko‘chmas mulk<span>.</span><br/>Investitsiyalar<span>.</span></>:<>Real Estate<span>.</span><br/>Investments<span>.</span></>}</h1>
+    <p>{lang==='ru'?'Коммерческие объекты и инвестиционные проекты Узбекистана':lang==='uz'?'O‘zbekistondagi tijorat obyektlari va investitsiya loyihalari':'Commercial properties and investment projects in Uzbekistan'}</p>
+    <a class="jj-ref-cta" href="#catalog">{lang==='ru'?'Смотреть объекты':lang==='uz'?'Obyektlarni ko‘rish':'Browse properties'} <span aria-hidden="true">→</span></a>
+  </section>:<section class="jj-intro jj-shell">
     <div class="jj-intro-copy"><p class="jj-crumb">{copy.sale}<span>/</span>{lang==='ru'?'Узбекистан':lang==='uz'?'O‘zbekiston':'Uzbekistan'}</p><h1 class="jj-market-heading"><span class="jj-market-full">{projects?investmentText.projects:investmentText.heading}</span><span class="jj-market-short">{projects?investmentText.projects:lang==='ru'?'Недвижимость и инвестиции':lang==='en'?'Property and investment':'Ko‘chmas mulk va investitsiyalar'}</span></h1><p class="jj-intro-text">{projects?investmentText.projectIntro:investmentText.intro}</p></div>
-  </section>
+  </section>}
+  {!projects&&<nav class="jj-ref-panels" aria-label={lang==='ru'?'Категории недвижимости':lang==='uz'?'Mulk toifalari':'Property categories'}>
+    {([
+      {type:'office',ru:'Офисы',uz:'Ofislar',en:'Offices',photo:sourceListings.find(x=>x.type==='office')?.images?.[0]},
+      {type:'retail',ru:'Ритейл',uz:'Savdo',en:'Retail',photo:sourceListings.find(x=>x.type==='retail')?.images?.[0]},
+      {type:'warehouse',ru:'Склады',uz:'Omborlar',en:'Warehouses',photo:sourceListings.find(x=>x.type==='warehouse')?.images?.[0]},
+      {type:'land',ru:'Участки',uz:'Yer uchastkalari',en:'Land',photo:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80'}
+    ] as const).map(item=><a class="jj-ref-panel" href="#catalog" data-jj-hero-type={item.type} aria-label={lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}>
+      {item.photo&&<img src={item.photo} alt="" loading="eager" decoding="async"/>}
+      <strong>{lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}</strong>
+    </a>)}
+  </nav>}
   <nav class="jj-shell jj-market-nav" aria-label={lang==='ru'?'Разделы каталога':lang==='en'?'Catalog sections':'Katalog bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{investmentText.estate}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{investmentText.projects}</a></nav>
   {projects&&listings.length===0&&<section class="jj-shell jj-project-empty"><h2>{investmentText.empty}</h2><p>{investmentText.emptyNote}</p><a href={base}>{investmentText.catalog} →</a></section>}
   <section class="jj-filter-shell" hidden={projects&&listings.length===0}><div class="jj-shell"><form id="jj-filters" class="jj-filter-form" role="search" aria-label={copy.search}>
@@ -67,6 +83,19 @@ const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US'
 </main><footer class="jj-bottom"><div class="jj-shell"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><p>{lang==='ru'?'Условия покупки и исходные параметры уточняйте у продавца. Источники указаны в объявлениях.':lang==='en'?'Confirm purchase terms and inputs with the seller. Sources are listed on the property pages.':'Xarid shartlari va parametrlarni sotuvchi bilan aniqlang. Manbalar e’lonlarda ko‘rsatilgan.'}</p><span>© {new Date().getFullYear()}</span></div></footer>
 <script type="application/json" id="jj-map-data" set:html={JSON.stringify(mapData).replace(/</g,'\\u003c')}></script>
 <script type="application/json" id="jj-i18n-data" set:html={JSON.stringify({found:copy.found,mapMissing:copy.mapMissing,mapFailed:copy.mapFailed,noCoords:labels.mapHelp,price:copy.price,detail:copy.detail,total:listings.length,lang})}></script>
+<script is:inline>
+/* JOY2_HOME_REFERENCE_V1: category tabs reuse existing search/filter logic. */
+document.addEventListener('click',event=>{
+  const link=event.target instanceof Element?event.target.closest('[data-jj-hero-type]'):null;
+  if(!link)return;
+  const type=link.getAttribute('data-jj-hero-type');
+  const select=document.getElementById('jj-type');
+  if(!(select instanceof HTMLSelectElement)||!type)return;
+  select.value=type;
+  select.dispatchEvent(new Event('change',{bubbles:true}));
+  document.getElementById('jj-filters')?.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+});
+</script>
 <script src="/js/joyjoy-marketplace.js" defer></script>
 <script src="/js/joyjoy-unslop-stage1.js" defer></script>
 <script src="/js/joyjoy-maplibre.js" defer></script>
