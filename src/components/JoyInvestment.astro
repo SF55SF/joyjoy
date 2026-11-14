@@ -1,0 +1,21 @@
+---
+import {investmentCopy} from '../../public/js/joyjoy-investment-copy.js';
+import {investmentFields,hasPublishedInvestment} from '../../public/js/joyjoy-investment-model.js';
+const {listing,lang='ru'}=Astro.props;
+const c=investmentCopy[lang];
+const published=hasPublishedInvestment(listing);
+const model=published?listing.investment:{currency:'USD',purchasePrice:listing.priceUsd,lettableArea:null,transactionCosts:null,fitOutCosts:null,otherCosts:null,monthlyRent:null,occupancy:null,annualExpenses:null};
+---
+<section class="jj-investment" data-investment data-lang={lang} data-published={String(published)} aria-labelledby="investment-heading">
+ <header><p class="jj-investment-kicker">{published?c.published:c.personal}</p><h2 id="investment-heading">{c.title}</h2><p>{published?c.estimate:c.unavailable}</p></header>
+ {published&&<dl class="jj-model-source"><div><dt>{c.source}</dt><dd>{c[model.rentBasis]}</dd></div><div><dt>{c.asOf}</dt><dd><time datetime={model.asOf}>{model.asOf}</time></dd></div><div><dt>{lang==='ru'?'Источник и условия':lang==='en'?'Source and terms':'Manba va shartlar'}</dt><dd>{model.sourceNote}</dd></div></dl>}
+ <form class="jj-investment-inputs" data-investment-form>
+ {investmentFields.map(key=><label><span>{c[key]}</span><input name={key} type="number" inputmode="decimal" min={key==='purchasePrice'||key==='lettableArea'?'0.01':'0'} max={key==='occupancy'?'100':'1000000000000'} step="any" value={model[key]??''} required /></label>)}
+ <button type="reset" class="jj-model-reset">{c.reset}</button>
+ </form>
+ <p class="jj-model-status" data-model-status role="status">{c.missing}</p>
+ <dl class="jj-investment-results" aria-live="polite" aria-atomic="true">{['totalInvestment','annualRent','annualNet','yieldPercent','paybackYears'].map(key=><div><dt>{c[key]}</dt><dd data-result={key}>—</dd></div>)}</dl>
+ <p class="jj-model-note">{c.note}</p>
+ <script type="application/json" data-investment-defaults set:html={JSON.stringify(model).replaceAll('<',String.fromCharCode(92)+'u003c')}></script>
+</section>
+<script src="/js/joyjoy-investment.js" type="module"></script>

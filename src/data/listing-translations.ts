@@ -29,6 +29,7 @@ const uz: Record<string, Translation> = {
 };
 export function localizeListing(item: Listing, lang: string): Listing {
  if(lang==='ru')return item;
- const row=(lang==='uz'?uz:en)[item.slug];if(!row)return item;
- return {...item,title:row[0],address:row[1],description:row[2],features:row[3],city:lang==='uz'?'Toshkent':'Tashkent',district:item.district?(lang==='uz'?'Yangi Toshkent':'New Tashkent'):''};
+ const override=item.translations?.[lang as 'uz'|'en']||{};
+ const row=(lang==='uz'?uz:en)[item.slug];if(!row)return {...item,...override};
+ return {...item,title:row[0],address:row[1],description:row[2],features:row[3],city:lang==='uz'?'Toshkent':'Tashkent',district:item.district?(lang==='uz'?'Yangi Toshkent':'New Tashkent'):'',...override};
 }

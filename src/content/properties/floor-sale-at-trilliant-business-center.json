@@ -1,0 +1,29 @@
+{
+  "slug": "floor-sale-at-trilliant-business-center",
+  "title": "Продажа этажа в БЦ Trilliant",
+  "city": "Ташкент",
+  "district": "",
+  "address": "ул. Шахрисабз, 2",
+  "lat": 41.3159695,
+  "lng": 69.2831597,
+  "type": "office",
+  "status": "available",
+  "area": 1674,
+  "priceUsd": null,
+  "images": [
+    "https://api.cmwp.uz/storage/projects/previews/TZbGGnP5yhx1g8fGqJACkHAaIaTsdxHNFmhNeX8K.webp"
+  ],
+  "description": "Готовый офисный этаж класса А с отделкой, мебелью, переговорными и панорамным остеклением. На сайте CMWP указана стоимость $5 800 без единицы измерения; общая стоимость требует подтверждения.",
+  "features": [
+    "2023 год",
+    "Класс A",
+    "С ремонтом и мебелью",
+    "Высота потолков 4,4 м",
+    "До 200 рабочих мест"
+  ],
+  "sourceUrl": "https://cmwp.uz/sales/floor-sale-at-trilliant-business-center",
+  "order": 4,
+  "published": true,
+  "showCatalog": true,
+  "showProjects": false
+}

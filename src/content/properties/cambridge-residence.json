@@ -1,0 +1,27 @@
+{
+  "slug": "cambridge-residence",
+  "title": "Cambridge Residence",
+  "city": "Ташкент",
+  "district": "",
+  "address": "пересечение МКАД и ул. Шимолий",
+  "lat": 41.3501358,
+  "lng": 69.2556152,
+  "type": "retail",
+  "status": "available",
+  "area": 1472,
+  "priceUsd": null,
+  "images": [
+    "https://api.cmwp.uz/storage/projects/previews/RFlsjHLJ7A3qrKlDXqqXOD8vJjKV8NKBjr5Y1dWM.webp"
+  ],
+  "description": "Трёхэтажное здание на территории жилого комплекса Cambridge Residence, подходящее для коммерческого или офисного использования.",
+  "features": [
+    "3 этажа",
+    "Комплекс из 11 домов",
+    "220 квартир в жилом комплексе"
+  ],
+  "sourceUrl": "https://cmwp.uz/sales/cambridge-residence",
+  "order": 7,
+  "published": true,
+  "showCatalog": true,
+  "showProjects": false
+}

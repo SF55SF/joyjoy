@@ -1,0 +1,28 @@
+{
+  "slug": "building-on-ipak-yoli",
+  "title": "Здание на Ипак Йоли",
+  "city": "Ташкент",
+  "district": "",
+  "address": "ул. Мирзо Улугбека, 32",
+  "lat": 41.3199262,
+  "lng": 69.3197825,
+  "type": "office",
+  "status": "available",
+  "area": 10.19,
+  "priceUsd": null,
+  "images": [
+    "https://api.cmwp.uz/storage/projects/previews/YbtQeTzd69bBJji5IL2EzJ1l3RaYnt8zGLJFvP2R.webp"
+  ],
+  "description": "Здание с модернизированными офисами, парковкой и помещением под столовую рядом с метро Буюк Ипак Йули. В источнике указана площадь 10,19 м², которая выглядит нетипично для здания и требует проверки.",
+  "features": [
+    "Класс B",
+    "Потолки 2,8 м",
+    "Площадь 10,19 м² требует уточнения",
+    "Парковочная зона"
+  ],
+  "sourceUrl": "https://cmwp.uz/sales/building-on-ipak-yoli",
+  "order": 8,
+  "published": true,
+  "showCatalog": true,
+  "showProjects": false
+}

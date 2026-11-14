@@ -1,6 +1,7 @@
 ---
 // JOYJOY_LOOPNET_LAYOUT_V3
 import '../styles/joyjoy.css';
+import '../styles/investment.css';
 const lang=Astro.props.lang??'ru';
 const title=Astro.props.title??'JoyJoy — коммерческая недвижимость';
 const description=Astro.props.description??'Продажа коммерческой недвижимости: офисы, торговые и складские помещения в Узбекистане.';
@@ -16,7 +17,7 @@ const image=Astro.props.image;
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>{title}</title>
 <meta name="description" content={description} />
-<meta name="robots" content={origin?'index,follow':'noindex,follow'} />
+<meta name="robots" content={Astro.props.robots??(origin?'index,follow':'noindex,follow')} />
 <meta name="theme-color" content="#ffffff" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="alternate icon" href="/favicon.ico" sizes="any" />
