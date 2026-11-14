@@ -217,3 +217,23 @@
 .jj-map-gesture-help{position:absolute;left:16px;bottom:32px;z-index:3;max-width:calc(100% - 72px);padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);pointer-events:none;display:flex;flex-direction:column;gap:4px;flex-basis:100%;color:var(--ink);font-size:13px;line-height:20px}.jj-map-touch-help{color:var(--secondary);font-size:12px}.jj-map-foot{flex-wrap:wrap}.jj-detail-map+.jj-map-gesture-help{margin-top:12px}.jj-map-wrap .maplibregl-canvas{cursor:default}.jj-map-wrap.is-ctrl-ready .maplibregl-canvas{cursor:grab}.jj-map-wrap.is-ctrl-dragging .maplibregl-canvas{cursor:grabbing}.jj-map-popup-address{color:var(--secondary);line-height:1.45;margin:8px 0}.jj-map-wrap .maplibregl-cooperative-gesture-screen{font-family:inherit}
 @media(pointer:coarse){.jj-map-gesture-help>span:first-child{display:none}.jj-map-touch-help{color:var(--ink);font-size:13px}}
 /* JOYJOY_MAP_COORDINATES_CTRL_V1_END */
+
+/* JOYJOY_APCA_READABILITY_V1_START */
+/* Readability refinement using Unslop by Damir Sokolovsky (@heydamir), CC BY 4.0. */
+:root{--secondary:#34443b;--muted:#38483f}
+.jj-field>span,.jj-range legend,.jj-range label>span,.jj-price-unknown,.jj-listing-heading p,.jj-listing-actions label,.jj-listing-actions select,.jj-listing-actions>button,.jj-catalog-source,.jj-card-overline,.jj-card-bottom small,.jj-label-status,.jj-detail-finance small,.jj-related-grid small,.jj-bottom p,.jj-bottom>.jj-shell>span{font-size:14px;line-height:20px}
+.jj-lang a,.jj-saved-link small{font-size:14px}
+.jj-lang a[aria-current]{color:var(--ink)}
+.jj-property-address,.jj-card-feature{font-size:15px;line-height:24px}
+.jj-card-bottom a,.jj-view-switch button,.jj-detail-back,.jj-back-link{font-size:14px;line-height:20px;color:var(--secondary)}
+.jj-view-switch button[aria-pressed=true]{color:var(--ink)}
+.jj-detail-heading p,.jj-detail-main p,.jj-detail-contact p,.jj-intro-text{font-size:16px;line-height:24px}
+.jj-detail-main p{line-height:28px}
+.jj-detail-status{font-size:14px;line-height:20px;color:var(--ink)}
+.jj-feature-list,.jj-detail-metrics{font-size:15px;line-height:24px}
+.jj-source-button{font-size:15px;font-weight:500}
+.jj-map-foot small,.jj-map-touch-help,.jj-map-gesture-help,.jj-map-popup p,.jj-map-popup a{font-size:14px;line-height:20px}
+.jj-map-popup a{color:var(--secondary)}
+.jj-crumb,.jj-intro-copy .jj-crumb{font-size:14px}
+@media(max-width:700px){.jj-filter-form>.jj-field{min-height:64px}.jj-filter-form>.jj-search-submit,.jj-filter-form>.jj-more-filters{min-height:64px;font-size:14px}.jj-field input,.jj-field select{font-size:16px}.jj-listing-actions select{max-width:184px}.jj-view-switch button{padding-inline:8px}.jj-card-overline{flex-wrap:wrap;gap:4px 12px}.jj-sitebar-in:has(.jj-detail-back){gap:8px}.jj-sitebar-in:has(.jj-detail-back) .jj-brand-logo{width:88px}.jj-detail-back{white-space:normal}}
+/* JOYJOY_APCA_READABILITY_V1_END */
