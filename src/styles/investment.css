@@ -183,3 +183,8 @@
  .jj-listing-section{padding-top:20px}
 }
 /* JOYJOY_UNSLOP_POLISH_V1_END */
+
+/* JOY2_PROJECT_NAV_CLEANUP_V1 */
+.jj-project-back { margin: 0 0 18px; }
+.jj-project-back a { color: #333; text-decoration: none; display: inline-flex; align-items: center; font-weight: 600; font-size: 14px; }
+.jj-project-back a:hover, .jj-project-back a:focus-visible { color: #D90016; text-decoration: underline; }
