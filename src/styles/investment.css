@@ -188,3 +188,13 @@
 .jj-project-back { margin: 0 0 18px; }
 .jj-project-back a { color: #333; text-decoration: none; display: inline-flex; align-items: center; font-weight: 600; font-size: 14px; }
 .jj-project-back a:hover, .jj-project-back a:focus-visible { color: #D90016; text-decoration: underline; }
+
+/* JOY2_HOME_DUAL_CTA_V1: visible navigation CTAs on desktop and mobile */
+.jj-ref-home .jj-ref-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:24px}
+.jj-ref-home .jj-ref-actions .jj-ref-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:18px;text-decoration:none}
+.jj-ref-home .jj-ref-actions .jj-ref-cta-secondary{background:transparent;color:#D90016;border:1px solid #D90016}
+.jj-ref-home .jj-ref-actions .jj-ref-cta-secondary:hover{background:#fff1f2}
+.jj-ref-home .jj-ref-actions .jj-ref-cta:focus-visible{outline:3px solid #222;outline-offset:3px}
+.jj-input-icon-no-search input{padding-left:16px}
+@media(max-width:700px){.jj-ref-home .jj-ref-actions{margin-top:16px;gap:9px}.jj-ref-home .jj-ref-actions .jj-ref-cta{display:inline-flex;min-height:46px;font-size:14px;padding:10px 13px;gap:8px}.jj-ref-home .jj-ref-actions .jj-ref-cta span{font-size:19px}}
+@media(max-width:390px){.jj-ref-home .jj-ref-actions{flex-direction:column;align-items:stretch}.jj-ref-home .jj-ref-actions .jj-ref-cta{width:100%}}
