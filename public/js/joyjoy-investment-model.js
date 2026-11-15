@@ -1,6 +1,19 @@
 // One deterministic model for the website, the editor and server-side validation.
-export const investmentFields = ['purchasePrice','transactionCosts','fitOutCosts','otherCosts','lettableArea','monthlyRent','occupancy','annualExpenses'];
+export const investmentFields = ['purchasePrice','transactionCosts','fitOutCosts','otherCosts','lettableArea','monthlyRent','occupancy','annualExpenses','capex','holdYears','exitCapRate','annualRentGrowth'];
+// New fields default for previously saved properties; blank CAPEX is always zero.
+export const investmentDefaults={capex:0,holdYears:8,exitCapRate:12,annualRentGrowth:0,rentCurrency:'USD',usdUzs:null,uzsDevaluation:null};
+function investmentInputs(m){return {...investmentDefaults,...m,capex:m?.capex??0,holdYears:m?.holdYears??8,exitCapRate:m?.exitCapRate??12,annualRentGrowth:m?.annualRentGrowth??0};}
+function netPresentValue(flows,rate){return flows.reduce((s,v,i)=>s+v/Math.pow(1+rate,i),0);}
+export function investmentIRR(flows){
+ if(!Array.isArray(flows)||flows.length<2||!(flows[0]<0))return null;
+ let low=-0.9999,high=1;let lo=netPresentValue(flows,low),hi=netPresentValue(flows,high);
+ while(hi>0&&high<1e6){high=high*2+1;hi=netPresentValue(flows,high);}
+ if(!Number.isFinite(lo)||!Number.isFinite(hi)||lo*hi>0)return null;
+ for(let i=0;i<160;i++){const mid=(low+high)/2,v=netPresentValue(flows,mid);if(v>0)low=mid;else high=mid;}
+ return (low+high)/2*100;
+}
 export function validateInvestment(model) {
+  model=investmentInputs(model);
   const errors = [];
   if (!model || typeof model !== 'object' || Array.isArray(model)) return ['model'];
   for (const key of investmentFields) {
@@ -11,15 +24,33 @@ export function validateInvestment(model) {
   if (!(model.lettableArea > 0)) errors.push('lettableArea');
   if (model.occupancy > 100) errors.push('occupancy');
   if (model.currency !== 'USD') errors.push('currency');
+  if(!Number.isInteger(model.holdYears)||model.holdYears<1||model.holdYears>40)errors.push('holdYears');
+  if(model.exitCapRate<=0||model.exitCapRate>100)errors.push('exitCapRate');
+  if(model.annualRentGrowth>100)errors.push('annualRentGrowth');
+  if(!['USD','UZS'].includes(model.rentCurrency))errors.push('rentCurrency');
+  if(model.rentCurrency==='UZS'&&(!(model.usdUzs>0)||!Number.isFinite(model.usdUzs)||!Number.isFinite(model.uzsDevaluation)||model.uzsDevaluation<=-100||model.uzsDevaluation>100))errors.push('fx');
   return [...new Set(errors)];
 }
-export function calculateInvestment(model) {
-  const errors = validateInvestment(model);
-  if (errors.length) return {ok:false,errors};
-  const totalInvestment = model.purchasePrice + model.transactionCosts + model.fitOutCosts + model.otherCosts;
-  const annualRent = model.lettableArea * model.monthlyRent * 12 * model.occupancy / 100;
-  const annualNet = annualRent - model.annualExpenses;
-  return {ok:true,totalInvestment,annualRent,annualNet,yieldPercent:annualNet/totalInvestment*100,paybackYears:annualNet>0?totalInvestment/annualNet:null};
+export function calculateInvestment(raw) {
+ const model=investmentInputs(raw);
+ const errors=validateInvestment(model);if(errors.length)return {ok:false,errors};
+ const totalInvestment=model.purchasePrice+model.transactionCosts+model.fitOutCosts+model.otherCosts+model.capex;
+ const annualRent=model.lettableArea*model.monthlyRent*12*model.occupancy/100/(model.rentCurrency==='UZS'?model.usdUzs:1);
+ const effectiveAnnualGrowth=model.rentCurrency==='UZS'?((1+model.annualRentGrowth/100)/(1+model.uzsDevaluation/100)-1)*100:model.annualRentGrowth;
+ const annualNet=annualRent-model.annualExpenses;
+ const cashFlows=[-totalInvestment],schedule=[];
+ for(let year=1;year<=model.holdYears;year++){
+   const revenue=annualRent*Math.pow(1+effectiveAnnualGrowth/100,year-1);
+   const noi=revenue-model.annualExpenses;
+   schedule.push({year,revenue,expenses:model.annualExpenses,noi,sale:0,cashFlow:noi});
+ }
+ const nextYearNOI=annualRent*Math.pow(1+effectiveAnnualGrowth/100,model.holdYears)-model.annualExpenses;
+ const salePrice=nextYearNOI>0?nextYearNOI/(model.exitCapRate/100):0;
+ schedule[schedule.length-1].sale=salePrice;
+ schedule[schedule.length-1].cashFlow+=salePrice;
+ cashFlows.push(...schedule.map(y=>y.cashFlow));
+ const irrPercent=investmentIRR(cashFlows);
+ return {ok:true,totalInvestment,annualRent,annualNet,yieldPercent:annualNet/totalInvestment*100,paybackYears:annualNet>0?totalInvestment/annualNet:null,irrPercent,salePrice,nextYearNOI,cashFlows,schedule,holdYears:model.holdYears};
 }
 export function hasPublishedInvestment(property) {
   const m = property.investment;
@@ -65,6 +96,9 @@ export function validateProperty(p) {
       for(const k of investmentFields)if(m[k]!==null&&m[k]!==undefined&&(typeof m[k]!=='number'||!Number.isFinite(m[k])||m[k]<0||m[k]>1e12))errors.push('investment.'+k);
       if(m.occupancy>100)errors.push('investment.occupancy');
       if(m.currency!=='USD')errors.push('investment.currency');
+      if(m.rentCurrency!==undefined&&!['USD','UZS'].includes(m.rentCurrency))errors.push('investment.rentCurrency');
+      if(m.usdUzs!=null&&(typeof m.usdUzs!=='number'||!Number.isFinite(m.usdUzs)||m.usdUzs<=0))errors.push('investment.usdUzs');
+      if(m.uzsDevaluation!=null&&(typeof m.uzsDevaluation!=='number'||!Number.isFinite(m.uzsDevaluation)||m.uzsDevaluation<=-100||m.uzsDevaluation>100))errors.push('investment.uzsDevaluation');
       if(m.rentBasis&&!['assumption','asking','contract'].includes(m.rentBasis))errors.push('investment.rentBasis');
       if(m.asOf&&!validDate(m.asOf))errors.push('investment.asOf');
       if(m.sourceNote!==undefined&&(typeof m.sourceNote!=='string'||m.sourceNote.length>4000))errors.push('investment.sourceNote');
