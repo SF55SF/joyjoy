@@ -1,0 +1,100 @@
+{
+  "slug": "the-business-park-block-3",
+  "title": "The Business Park · Блок 3",
+  "city": "Ташкент",
+  "district": "Яшнабадский район",
+  "address": "ул. Махтумкули, 114",
+  "type": "office",
+  "status": "existing",
+  "area": 5403,
+  "priceUsd": 7515000,
+  "images": [],
+  "description": "Отдельный блок делового комплекса The Business Park из шести зданий по адресу ул. Махтумкули, 114, Яшнабадский район, Ташкент. В состав предложения входят три офисных этажа, терраса на пятом этаже и доля в двух уровнях подземного паркинга. Ремонт и отделка завершены летом 2026 года. Объект предлагается к продаже целиком.",
+  "features": [
+    "Офисные этажи 2, 4 и 5",
+    "Терраса на 5-м этаже",
+    "Подземный паркинг",
+    "Круглосуточная охрана и контроль доступа",
+    "VRF-кондиционирование и приточно-вытяжная вентиляция",
+    "Лифты KONE",
+    "Собственная трансформаторная подстанция",
+    "Отделка завершена летом 2026 года"
+  ],
+  "tenancyStatus": "leased",
+  "translations": {
+    "en": {
+      "title": "The Business Park · Block 3",
+      "city": "Tashkent",
+      "district": "Yashnabad District",
+      "address": "114 Makhtumkuli Street",
+      "description": "Income-producing office property for sale within The Business Park. The offering includes three office floors, a fifth-floor terrace, a share in two underground parking levels and 12 parking spaces. All 3,006 sq m of leased space are occupied by three long-term tenants. Total cadastral area is 5,403 sq m. Asking price includes VAT.",
+      "features": [
+        "Three leased office floors: levels 2, 4 and 5",
+        "Leased area: 3,006 sq m; occupancy: 100%",
+        "12 parking spaces",
+        "Terrace: 357 sq m",
+        "Annual NOI per offering: USD 620,130",
+        "Rent escalation under contracts: 6% annually",
+        "Fully fitted out in summer 2026",
+        "Asking price includes VAT"
+      ]
+    },
+    "uz": {
+      "title": "The Business Park · 3-blok",
+      "city": "Toshkent",
+      "district": "Yashnobod tumani",
+      "address": "Maxtumquli ko‘chasi, 114",
+      "description": "The Business Park majmuasida ijaraga berilgan ofis aktivini sotish taklifi. Tarkibida uchta ofis qavati, beshinchi qavatdagi terrasa, yerosti avtoturargohining ikki sathidagi ulush va 12 ta mashina o‘rni bor. 3 006 m² ijara maydoni uchta uzoq muddatli ijarachi tomonidan to‘liq band qilingan. Kadastr maydoni 5 403 m². Narx QQS bilan ko‘rsatilgan.",
+      "features": [
+        "2-, 4- va 5-qavatlardagi ofislar",
+        "Ijara maydoni: 3 006 m²; bandlik 100%",
+        "12 ta mashina o‘rni",
+        "Terrasa: 357 m²",
+        "QQSsiz yillik ijara: 734 916 USD",
+        "Yillik ijara indeksatsiyasi: 6%",
+        "Ta’mirlash ishlari 2026-yil yozida tugallangan",
+        "Narx QQS bilan"
+      ]
+    }
+  },
+  "order": 1,
+  "published": true,
+  "showCatalog": true,
+  "showProjects": false,
+  "units": [
+    {
+      "id": "whole-property",
+      "number": "1",
+      "block": "3",
+      "floor": "2, 4, 5",
+      "title": "The Business Park · Блок 3",
+      "area": 5403,
+      "pricePerSqm": 1390.8939478067741,
+      "published": true,
+      "tenancyStatus": "leased",
+      "note": "Инвестиционное предложение: продажа единого объекта. Цена $7 515 000, включая НДС.\nКадастровая площадь — 5 403 м²; арендная площадь — 3 006 м²; занятость — 100%; 3 арендатора по долгосрочным договорам.\nОфисы: 2-й этаж — 1 057 м² (арендовано 951 м²); 4-й этаж — 1 059 м² (951 м²); 5-й этаж — 1 059 м² (1 104 м²).\nТерраса 5-го этажа — 357 м²: 120 м² закрытой и 237 м² открытой площади.\nПаркинг: доля в уровнях −1 и −2 — 1 871 м²; по кадастру 12 машиномест.\nАрендаторы: банк, производитель коммерческого транспорта Foton и дипломатическое представительство страны ЕС.\nАренда без НДС — $734 916 в год. Платежи арендаторов за аренду и OPEX с НДС — $75 326 в месяц.\nВозмещение OPEX арендаторами — $72 144 в год без НДС ($2/м²/мес.).\nРасходы собственника в год без НДС: эксплуатация и персонал — $123 132; коммунальные услуги — $18 000; налог на имущество — $43 718; налог на землю — $2 080.\nИндексация аренды — 6% ежегодно в USD. Ремонт и отделка завершены летом 2026 года.",
+      "investment": {
+        "currency": "USD",
+        "published": true,
+        "purchasePrice": 7515000,
+        "transactionCosts": 0,
+        "fitOutCosts": 0,
+        "otherCosts": 0,
+        "capex": 0,
+        "lettableArea": 3006,
+        "monthlyRent": 22.37358616101131,
+        "mezzanineArea": 0,
+        "mezzanineRent": 0,
+        "occupancy": 100,
+        "annualExpenses": 143212,
+        "holdYears": 8,
+        "exitCapRate": 12,
+        "annualRentGrowth": 6,
+        "rentCurrency": "USD",
+        "rentBasis": "contract",
+        "asOf": "2026-11-15",
+        "sourceNote": "The Business Park, блок 3: исходные данные из инвестиционной презентации. Аренда без НДС $734 916/год; возмещение OPEX арендаторами $72 144/год. Ставка модели $22.37359/м²/мес. включает эти два поступления и не включает НДС. Расходы $143 212/год включают эксплуатацию $123 132, коммунальные $18 000 и земельный налог $2 080; налог на имущество $43 718 из презентации исключён из расходов во избежание двойного учёта — его рассчитывает модель Joy². Цена покупки $7 515 000 включает НДС; налоговый вычет НДС отдельно не моделируется. Срок 8 лет и ставка выхода 12% — стандартные допущения Joy², в презентации не указаны."
+      }
+    }
+  ]
+}

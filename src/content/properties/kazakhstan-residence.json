@@ -1,0 +1,93 @@
+{
+  "slug": "kazakhstan-residence",
+  "title": "ЖК «Казахстан»",
+  "city": "Ташкент",
+  "district": "Миробод / Минор",
+  "address": "проспект Амира Темура, 86",
+  "type": "retail",
+  "status": "existing",
+  "area": 256,
+  "priceUsd": 640000,
+  "images": [],
+  "description": "Коммерческое помещение в ЖК «Казахстан» в центре Ташкента. Два уровня, летняя терраса, выполнены отделка и оснащение. Метро «Минор» примерно в 5–7 минутах пешком.",
+  "features": [
+    "Два уровня",
+    "Летняя терраса",
+    "Высота потолка первого уровня 4,52 м",
+    "Высота потолка второго уровня 4,00 м",
+    "Чиллерная система",
+    "Тёплый пол",
+    "Цена включает НДС"
+  ],
+  "published": true,
+  "showCatalog": true,
+  "showProjects": false,
+  "order": 5,
+  "tenancyStatus": "preliminary",
+  "units": [
+    {
+      "id": "kazakhstan-premise-1",
+      "number": "1",
+      "block": "ЖК Казахстан",
+      "floor": "1–2",
+      "title": "Коммерческое помещение · два уровня",
+      "area": 256,
+      "pricePerSqm": 2500,
+      "published": true,
+      "tenancyStatus": "preliminary",
+      "note": "Площадь 256 м² на двух уровнях. Летняя терраса. Высота потолка: уровень 1 — 4,52 м; уровень 2 — 4,00 м. Чиллер и тёплый пол. Цена продажи $640 000 с НДС. Расчётная ставка аренды $20/м² в месяц. Ставка аренды указана как инвестиционное допущение, действующего договора нет. Одинаковая ставка на обоих уровнях — $20/м²/мес.; оба уровня входят в общую площадь 256 м², двойного учёта нет.",
+      "investment": {
+        "currency": "USD",
+        "published": true,
+        "purchasePrice": 640000,
+        "transactionCosts": 0,
+        "fitOutCosts": 0,
+        "otherCosts": 0,
+        "capex": 0,
+        "lettableArea": 256,
+        "monthlyRent": 20,
+        "mezzanineArea": 0,
+        "mezzanineRent": 20,
+        "occupancy": 100,
+        "annualExpenses": 0,
+        "holdYears": 8,
+        "exitCapRate": 12,
+        "annualRentGrowth": 0,
+        "rentCurrency": "USD",
+        "rentBasis": "assumption",
+        "asOf": "2026-11-15",
+        "sourceNote": "Цена продажи $640 000 с НДС, площадь 256 м², два уровня и оснащение — из Kazakhstan Premise Sale Teaser (ноябрь 2026). Аренда $20/м²/мес. задана для инвестиционного расчёта и отсутствует в презентации. Аренда — расчётное предположение, действующих договоров нет. Срок владения 8 лет и ставка выхода 12% — стандартные сценарные допущения Joy², не условия продавца. Нулевые дополнительные расходы — отсутствие подтверждённых данных, а не гарантия их отсутствия. Оба уровня включены в общую площадь 256 м²; ставка $20/м²/мес. единая. Отдельная площадь мезонина в презентации не указана."
+      }
+    }
+  ],
+  "translations": {
+    "en": {
+      "title": "Kazakhstan Residence",
+      "city": "Tashkent",
+      "district": "Minor",
+      "address": "86 Amir Temur Avenue",
+      "description": "Two-level fitted commercial premises with a summer terrace in central Tashkent. The stated sale price includes VAT.",
+      "features": [
+        "Two levels",
+        "Summer terrace",
+        "Ceiling heights 4.52 m / 4.00 m",
+        "Chiller and underfloor heating",
+        "Sale price includes VAT"
+      ]
+    },
+    "uz": {
+      "title": "Qozog‘iston turar joy majmuasi",
+      "city": "Toshkent",
+      "district": "Minor",
+      "address": "Amir Temur shoh ko‘chasi, 86",
+      "description": "Toshkent markazida yozgi terrasali, ikki qavatli tayyor tijorat binosi. Sotuv narxi QQSni o‘z ichiga oladi.",
+      "features": [
+        "Ikki daraja",
+        "Yozgi terrasa",
+        "Shift balandligi 4,52 m / 4,00 m",
+        "Chiller va issiq pol",
+        "Narx QQS bilan"
+      ]
+    }
+  }
+}
