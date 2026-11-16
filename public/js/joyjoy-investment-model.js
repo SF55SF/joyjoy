@@ -2,7 +2,7 @@
 export const investmentFields = ['purchasePrice','transactionCosts','fitOutCosts','otherCosts','lettableArea','monthlyRent','occupancy','annualExpenses','capex','holdYears','exitCapRate','annualRentGrowth'];
 // New fields default for previously saved properties; blank CAPEX is always zero.
 export const investmentDefaults={capex:0,holdYears:8,exitCapRate:12,annualRentGrowth:0,rentCurrency:'USD',usdUzs:null,uzsDevaluation:null};
-function investmentInputs(m){return {...investmentDefaults,...m,capex:m?.capex??0,holdYears:m?.holdYears??8,exitCapRate:m?.exitCapRate??12,annualRentGrowth:m?.annualRentGrowth??0};}
+function investmentInputs(m){return {...investmentDefaults,...m,capex:m?.capex??0,holdYears:m?.holdYears??8,exitCapRate:m?.exitCapRate??12,annualRentGrowth:m?.annualRentGrowth??0,occupancy:m?.occupancy??0,monthlyRent:m?.monthlyRent??0,annualExpenses:m?.annualExpenses??0,otherCosts:m?.otherCosts??0,fitOutCosts:m?.fitOutCosts??0,transactionCosts:m?.transactionCosts??0,mezzanineArea:m?.mezzanineArea??0,mezzanineRent:m?.mezzanineRent??0,propertyTaxRate:m?.propertyTaxRate??0,profitTaxRate:m?.profitTaxRate??0};}
 function netPresentValue(flows,rate){return flows.reduce((s,v,i)=>s+v/Math.pow(1+rate,i),0);}
 export function investmentIRR(flows){
  if(!Array.isArray(flows)||flows.length<2||!(flows[0]<0))return null;
@@ -22,6 +22,8 @@ export function validateInvestment(model) {
   }
   if (!(model.purchasePrice > 0)) errors.push('purchasePrice');
   if (!(model.lettableArea > 0)) errors.push('lettableArea');
+  for(const key of ['mezzanineArea','mezzanineRent','propertyTaxRate','profitTaxRate'])if(!Number.isFinite(model[key])||model[key]<0||model[key]>1e12)errors.push(key);
+  if(model.propertyTaxRate>100||model.profitTaxRate>100)errors.push('taxRates');
   if (model.occupancy > 100) errors.push('occupancy');
   if (model.currency !== 'USD') errors.push('currency');
   if(!Number.isInteger(model.holdYears)||model.holdYears<1||model.holdYears>40)errors.push('holdYears');
@@ -32,33 +34,72 @@ export function validateInvestment(model) {
   return [...new Set(errors)];
 }
 export function calculateInvestment(raw) {
- const model=investmentInputs(raw);
- const errors=validateInvestment(model);if(errors.length)return {ok:false,errors};
- const totalInvestment=model.purchasePrice+model.transactionCosts+model.fitOutCosts+model.otherCosts+model.capex;
- const annualRent=model.lettableArea*model.monthlyRent*12*model.occupancy/100/(model.rentCurrency==='UZS'?model.usdUzs:1);
- const effectiveAnnualGrowth=model.rentCurrency==='UZS'?((1+model.annualRentGrowth/100)/(1+model.uzsDevaluation/100)-1)*100:model.annualRentGrowth;
- const annualNet=annualRent-model.annualExpenses;
+ // JOY2_TAX_REALISM_CLEAN_UI_V7. Simplified corporate owner on general tax regime.
+ // Buildings: tax depreciation 5% straight-line, capped at 20 years.
+ // 2026 legal-person property tax 1.5%, minimum floor per m²; floors are held constant
+ // for future years as an illustrative assumption. Tax FX defaults to 12,000 UZS/USD.
+ // VAT, land tax, regional multipliers, financing, incentives and acquisition basis
+ // adjustments are outside this indicative model.
+ const m=investmentInputs(raw);
+ const errors=validateInvestment(m);if(errors.length)return {ok:false,errors,irrPercent:null};
+ const purchase=Number(m.purchasePrice);
+ const transactionCosts=Number(m.transactionCosts||0),fitOutCosts=Number(m.fitOutCosts||0),otherCosts=Number(m.otherCosts||0),capex=Number(m.capex||0);
+ const annualExpenses=Number(m.annualExpenses||0);
+ const totalInvestment=purchase+transactionCosts+fitOutCosts+otherCosts+capex;
+ const fxRent=m.rentCurrency==='UZS'?Number(m.usdUzs):1;
+ const annualRent=(Number(m.lettableArea)*Number(m.monthlyRent||0)+Number(m.mezzanineArea||0)*Number(m.mezzanineRent||0))*12*Number(m.occupancy||0)/100/fxRent;
+ const effectiveAnnualGrowth=m.rentCurrency==='UZS'?((1+Number(m.annualRentGrowth)/100)/(1+Number(m.uzsDevaluation)/100)-1)*100:Number(m.annualRentGrowth||0);
+ const nYears=Number(m.holdYears);
+ const annualDepreciation=purchase/20;
+ // Property tax is deducted as an operating expense; the income tax on rental profit
+ // is deducted afterwards. Deductible building depreciation is a NON-cash expense.
+ const location=String(m.taxCity||m.city||'Ташкент').toLowerCase();
+ const floorUzsPerSqm=location.includes('ташкент')||location.includes('tashkent')?3530000:(location.includes('нукус')||location.includes('nukus')?2350000:1390000);
+ const taxFx=Number(m.taxUsdUzs)>0?Number(m.taxUsdUzs):(Number(m.usdUzs)>0?Number(m.usdUzs):12000);
+ const taxArea=Number(m.propertyTaxArea)>0?Number(m.propertyTaxArea):Number(m.lettableArea);
+ const minPropertyBase=taxArea*floorUzsPerSqm/taxFx;
+ const costAtTime=years=>purchase*Math.max(0,1-years/20);
+ const propertyTaxForYear=year=>{
+  const avgResidual=(costAtTime(year-1)+costAtTime(year))/2;
+  return Math.max(avgResidual,minPropertyBase)*0.015;
+ };
+ const rentAtYear=year=>annualRent*Math.pow(1+effectiveAnnualGrowth/100,year-1);
  const cashFlows=[-totalInvestment],schedule=[];
- for(let year=1;year<=model.holdYears;year++){
-   const revenue=annualRent*Math.pow(1+effectiveAnnualGrowth/100,year-1);
-   const noi=revenue-model.annualExpenses;
-   schedule.push({year,revenue,expenses:model.annualExpenses,noi,sale:0,cashFlow:noi});
+ for(let year=1;year<=nYears;year++){
+   const revenue=rentAtYear(year);
+   const propertyTax=propertyTaxForYear(year);
+   const expenses=annualExpenses+propertyTax;
+   const noi=revenue-expenses;
+   const taxableRentProfit=Math.max(0,noi-(year<=20?annualDepreciation:0));
+   const rentalProfitTax=taxableRentProfit*0.15;
+   const cashFlow=noi-rentalProfitTax;
+   schedule.push({year,revenue,expenses,otherExpenses:annualExpenses,propertyTax,noi,taxableRentProfit,rentalProfitTax,sale:0,cashFlow});
  }
- const nextYearNOI=annualRent*Math.pow(1+effectiveAnnualGrowth/100,model.holdYears)-model.annualExpenses;
- const salePrice=nextYearNOI>0?nextYearNOI/(model.exitCapRate/100):0;
- schedule[schedule.length-1].sale=salePrice;
- schedule[schedule.length-1].cashFlow+=salePrice;
- cashFlows.push(...schedule.map(y=>y.cashFlow));
+ const nextYearNOI=rentAtYear(nYears+1)-annualExpenses-propertyTaxForYear(nYears+1);
+ // Exit value at end of holding year: same-year annual contractual rent before corporate income tax, divided by exit rate.
+ // This is GROSS-rent capitalization, not conventional NOI-based capitalization.
+ const exitAnnualRent=rentAtYear(nYears);
+ const salePrice=exitAnnualRent>0?exitAnnualRent/(Number(m.exitCapRate)/100):0;
+ const remainingBasis=costAtTime(nYears);
+ const taxableSaleGain=Math.max(0,salePrice-remainingBasis);
+ const saleTax=taxableSaleGain*0.15;
+ const netSale=salePrice-saleTax;
+ const last=schedule[schedule.length-1];last.sale=salePrice;last.saleTax=saleTax;last.netSale=netSale;last.cashFlow+=netSale;
+ cashFlows.push(...schedule.map(row=>row.cashFlow));
  const irrPercent=investmentIRR(cashFlows);
- return {ok:true,totalInvestment,annualRent,annualNet,yieldPercent:annualNet/totalInvestment*100,paybackYears:annualNet>0?totalInvestment/annualNet:null,irrPercent,salePrice,nextYearNOI,cashFlows,schedule,holdYears:model.holdYears};
+ const netProfit=cashFlows.reduce((a,b)=>a+b,0);
+ const annualNet=schedule[0].noi-schedule[0].rentalProfitTax;
+ return {ok:true,totalInvestment,annualRent,annualNet,yieldPercent:totalInvestment>0?annualNet/totalInvestment*100:null,paybackYears:annualNet>0?totalInvestment/annualNet:null,irrPercent,salePrice,netSale,saleTax,taxableSaleGain,remainingBasis,saleTransactionCosts:0,nextYearNOI,cashFlows,schedule,holdYears:nYears,netProfit,propertyTaxRate:1.5,rentalProfitTaxRate:15,saleTaxRate:15,propertyTaxFloorUzsPerSqm:floorUzsPerSqm,propertyTaxFx:taxFx};
 }
+
 export function hasPublishedInvestment(property) {
   const m = property.investment;
   return property.published !== false && m?.published === true && validateInvestment(m).length === 0 &&
     typeof m.sourceNote === 'string' && m.sourceNote.trim().length > 0 &&
     ['assumption','asking','contract'].includes(m.rentBasis) && validDate(m.asOf);
 }
-export function isPublishedProject(property) {return property.showProjects===true && hasPublishedInvestment(property);}
+export function hasPublishedUnitInvestment(unit){return unit?.published!==false && unit?.investment?.published===true && validateInvestment(unit.investment).length===0 && !!unit.investment.sourceNote && !!unit.investment.asOf && ['assumption','asking','contract'].includes(unit.investment.rentBasis);}
+export function isPublishedProject(property) {return property.showProjects===true && (hasPublishedInvestment(property)||(Array.isArray(property.units)&&property.units.some(hasPublishedUnitInvestment)));}
 function validDate(s) {return typeof s==='string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s+'T00:00:00Z')) && new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;}
 export function validateProperty(p) {
   const errors=[];
@@ -88,6 +129,18 @@ export function validateProperty(p) {
       }
     }
   }
+  if(p.units!==undefined){
+    if(!Array.isArray(p.units)||p.units.length>200)errors.push('units');
+    else {const ids=new Set();for(const u of p.units){
+      if(!u||typeof u!=='object'||!(/^[a-z0-9][a-z0-9-]{0,70}$/.test(u.id||''))||ids.has(u.id)){errors.push('units.id');continue;}ids.add(u.id);
+      if(typeof u.block!=='string'||u.block.length>80||typeof u.floor!=='string'||u.floor.length>80||typeof u.number!=='string'||u.number.length>80)errors.push('units.label');
+      if(typeof u.area!=='number'||u.area<=0||!Number.isFinite(u.area)||typeof u.pricePerSqm!=='number'||u.pricePerSqm<=0||!Number.isFinite(u.pricePerSqm))errors.push('units.price');
+      if(u.published!==undefined&&typeof u.published!=='boolean')errors.push('units.published');
+      if(u.investment!=null){if(typeof u.investment!=='object'||Array.isArray(u.investment))errors.push('units.investment');else if(u.investment.published&&!hasPublishedUnitInvestment(u))errors.push('units.investment.incomplete');}
+      if(u.planImage!==undefined&&u.planImage!==''&&(typeof u.planImage!=='string'||!u.planImage.startsWith('/images/')))errors.push('units.planImage');
+      if(u.images!==undefined&&(!Array.isArray(u.images)||u.images.some(x=>!safeUrl(x))))errors.push('units.images');
+    }}
+  }
   if(p.investment!=null){
     const m=p.investment;
     if(typeof m!=='object'||Array.isArray(m))errors.push('investment');
@@ -105,7 +158,7 @@ export function validateProperty(p) {
       if(m.published&&(!isPublishedProject({...p,published:true,showProjects:true})))errors.push('investment.incomplete');
     }
   }
-  if(p.showProjects&&(!p.investment?.published||!isPublishedProject({...p,published:true})))errors.push('showProjects');
+  if(p.showProjects&&!isPublishedProject({...p,published:true}))errors.push('showProjects');
   return [...new Set(errors)];
 }
 export function propertyErrorMessage(errors) {

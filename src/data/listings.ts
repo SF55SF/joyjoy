@@ -8,6 +8,7 @@ export interface Listing {
  published?: boolean; showCatalog?: boolean; showProjects?: boolean; order?: number;
  translations?: Partial<Record<'uz'|'en',Partial<Pick<Listing,'title'|'city'|'district'|'address'|'description'|'features'>>>>;
  investment?: Record<string,any> | null;
+ units?: Array<Record<string,any>>;
 
  slug: string; title: string; city: string; district: string; address: string;
  type: PropertyType; status: PropertyStatus; area: number; priceUsd: number | null;

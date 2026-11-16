@@ -107,10 +107,10 @@
 .jj-ref-home .jj-field{min-height:60px;justify-content:center}
 .jj-ref-home .jj-field>span{color:#778198}
 .jj-ref-home .jj-more-filters{min-height:60px;padding-inline:22px}
-.jj-ref-home .jj-search-submit{border-radius:6px;background:#d90016;border-color:#d90016;min-width:160px}
-.jj-ref-home .jj-search-submit:hover{background:#b90013}
+
+
 @media(max-width:1100px){.jj-ref-header .jj-primary-nav{gap:18px}.jj-ref-home .jj-ref-hero{min-height:380px}.jj-ref-home .jj-ref-panels{height:265px}.jj-ref-home .jj-filter-form{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto}}
-@media(max-width:700px){.jj-ref-header{height:64px}.jj-ref-header .jj-sitebar-in{gap:12px}.jj-ref-header .jj-primary-nav{display:flex;gap:10px;margin-left:auto}.jj-ref-header .jj-primary-nav a{font-size:11px}.jj-ref-header .jj-saved-link span,.jj-ref-header .jj-saved-link small{display:none}.jj-ref-header .jj-sitebar-right{gap:8px}.jj-ref-header .jj-lang{padding-left:5px;gap:0}.jj-ref-header .jj-lang a{font-size:11px;min-width:24px}.jj-ref-home .jj-ref-hero{padding-top:44px;padding-bottom:55px;min-height:340px}.jj-ref-hero h1{font-size:clamp(36px,8.2vw,57px);letter-spacing:-.055em;margin-bottom:20px}.jj-ref-hero p{font-size:16px;margin-bottom:24px}.jj-ref-cta{font-size:16px;min-height:48px;padding:10px 18px}.jj-ref-home .jj-ref-panels{height:290px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:1fr 1fr}.jj-ref-panel,.jj-ref-panel:first-child,.jj-ref-panel:last-child{margin:0;clip-path:none}.jj-ref-panel:nth-child(odd){clip-path:polygon(0 0,100% 0,91% 100%,0 100%)}.jj-ref-panel:nth-child(even){clip-path:polygon(9% 0,100% 0,100% 100%,0 100%)}.jj-ref-panel strong,.jj-ref-panel:first-child strong{left:12px;bottom:12px;font-size:16px;padding:5px 9px}.jj-ref-home .jj-filter-shell{padding:14px 0 20px}.jj-ref-home .jj-filter-form{grid-template-columns:minmax(0,1fr) 108px;gap:8px}.jj-ref-home .jj-field-search{grid-column:1;grid-row:1}.jj-ref-home .jj-search-submit{grid-column:2;grid-row:1;min-width:0;min-height:52px}.jj-ref-home .jj-filter-form>.jj-field:not(.jj-field-search){grid-column:1;grid-row:2}.jj-ref-home .jj-more-filters{grid-column:2;grid-row:2;min-height:52px;padding:8px}.jj-ref-home .jj-field{min-height:52px}}
+@media(max-width:700px){.jj-ref-header{height:64px}.jj-ref-header .jj-sitebar-in{gap:12px}.jj-ref-header .jj-primary-nav{display:flex;gap:10px;margin-left:auto}.jj-ref-header .jj-primary-nav a{font-size:11px}.jj-ref-header .jj-saved-link span,.jj-ref-header .jj-saved-link small{display:none}.jj-ref-header .jj-sitebar-right{gap:8px}.jj-ref-header .jj-lang{padding-left:5px;gap:0}.jj-ref-header .jj-lang a{font-size:11px;min-width:24px}.jj-ref-home .jj-ref-hero{padding-top:44px;padding-bottom:55px;min-height:340px}.jj-ref-hero h1{font-size:clamp(36px,8.2vw,57px);letter-spacing:-.055em;margin-bottom:20px}.jj-ref-hero p{font-size:16px;margin-bottom:24px}.jj-ref-cta{font-size:16px;min-height:48px;padding:10px 18px}.jj-ref-home .jj-ref-panels{height:290px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:1fr 1fr}.jj-ref-panel,.jj-ref-panel:first-child,.jj-ref-panel:last-child{margin:0;clip-path:none}.jj-ref-panel:nth-child(odd){clip-path:polygon(0 0,100% 0,91% 100%,0 100%)}.jj-ref-panel:nth-child(even){clip-path:polygon(9% 0,100% 0,100% 100%,0 100%)}.jj-ref-panel strong,.jj-ref-panel:first-child strong{left:12px;bottom:12px;font-size:16px;padding:5px 9px}.jj-ref-home .jj-filter-shell{padding:14px 0 20px}.jj-ref-home .jj-filter-form{grid-template-columns:minmax(0,1fr) 108px;gap:8px}.jj-ref-home .jj-field-search{grid-column:1;grid-row:1}.jj-ref-home .jj-filter-form>.jj-field:not(.jj-field-search){grid-column:1;grid-row:2}.jj-ref-home .jj-more-filters{grid-column:2;grid-row:2;min-height:52px;padding:8px}.jj-ref-home .jj-field{min-height:52px}}
 @media(max-width:390px){.jj-ref-header .jj-primary-nav a:nth-child(2){display:none}.jj-ref-home .jj-ref-hero{min-height:320px}.jj-ref-hero h1{font-size:34px}}
 @media(prefers-reduced-motion:reduce){.jj-ref-panel img{transition:none}}
 
@@ -146,8 +146,8 @@
 .jj-ref-home .jj-field>span{color:var(--secondary);font-size:14px;line-height:20px}
 .jj-ref-home .jj-field input::placeholder{color:var(--secondary);opacity:1}
 .jj-ref-home .jj-field,.jj-ref-home .jj-more-filters{min-height:64px;border-color:#9aa69e}
-.jj-ref-home .jj-search-submit{min-height:64px;background:var(--accent);border-color:var(--accent);font-size:16px}
-.jj-ref-home .jj-search-submit:hover{background:#940010;border-color:#940010}
+
+
 .jj-ref-home .jj-ref-panels{height:224px}
 .jj-ref-home .jj-ref-panel::after{background:none}
 .jj-ref-home .jj-ref-panel img,.jj-ref-home .jj-ref-panel:hover img{transform:none;transition:none}
@@ -175,8 +175,8 @@
  .jj-ref-home .jj-ref-cta{display:none}
  .jj-ref-home .jj-filter-shell{padding:0 0 16px}
  .jj-ref-home .jj-filter-form{grid-template-columns:minmax(0,1fr) 108px}
- .jj-ref-home .jj-filter-form>.jj-field,.jj-ref-home .jj-filter-form>.jj-more-filters,.jj-ref-home .jj-filter-form>.jj-search-submit{min-height:64px}
- .jj-ref-home .jj-filter-form>.jj-search-submit{font-size:16px;padding-inline:12px}
+ .jj-ref-home .jj-filter-form>.jj-field,.jj-ref-home .jj-filter-form>.jj-more-filters{min-height:64px}
+ 
  .jj-ref-home .jj-ref-panels{height:176px}
  .jj-ref-home .jj-ref-panel strong,.jj-ref-home .jj-ref-panel:first-child strong{left:12px;bottom:8px;font-size:15px;line-height:20px;padding:4px 8px}
  .jj-category-empty{font-size:14px;line-height:20px;padding:12px 12px 36px}
@@ -198,3 +198,108 @@
 .jj-input-icon-no-search input{padding-left:16px}
 @media(max-width:700px){.jj-ref-home .jj-ref-actions{margin-top:16px;gap:9px}.jj-ref-home .jj-ref-actions .jj-ref-cta{display:inline-flex;min-height:46px;font-size:14px;padding:10px 13px;gap:8px}.jj-ref-home .jj-ref-actions .jj-ref-cta span{font-size:19px}}
 @media(max-width:390px){.jj-ref-home .jj-ref-actions{flex-direction:column;align-items:stretch}.jj-ref-home .jj-ref-actions .jj-ref-cta{width:100%}}
+
+/* JOY2_SEARCH_NO_SUBMIT_V1 */
+.jj-ref-home .jj-filter-form{grid-template-columns:minmax(0,1.5fr) minmax(160px,.9fr) auto}
+@media(max-width:1100px){.jj-ref-home .jj-filter-form{grid-template-columns:minmax(0,1fr) minmax(130px,.8fr) auto}}
+@media(max-width:700px){.jj-ref-home .jj-filter-form{grid-template-columns:minmax(0,1fr) auto}.jj-ref-home .jj-field-search{grid-column:1;grid-row:1}.jj-ref-home .jj-filter-form>.jj-field:not(.jj-field-search){grid-column:1;grid-row:2}.jj-ref-home .jj-more-filters{grid-column:2;grid-row:1 / span 2;align-self:stretch}}
+/* JOY2_PROJECT_HOME_LINK_V1 */
+.jj-project-back{margin:0 0 20px}
+.jj-project-back a{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid #dfdfdf;border-radius:8px;background:#fff;color:#242424;font-size:14px;font-weight:600;line-height:20px;text-decoration:none;transition:border-color .15s ease,background .15s ease,color .15s ease}
+.jj-project-back a svg{width:19px;height:19px;flex:none}
+.jj-project-back a:hover{border-color:#D90016;background:#fff5f6;color:#D90016;text-decoration:none}
+.jj-project-back a:focus-visible{outline:3px solid #D90016;outline-offset:3px}
+
+/* JOY2_DAHO_MULTIUNIT_V1 */
+.jj-units{padding:28px 0;border-top:1px solid #e5e5e5}.jj-units-heading{display:flex;align-items:center;gap:14px}.jj-units-heading h2{margin:0}.jj-units-heading span{background:#f4f4f4;color:#c60018;border-radius:999px;padding:5px 11px;font-weight:600}.jj-units-intro{margin:12px 0 18px;color:#707070}
+.jj-units-list{display:grid;gap:8px}.jj-unit-option{width:100%;display:grid;grid-template-columns:1fr 1fr 1fr auto;align-items:center;text-align:left;gap:12px;padding:16px 18px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#171717;transition:border-color .15s,background .15s}.jj-unit-option:hover,.jj-unit-option.is-active{border-color:#d90016;background:#fffafa}.jj-unit-option span{display:grid;gap:5px}.jj-unit-option b{font-weight:600;font-size:15px}.jj-unit-option small{color:#66706d;font-size:12px}.jj-unit-option em{font-size:11px;font-weight:700;font-style:normal;color:#d90016;border:1px solid #d90016;border-radius:5px;padding:4px 7px}
+.jj-unit-details{padding:20px;margin-top:16px;border:1px solid #ddd;border-radius:12px}.jj-unit-details[hidden]{display:none!important}.jj-unit-summary{display:flex;justify-content:space-between;gap:20px;align-items:center}.jj-unit-summary p{color:#66706d;margin:0 0 5px}.jj-unit-summary h3{font-size:32px;margin:0 0 8px}.jj-unit-summary small{font-size:12px;color:#66706d}.jj-unit-summary>div:last-child{text-align:right;display:grid;gap:7px}.jj-unit-plan{margin:22px 0}.jj-unit-plan figcaption{font-weight:600;margin-bottom:12px}.jj-unit-plan img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid #e7e7e7}.jj-unit-assumptions{padding:10px 12px;font-size:13px;color:#555;background:#f8f8f8}.jj-unit-admin-card{border:1px solid #ddd;border-radius:10px;padding:18px;margin:16px 0;background:#fff}.jj-unit-admin-card h3{margin:0 0 12px}.jj-unit-admin-card>label{display:block;margin:14px 0}.jj-unit-admin-model{margin-top:14px;border-top:1px solid #ddd;padding-top:12px}.jj-unit-admin-model h4{margin:10px 0}.jj-unit-admin-model>label{display:grid;gap:8px;margin:14px 0}.jj-unit-admin-model textarea{width:100%}
+@media(max-width:650px){.jj-unit-option{grid-template-columns:1fr 1fr;gap:12px;padding:13px}.jj-unit-price{text-align:right}.jj-unit-option em{justify-self:start}.jj-unit-summary h3{font-size:24px}.jj-unit-details{padding:12px}.jj-unit-summary{align-items:flex-start}.jj-unit-summary>div:last-child{font-size:13px}}
+
+/* JOY2 INVESTMENT ANALYSIS RIBBON AND DISCLOSURE */
+.jj-property-card-image{position:relative}.jj-invest-ribbon{position:absolute;z-index:3;top:14px;left:-6px;padding:10px 14px 10px 17px;background:#d90016;color:#fff;font-size:12px;font-weight:700;line-height:1.1;letter-spacing:.02em;box-shadow:0 4px 12px #0002;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%)}.jj-unit-invest-disclosure{margin-top:22px}.jj-unit-calc-trigger{border:1px solid #d90016;color:#d90016;background:#fff;border-radius:8px;padding:12px 18px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:20px}.jj-unit-calc-trigger:hover,.jj-unit-calc-trigger[aria-expanded=true]{background:#d90016;color:#fff}.jj-unit-calc-trigger[aria-expanded=true] span{transform:rotate(180deg)}
+
+
+/* JOY2_ROW_FINANCE_TOGGLE_V2 - aligned unit table, flag and annual cash-flow cards */
+.jj-units .jj-unit-table-wrap{overflow-x:auto;width:100%}
+.jj-units .jj-unit-table-heading,.jj-units .jj-unit-data-row{display:grid!important;grid-template-columns:minmax(155px,1.35fr) minmax(80px,.68fr) minmax(95px,.72fr) minmax(145px,1.1fr) minmax(143px,1fr)!important;align-items:center!important;gap:12px!important;min-width:690px;box-sizing:border-box}
+.jj-units .jj-unit-table-heading{padding:12px 16px;color:#69736d;font-size:12px;background:#f6f7f6;border-bottom:1px solid #dde3df;font-weight:650}
+.jj-units .jj-unit-data-row{width:100%!important;min-height:80px!important;padding:13px 16px!important;text-align:left;border-bottom:1px solid #e7ebe7;background:white;cursor:pointer}
+.jj-units .jj-unit-data-row:hover{background:#faf8f8}.jj-units .jj-unit-data-row.is-active{background:#fff8f8;box-shadow:inset 3px 0 0 #d90016}
+.jj-units .jj-unit-data-row>span{display:block!important;min-width:0;margin:0!important}.jj-units .jj-unit-data-row b{display:block;font-size:14px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}.jj-units .jj-unit-data-row small{display:block;font-size:12px;color:#748078;margin-top:5px}
+.jj-units .jj-unit-col-price b{font-size:15px}.jj-units .jj-unit-col-flag{min-height:28px;display:flex!important;align-items:center}.jj-unit-finance-flag{display:inline-block;padding:7px 10px;border-radius:4px;background:#d90016;color:white;font-size:11px;font-weight:700;line-height:1.2;white-space:nowrap}
+.jj-unit-finance-drawer{margin-top:24px;padding:22px;border:1px solid #e0e4e0;border-radius:13px;background:#fff;box-shadow:0 8px 30px #1c2b2310}
+.jj-rinv-header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.jj-rinv-header h3{margin:12px 0 0;font-size:22px;font-weight:650}.jj-rinv-close{background:#f3f4f3;color:#222;border:0;border-radius:8px;font-size:25px;line-height:1;width:36px;height:36px;cursor:pointer}
+.jj-rinv-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0 30px}.jj-rinv-kpis>div{padding:15px;border:1px solid #e5e8e5;border-radius:10px;background:#f7f8f7;min-width:0}.jj-rinv-kpis small{display:block;font-size:12px;color:#6a786e;margin-bottom:9px}.jj-rinv-kpis strong{display:block;font-size:clamp(17px,1.8vw,23px);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.jj-negative{color:#d90016}.jj-positive{color:#188047}.jj-unit-finance-drawer h4{margin:24px 0 12px;font-size:16px;font-weight:700}
+.jj-rinv-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0}.jj-rinv-inputs>div{padding:12px;background:#f8f9f8;border-radius:7px;min-width:0}.jj-rinv-inputs dt{font-size:12px;color:#6f7872}.jj-rinv-inputs dd{margin:6px 0 0;font-weight:650;font-size:14px;overflow-wrap:anywhere}
+.jj-rinv-flow-strip{display:flex;gap:10px;overflow-x:auto;padding:4px 0 12px;scroll-snap-type:x proximity}.jj-rinv-year{flex:0 0 133px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;border:1px solid #dfe6df;border-radius:11px;background:#f9fbf9;padding:13px;scroll-snap-align:start;font-variant-numeric:tabular-nums}.jj-rinv-year.is-negative{background:#fff7f7;border-color:#f1c7cc;color:#b80018}.jj-rinv-year.is-positive{background:#f3faf5;border-color:#cbe6d2;color:#167b43}.jj-rinv-year-label{font-size:11px;font-weight:700;color:#5c6860}.jj-rinv-year-mark{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;font-size:19px;font-weight:750;color:white;background:#198346}.jj-rinv-year.is-negative .jj-rinv-year-mark{background:#d90016}.jj-rinv-year strong{font-size:16px;letter-spacing:-.02em}.jj-rinv-year small{font-size:11px;color:#68746b}.jj-rinv-footnote{font-size:12px;line-height:1.5;color:#6b776e;margin:12px 0 0}
+@media(max-width:850px){.jj-rinv-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.jj-rinv-inputs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.jj-unit-finance-drawer{padding:15px}.jj-rinv-kpis{gap:8px}.jj-rinv-kpis>div{padding:12px}.jj-rinv-inputs{gap:7px}.jj-rinv-flow-strip{margin-inline:-2px}}
+
+/* JOY2_INLINE_ROW_INVESTMENT_V3 - inline disclosure, 8 columns without horizontal scroll */
+.jj-units .jj-units-list{display:block!important}
+.jj-units .jj-units-list>.jj-unit-details{width:100%;box-sizing:border-box;margin:0 0 10px;padding:10px 12px 18px;border:1px solid #e3e7e3;background:#fbfcfb}
+.jj-units .jj-unit-details[hidden],.jj-units .jj-unit-finance-drawer[hidden]{display:none!important}
+.jj-units .jj-unit-finance-drawer{margin-top:8px}
+.jj-units .jj-rinv-flow-strip{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px!important;width:100%;overflow:visible!important;padding:3px 0!important;scroll-snap-type:none!important}
+.jj-units .jj-rinv-year{min-width:0!important;max-width:none!important;flex:none!important;align-items:center!important;padding:9px 3px!important;gap:7px!important;text-align:center}
+.jj-units .jj-rinv-year-label{font-size:10px!important;white-space:normal;line-height:1.2}
+.jj-units .jj-rinv-year-mark{height:22px;width:22px;font-size:14px}
+.jj-units .jj-rinv-year strong{font-size:clamp(9px,.88vw,13px)!important;white-space:normal!important;overflow-wrap:anywhere;line-height:1.28}
+.jj-units .jj-rinv-year small{font-size:10px;overflow-wrap:anywhere}
+.jj-rinv-tax-info{color:#575e58;font-size:13px}.jj-rinv-tax-warning{color:#995f1d;font-size:12px}
+@media(max-width:680px){.jj-units .jj-rinv-flow-strip{gap:2px!important}.jj-units .jj-rinv-year{padding:5px 1px!important;border-radius:5px}.jj-units .jj-rinv-year strong{font-size:9px!important}.jj-units .jj-rinv-year small{font-size:8px}.jj-units .jj-rinv-year-mark{width:17px;height:17px;font-size:12px}}
+
+/* JOY2_TAX_REALISM_CLEAN_UI_V7 */
+.jj-rinv-tax-assumptions{font-size:13px;line-height:1.5;color:#59615b;margin:18px 0 4px}
+.jj-rinv-disclaimer{font-size:12px;line-height:1.5;color:#7b837d;margin:0 0 4px}
+
+/* JOY2_CASHFLOWS_FILTERS_V8: 8 compact yearly cash-flow cells, no decorative +/- icon */
+.jj-units .jj-rinv-flow-strip{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:6px!important;width:100%!important;overflow:visible!important;padding:3px 0 4px!important;scroll-snap-type:none!important}
+.jj-units .jj-rinv-year{box-sizing:border-box;min-width:0!important;max-width:none!important;width:100%!important;padding:10px 5px!important;gap:3px!important;align-items:center!important;justify-content:center;text-align:center;box-shadow:none!important;flex:none!important}
+.jj-units .jj-rinv-year-mark{display:none!important}
+.jj-units .jj-rinv-year-label{font-size:11px!important;line-height:1.25!important;white-space:normal}
+.jj-units .jj-rinv-year strong{display:block;font-size:clamp(13px,1.15vw,17px)!important;line-height:1.15!important;letter-spacing:-.025em;white-space:nowrap!important;overflow-wrap:normal!important;font-variant-numeric:tabular-nums}
+.jj-units .jj-rinv-thousands{font-size:11px;line-height:1.2;color:inherit;white-space:nowrap;opacity:.88}
+.jj-units .jj-rinv-year small{display:block;font-size:10px!important;line-height:1.25!important;margin-top:3px;overflow-wrap:normal}
+@media(max-width:1050px){.jj-units .jj-rinv-flow-strip{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:480px){.jj-units .jj-rinv-flow-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}.jj-units .jj-rinv-year{padding:10px 6px!important}.jj-units .jj-rinv-year strong{font-size:15px!important}}
+/* Jump to filters from All properties; the inventory starts immediately after */
+#catalog.jj-filter-shell{scroll-margin-top:90px}
+#catalog-results.jj-listing-section{scroll-margin-top:90px}
+
+/* JOY2_PUBLIC_BRANDING_SPACING_V10: breathing room between property category photography and filters. */
+.jj-ref-home .jj-filter-shell{margin-top:36px!important;}
+@media(max-width:700px){.jj-ref-home .jj-filter-shell{margin-top:24px!important;}}
+
+/* JOY2_BUSINESS_PARK_TENANCY_V18_LITE: public property badges, leased project summary. */
+.jj-property-card-image{position:relative}.jj-tenancy-ribbon{position:absolute;z-index:3;bottom:12px;left:12px;padding:6px 10px;color:#fff;background:#166c4a;font-size:12px;line-height:1.25;border-radius:4px;box-shadow:0 2px 8px #0002;font-weight:650}.jj-tenancy-ribbon.is-preliminary{background:#5c6270}.jj-unit-tenancy-tag{display:inline-flex;margin:3px 0 0 5px;background:#eff8f2;border:1px solid #bfdfca;color:#126441;border-radius:5px;padding:3px 6px;font-size:11px;line-height:1.2}.jj-bizpark-snapshot{margin:22px 0 26px;padding:20px;border:1px solid #e5e8e5;border-radius:14px;background:#fff}.jj-bizpark-snapshot-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.jj-bizpark-snapshot-grid>div{padding:15px 12px;background:#f7f8f7;border-radius:9px;display:grid;gap:7px;min-width:0}.jj-bizpark-snapshot-grid small{color:#68716d;font-size:12px}.jj-bizpark-snapshot-grid strong{font-weight:680;font-size:clamp(16px,1.6vw,22px);overflow-wrap:anywhere}.jj-bizpark-snapshot>p{color:#69726e;font-size:12px;margin:12px 0 0}@media(max-width:680px){.jj-bizpark-snapshot{padding:12px}.jj-bizpark-snapshot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.jj-bizpark-snapshot-grid>div{padding:10px 8px}}
+
+/* JOY2_BP_OFFER_V29 */
+.jj-bp-offer-badge{display:inline-block;background:#c91026;color:#fff;font:700 11px/1.35 system-ui,sans-serif;border-radius:5px;padding:5px 9px;max-width:100%}.jj-bp-offer-badge-card{position:absolute;left:12px;top:12px;z-index:4;box-shadow:0 2px 8px #0002}.jj-bp-offer-inline{margin:4px 8px;vertical-align:middle}.jj-bp-commercial{background:#fff;border:1px solid #e1e4e8;border-radius:10px;padding:16px;margin:10px 0}.jj-bp-commercial summary{cursor:pointer;font-weight:650}.jj-bp-commercial-body{padding-top:12px;display:grid;gap:14px}.jj-bp-commercial-body>section{margin:0!important}.jj-bp-commercial-body ul{padding-left:18px}.jj-bp-extra-row td{padding:0 12px 14px!important;border:0!important}.jj-bp-extra-row .jj-bp-commercial{margin:0}.jj-bp-openable{cursor:pointer}.jj-bp-openable:focus-visible{outline:2px solid #c91026;outline-offset:-2px}.jj-bp-commercial .jj-bizpark-snapshot{margin:0}.jj-bp-commercial-body .jj-bizpark-snapshot-grid{max-width:100%}@media(max-width:700px){.jj-bp-commercial{padding:12px}.jj-bp-offer-badge{font-size:10px}}
+
+/* JOY2_COMMERCIAL_UNIT_V31: multi-line commercial conditions displayed inside the DAHO drawer. */
+.jj-units .jj-unit-note{white-space:pre-line;line-height:1.65;max-width:100%;overflow-wrap:anywhere}
+
+/* JOY2_BP_ONE_UNIT_AS_DAHO_V32: keep commercial details within the standard DAHO drawer. */
+.jj-unit-note{white-space:pre-line;line-height:1.65;overflow-wrap:anywhere}
+
+/* JOY2_HIDE_UNIT_TENANT_LABEL_V36: tenancy is in the commercial terms, not the unit row label. */
+.jj-unit-tenancy-tag{display:none!important}
+
+/* JOY2_PROJECT_HEADER_LINKS_V38: separated, clickable RU/UZ/EN navigation */
+.jj-primary-nav{display:flex!important;align-items:center!important;gap:clamp(18px,2.5vw,36px)!important;flex-wrap:wrap!important;min-width:0!important}
+.jj-primary-nav>a{display:inline-flex!important;align-items:center;flex:0 0 auto;white-space:normal;line-height:1.35;position:relative;z-index:2}
+@media(max-width:700px){.jj-primary-nav{gap:12px 20px!important}.jj-primary-nav>a{font-size:13px}}
+
+/* JOY2_HOME_NAV_UNDERLINE_V40: underline both sections on the main page */
+.jj-ref-header .jj-primary-nav>a,
+.jj-ref-home .jj-primary-nav>a{
+  border-bottom:2px solid #d90016!important;
+  text-decoration:none;
+}
+.jj-ref-header .jj-primary-nav>a:hover,
+.jj-ref-header .jj-primary-nav>a:focus-visible{
+  color:#d90016;
+}
