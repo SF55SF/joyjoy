@@ -4,7 +4,7 @@ import {loadFx,lastFx} from './joyjoy-fx.js';
 const root=document.querySelector('[data-joyjoy-admin]');
 if(root){
  const form=root.querySelector('form'),status=root.querySelector('[data-save-status]'),list=root.querySelector('[data-property-list]'),listStatus=root.querySelector('[data-list-status]'),save=form.querySelector('[data-save-property]');
- let current=null,sha=null,isNew=false,dirty=false,busy=false,loadId=0;
+ let current=null,sha=null,isNew=false,dirty=false,busy=false,loadId=0,fxVersion=0,appliedFxDate;
  const field=k=>form.elements.namedItem(k);
  const nullable=k=>field(k).value.trim()===''?null:field(k).valueAsNumber;
  const lines=k=>field(k).value.split('\n').map(x=>x.trim()).filter(Boolean);
@@ -23,11 +23,12 @@ if(root){
   for(const key of investmentFields)p.investment[key]=nullable(key);
   for(const key of ['rentBasis','asOf','sourceNote','rentCurrency'])p.investment[key]=field(key).value.trim();
   for(const key of ['usdUzs','uzsDevaluation'])p.investment[key]=nullable(key);
+  if(appliedFxDate!==undefined)p.investment.fxRateDate=appliedFxDate;
   return p;
  }
  function preview(){const r=calculateInvestment(read().investment);root.querySelector('[data-admin-model-status]').textContent=r.ok?'Предпросмотр по введённым параметрам':'Для расчёта заполните все числовые параметры. Цена и площадь — больше нуля; заполняемость 0–100%.';for(const el of root.querySelectorAll('[data-admin-result]')){const k=el.dataset.adminResult;el.textContent=!r.ok?'—':k==='paybackYears'?(r[k]===null?'Не окупается':r[k].toLocaleString('ru-RU',{maximumFractionDigits:1})+' лет'):['yieldPercent','irrPercent'].includes(k)?(r[k]===null?'—':r[k].toLocaleString('ru-RU',{maximumFractionDigits:2})+'%'):r[k].toLocaleString('ru-RU',{style:'currency',currency:'USD',maximumFractionDigits:0});}}
  function render(p,version,creating=false){
-  form.reset();current=p;sha=version;isNew=creating;
+  form.reset();current=p;sha=version;isNew=creating;++fxVersion;appliedFxDate=p.investment?.fxRateDate;root.querySelector('[data-admin-fx-refresh]').disabled=false;
   for(const key of ['slug','title','city','district','address','description','type','status','sourceUrl','area','priceUsd','lat','lng'])field(key).value=p[key]??'';
   field('slug').readOnly=!creating;for(const key of ['published','showCatalog'])field(key).checked=p[key]!==false;field('showProjects').checked=p.showProjects===true;
   for(const k of ['images','features'])field(k).value=(p[k]||[]).join('\n');
