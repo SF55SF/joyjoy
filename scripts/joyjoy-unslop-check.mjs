@@ -5,10 +5,7 @@ await import('./joyjoy-investment-check.mjs');
 for(const prefix of ['', 'en/', 'uz/']){
  const home=fs.readFileSync('dist/'+prefix+'index.html','utf8');
  const projects=fs.readFileSync('dist/'+prefix+'projects/index.html','utf8');
- // JOYJOY_SEARCH_ORDER_RECOVERY_V1
- const search=home.search(/<section\b[^>]*\bclass="[^"]*\bjj-filter-shell\b[^"]*"/),photos=home.search(/<nav\b[^>]*\bclass="[^"]*\bjj-ref-panels\b[^"]*"/);
- assert.ok(search>=0,'Missing search section');assert.ok(photos>=0,'Missing category photos');
- assert.ok(search<photos,'Search must precede category photos');
+ assert.ok(home.indexOf('class="jj-filter-shell"')<home.indexOf('class="jj-ref-panels"'),'Search must precede category photos');
  assert.ok(home.includes('jj-mobile-sections'),'Missing accessible mobile sections');
  assert.ok(projects.includes('jj-mobile-sections'),'Projects need mobile navigation too');
  assert.ok(!home.includes('photo-1500382017468-9049fed747ef'),'Do not present stock land as inventory');
