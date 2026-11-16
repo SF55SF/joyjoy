@@ -1,3 +1,4 @@
+// JOYJOY_ADMIN_EXPLICIT_FX_V1
 // JOYJOY_ADMIN_INDEPENDENT_PUBLICATION_V1
 import {calculateInvestment,investmentFields,investmentDefaults,validateProperty,propertyErrorMessage} from './joyjoy-investment-model.js';
 import {loadFx,lastFx} from './joyjoy-fx.js';
@@ -35,7 +36,7 @@ if(root){
   for(const lang of ['uz','en'])for(const k of ['title','city','district','address','description','features']){const value=p.translations?.[lang]?.[k];field(lang+'_'+k).value=Array.isArray(value)?value.join('\n'):value??'';}
   const m=p.investment||{};for(const k of investmentFields)field(k).value=m[k]??investmentDefaults[k]??'';
   for(const k of ['rentBasis','asOf','sourceNote','rentCurrency'])field(k).value=m[k]??(k==='rentCurrency'?'USD':'');
-  for(const k of ['usdUzs','uzsDevaluation'])field(k).value=m[k]??'';field('modelPublished').checked=m.published===true;showInvestment();root.querySelector('[data-investment-disclosure]').open=false;const fx=lastFx();if(fx){field('usdUzs').value=fx.usdUzs;field('uzsDevaluation').value=fx.annualDevaluation;}
+  for(const k of ['usdUzs','uzsDevaluation'])field(k).value=m[k]??'';field('modelPublished').checked=m.published===true;showInvestment();root.querySelector('[data-investment-disclosure]').open=false;applyFx(lastFx());
   root.querySelector('[data-editor-title]').textContent=p.title||'Новый объект';form.hidden=false;dirty=false;preview();
  }
  function discard(){return !dirty||window.confirm('Есть несохранённые правки. Перейти без сохранения?');}
@@ -46,9 +47,16 @@ if(root){
  root.querySelector('[data-new-property]').addEventListener('click',()=>{if(busy||!discard())return;++loadId;render({slug:'',title:'',city:'',district:'',address:'',description:'',area:null,priceUsd:null,type:'office',status:null,images:[],features:[],published:false,showCatalog:true,showProjects:false,order:Date.now()},null,true);setStatus('Новый объект. Заполните данные и переводы. Публикация по умолчанию отключена.');dirty=true;field('slug').focus();});
  root.querySelector('[data-admin-logout]').addEventListener('click',async()=>{if(busy||!discard())return;try{await api('/api/admin/logout',{method:'POST'});dirty=false;location.assign('/admin-login/');}catch(e){setStatus(e.message,true);}});
  window.addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});
- const applyFx=d=>{if(!d)return;for(const key of ['usdUzs','uzsDevaluation'])field(key).value=d[key];root.querySelector('[data-fx-status]').textContent='ЦБ Узбекистана: 1 USD = '+d.usdUzs.toLocaleString('ru-RU',{maximumFractionDigits:2})+' UZS · девальвация '+d.annualDevaluation.toFixed(2)+'% в год · '+(d.stale?'последние сохранённые данные':'актуальные данные')+' · '+(d.rateDate||'');preview();};
- const saved=lastFx();
- const initialFx=saved?{...saved,uzsDevaluation:saved.annualDevaluation}:null;
+ const fxButton=root.querySelector('[data-admin-fx-refresh]'),fxStatus=root.querySelector('[data-fx-status]');fxButton.hidden=false;
+ const applyFx=(d,replace=false)=>{
+  if(replace&&d){field('usdUzs').value=d.usdUzs;field('uzsDevaluation').value=d.annualDevaluation;appliedFxDate=d.rateDate||null;dirty=true;preview();}
+  fxStatus.textContent=(replace?'Применено. Сохраните модель. ':'Модель без изменений. ')+(d?'ЦБ: '+d.usdUzs+' UZS/USD · '+d.annualDevaluation.toFixed(2)+'% в год · '+(d.unavailable?'нет связи; кэш':d.stale?'кэш':'получено')+' · '+(d.rateDate||'дата не указана'):'ЦБ недоступен. Повторите запрос.')+' · дата модели: '+(appliedFxDate||'не указана');
+ };
+ fxButton.addEventListener('click',async()=>{
+  if(busy||!current)return;const version=++fxVersion;fxButton.disabled=true;fxStatus.textContent='Запрашиваем курс ЦБ…';
+  try{const data=await loadFx({force:true});if(version===fxVersion)applyFx(data,Boolean(data&&!data.unavailable));}
+  catch{if(version===fxVersion)applyFx(null);}finally{if(version===fxVersion)fxButton.disabled=false;}
+ });
  const slugs=await loadList();if(slugs.length)await load(slugs[0]);
- const latest=await loadFx();if(latest){const fx={...latest,uzsDevaluation:latest.annualDevaluation};applyFx(fx);}else if(initialFx)applyFx(initialFx);else root.querySelector('[data-fx-status]').textContent='ЦБ недоступен. Последнего курса нет: для модели с арендой в UZS необходим официальный курс.';
+ const version=fxVersion;loadFx().then(data=>{if(version===fxVersion)applyFx(data);}).catch(()=>{if(version===fxVersion)applyFx(null);});
 }
