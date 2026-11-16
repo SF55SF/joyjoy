@@ -236,3 +236,8 @@
  .jj-catalog-tools{grid-row:3}
 }
 /* JOYJOY_TEAM_SERIES_1_V1_END */
+
+/* JOYJOY_CALCULATOR_ERRORS_V1 */
+.jj-investment-inputs .jj-field-error{display:block;color:#8d1124;font-size:14px;line-height:20px;font-weight:400;overflow-wrap:anywhere}
+.jj-investment-inputs [aria-invalid=true]{border-color:#8d1124}
+
