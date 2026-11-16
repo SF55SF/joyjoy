@@ -34,6 +34,9 @@ const image=Astro.props.image;
 {canonical&&<><link rel="canonical" href={canonical}/><meta property="og:url" content={canonical}/></>}
 {image&&<meta property="og:image" content={image}/>}
 {origin&&<><link rel="alternate" hreflang="ru" href={new URL(Astro.url.pathname.replace(/^\/(uz|en)\//,'/'),origin).toString()}/><link rel="alternate" hreflang="uz" href={new URL('/uz/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/><link rel="alternate" hreflang="en" href={new URL('/en/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/></>}
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Joy²" />
 </head>
-<body><slot /></body>
+<body><slot /><script src="/js/joyjoy-money-display.js" defer></script>
+</body>
 </html>
