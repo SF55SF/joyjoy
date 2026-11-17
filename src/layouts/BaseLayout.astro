@@ -19,11 +19,11 @@ const image=Astro.props.image;
 <meta name="description" content={description} />
 <meta name="robots" content={Astro.props.robots??(origin?'index,follow':'noindex,follow')} />
 <meta name="theme-color" content="#ffffff" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="alternate icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=joy2-icon-20261117" />
+<link rel="alternate icon" href="/favicon.ico?v=joy2-icon-20261117" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=joy2-icon-20261117" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=joy2-icon-20261117" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=joy2-icon-20261117" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -34,7 +34,7 @@ const image=Astro.props.image;
 {canonical&&<><link rel="canonical" href={canonical}/><meta property="og:url" content={canonical}/></>}
 {image&&<meta property="og:image" content={image}/>}
 {origin&&<><link rel="alternate" hreflang="ru" href={new URL(Astro.url.pathname.replace(/^\/(uz|en)\//,'/'),origin).toString()}/><link rel="alternate" hreflang="uz" href={new URL('/uz/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/><link rel="alternate" hreflang="en" href={new URL('/en/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/></>}
-<link rel="manifest" href="/site.webmanifest" />
+<link rel="manifest" href="/site.webmanifest?v=joy2-icon-20261117" />
 <meta name="apple-mobile-web-app-title" content="Joy²" />
 </head>
 <body><slot /><script src="/js/joyjoy-money-display.js" defer></script>

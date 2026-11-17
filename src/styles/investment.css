@@ -303,3 +303,38 @@
 .jj-ref-header .jj-primary-nav>a:focus-visible{
   color:#d90016;
 }
+
+/* JOY2_HEADER_PROJECT_FIX_V41: precise home/project header and navigation. */
+/* Главная: левый край логотипа совпадает с левым краем большого заголовка. */
+.jj-ref-header .jj-sitebar-in{width:calc(100% - 40px)!important;max-width:none!important;margin-inline:auto!important}
+/* Убираем двойное подчёркивание: остаётся только одна нижняя граница. */
+.jj-sitebar .jj-primary-nav>a,.jj-ref-header .jj-primary-nav>a{
+  text-decoration:none!important;text-underline-offset:initial!important;
+  border-bottom:2px solid transparent!important;
+}
+/* На главной оба раздела подсвечены. */
+.jj-ref-header .jj-primary-nav>a{border-bottom-color:#d90016!important}
+/* На странице проектов подсвечены только «Инвестиционные проекты». */
+.jj-project-header .jj-primary-nav>a[aria-current="page"]{border-bottom-color:#d90016!important}
+/* На страницах проектов логотип и заголовок используют одинаковую ширину контейнера. */
+.jj-project-header .jj-sitebar-in{width:min(1440px,calc(100% - 96px))!important;margin-inline:auto!important}
+@media(max-width:1100px){.jj-project-header .jj-sitebar-in{width:calc(100% - 48px)!important}}
+@media(max-width:700px){.jj-project-header .jj-sitebar-in{width:calc(100% - 32px)!important}.jj-ref-header .jj-sitebar-in{width:calc(100% - 32px)!important}}
+/* Удалён только повторный заголовок; фильтры и инвестиционные расчёты сохранены. */
+
+/* JOY2_INVESTMENT_FLOW_YEAR0_UNIFY_V1 */
+@media(min-width:1051px){.jj-units .jj-rinv-flow-strip{grid-template-columns:repeat(9,minmax(0,1fr))!important}}
+
+/* JOY2_PROJECT_NAV_MATCH_HOME_V41 */
+/* Same single red underline on both pages; red hover/focus */
+.jj-sitebar .jj-primary-nav > a {
+  border-bottom:2px solid #d90016 !important;
+  text-decoration:none !important;
+  text-underline-offset:initial !important;
+  transition:color .16s ease !important;
+}
+.jj-sitebar .jj-primary-nav > a:hover,
+.jj-sitebar .jj-primary-nav > a:focus-visible {
+  color:#d90016 !important;
+  text-decoration:none !important;
+}

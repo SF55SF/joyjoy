@@ -13,7 +13,7 @@ const money=n=>Number.isFinite(Number(n))?'$'+Math.round(Number(n)).toLocaleStri
 const signedMoney=n=>Number.isFinite(n)?(n<0?'(':'')+'$'+Math.abs(Math.round(n)).toLocaleString('en-US')+(n<0?')':''):'—';
 const num=n=>Number.isFinite(Number(n))?Number(n).toLocaleString('en-US',{maximumFractionDigits:2}):'—';
 const pct=n=>Number.isFinite(n)?n.toLocaleString('en-US',{maximumFractionDigits:2})+'%':'—';
-const getModel=u=>{const m=u.investment;if(!m||m.published!==true)return null;const r=calculateInvestment({...m,propertyTaxArea:Number(u.area)>0?Number(u.area):m.lettableArea,taxCity:listing.city});if(!r.ok)return null;return {m,r,total:r.netProfit,flow:r.schedule.map((y,i)=>({...y,cashFlow:y.cashFlow-(i===0?r.totalInvestment:0)}))};};
+const getModel=u=>{const m=u.investment;if(!m||m.published!==true)return null;const r=calculateInvestment({...m,propertyTaxArea:Number(u.area)>0?Number(u.area):m.lettableArea,taxCity:listing.city});if(!r.ok)return null;return {m,r,total:r.netProfit,flow:[{year:0,cashFlow:r.cashFlows[0]},...r.schedule.map(y=>({...y}))]};};
 // The model only exposes non-zero optional costs and mezzanine data.
 const assumptions=x=>{
  const m=x.m, rows=[];
@@ -72,7 +72,7 @@ const compact=value=>{
          
          <strong>{compact(y.cashFlow)}</strong>
          <span class="jj-rinv-thousands">{lang==='ru'?'тыс. $':lang==='uz'?'ming $':'k $'}</span>
-         <small>{idx===0?c.outflow:idx===x.flow.length-1?'Cash Flow + '+c.sale:'Cash Flow'}</small>
+         <small>{y.year===0?c.outflow:idx===x.flow.length-1?'Cash Flow + '+c.sale:'Cash Flow'}</small>
        </div>)}
      </div>
      <p class="jj-rinv-tax-assumptions">{lang==='ru'?'В расчёте использованы налоговые допущения: налог на прибыль — 15%, налог на имущество — 1,5%.':lang==='uz'?'Hisobda quyidagi soliq taxminlari qo‘llangan: foyda solig‘i — 15%, mulk solig‘i — 1,5%.':'Tax assumptions used: 15% corporate profit tax and 1.5% property tax.'}</p>

@@ -1,6 +1,6 @@
 {
-  "name": "JoyJoy",
-  "short_name": "JoyJoy",
+  "name": "Joy²",
+  "short_name": "Joy²",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -27,7 +27,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#111820",
-  "background_color": "#F4F2ED",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone"
 }

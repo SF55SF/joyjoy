@@ -48,7 +48,7 @@ function assumptions(model){
 }
 ---
 <section class="jj-invest-directory jj-shell" id="investments" data-jj-invest-directory>
- <div class="jj-invest-directory-intro"><h2>{copy.heading}</h2><p>{copy.intro}</p></div>
+ {/* Заголовок и описание раздела уже отображаются выше на странице. */}
  <form class="jj-inv-filters" data-jj-inv-filters role="search" aria-label={copy.heading}>
   <label><span>{copy.search}</span><input type="search" name="query" placeholder={copy.search} autocomplete="off"/></label>
   <label><span>{copy.kind}</span><select name="kind"><option value="">{copy.all}</option>{['office','retail','warehouse','land'].map(kind=><option value={kind}>{copy[kind]}</option>)}</select></label>
@@ -75,7 +75,7 @@ function assumptions(model){
     <div><small>{copy.profit}</small><strong class:list={{'is-negative':profit<0,'is-positive':profit>=0}}>{money(profit)}</strong></div>
    </div>
    <h3>{copy.terms}</h3><dl class="jj-inv-assumptions">{assumptions(model).map(x=><div><dt>{x.label}</dt><dd>{x.value}</dd></div>)}</dl>
-   <h3>{copy.cash}</h3><div class="jj-inv-cash-strip">{/* JOY2_INVEST_YEAR0_V27 */}{[{year:0,cashFlow:result.cashFlows?.[0]??-result.totalInvestment},...(result.schedule||[])].map(y=><div class:list={['jj-inv-year',{'is-negative':y.cashFlow<0,'is-positive':y.cashFlow>=0}]}><small>{copy.year} {y.year}</small><strong>{thousands(y.cashFlow)}</strong><span>{lang==='ru'?'тыс. $':lang==='uz'?'ming $':'k $'}</span></div>)}</div>
+   <h3>{copy.cash}</h3><div class="jj-inv-cash-strip">{/* JOY2_INVEST_YEAR0_V27 */}{[{year:0,cashFlow:result.cashFlows[0]},...(result.schedule||[])].map(y=><div class:list={['jj-inv-year',{'is-negative':y.cashFlow<0,'is-positive':y.cashFlow>=0}]}><small>{copy.year} {y.year}</small><strong>{thousands(y.cashFlow)}</strong><span>{lang==='ru'?'тыс. $':lang==='uz'?'ming $':'k $'}</span></div>)}</div>
    <p class="jj-inv-tax">{copy.tax}</p><p class="jj-inv-disclaimer">{copy.disclaimer}</p>
   </div>
  </div>})}

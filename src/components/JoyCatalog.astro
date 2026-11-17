@@ -38,7 +38,7 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
 // OpenFreeMap requires no API key. Unverified coordinates are never invented.
 
 ---
-<header class:list={["jj-sitebar",{"jj-ref-header":!projects}]}><div class="jj-shell jj-sitebar-in">
+<header class:list={["jj-sitebar",{"jj-ref-header":!projects,"jj-project-header":projects}]}><div class="jj-shell jj-sitebar-in">
   <a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a>
   <nav class="jj-primary-nav" aria-label={labels.catalog}><a class:list={{'is-current':!projects}} aria-current={!projects?'page':undefined} href={base+'#catalog'}>{investmentText.estate}</a><a class:list={{'is-current':projects}} aria-current={projects?'page':undefined} href={base+'projects/'}>{investmentText.projects}</a></nav>
   <div class="jj-sitebar-right"><button class="jj-saved-link" id="jj-saved-only" type="button" aria-label={copy.favorites} aria-pressed="false"><JoyIcon name="heart"/><span>{copy.favorites}</span><small id="jj-saved-count">0</small></button>

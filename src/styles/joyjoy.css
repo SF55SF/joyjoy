@@ -210,7 +210,7 @@
 @media(max-width:360px){.jj-intro h1{font-size:28px}.jj-filter-form{grid-template-columns:minmax(0,1fr) 96px}.jj-filter-form>.jj-search-submit{padding:8px;font-size:13px}.jj-listing-actions select{max-width:152px}}
 /* JOYJOY_UNSLOP_CATALOG_DENSITY_V1_END */
 /* JOY2_BRAND_PATCH_V1 */
-.jj-wordmark{display:inline-flex;align-items:center;justify-content:flex-start;line-height:1;flex-shrink:0}.jj-brand-logo{display:block;width:116px;height:auto;max-height:44px;object-fit:contain}.jj-sitebar .jj-wordmark{color:#D90016}@media(max-width:700px){.jj-brand-logo{width:102px;max-height:40px}}
+.jj-wordmark{display:inline-flex;align-items:center;justify-content:flex-start;line-height:1;flex-shrink:0}.jj-brand-logo{display:block;width:151px;height:auto;max-height:57px;object-fit:contain}.jj-sitebar .jj-wordmark{color:#D90016}@media(max-width:700px){.jj-brand-logo{width:133px;max-height:52px}}
 
 /* JOYJOY_MAP_COORDINATES_CTRL_V1_START */
 /* JOYJOY_MAP_COORDINATES_CTRL_V1 — quiet map interaction guidance. */
@@ -235,5 +235,5 @@
 .jj-map-foot small,.jj-map-touch-help,.jj-map-gesture-help,.jj-map-popup p,.jj-map-popup a{font-size:14px;line-height:20px}
 .jj-map-popup a{color:var(--secondary)}
 .jj-crumb,.jj-intro-copy .jj-crumb{font-size:14px}
-@media(max-width:700px){.jj-filter-form>.jj-field{min-height:64px}.jj-filter-form>.jj-search-submit,.jj-filter-form>.jj-more-filters{min-height:64px;font-size:14px}.jj-field input,.jj-field select{font-size:16px}.jj-listing-actions select{max-width:184px}.jj-view-switch button{padding-inline:8px}.jj-card-overline{flex-wrap:wrap;gap:4px 12px}.jj-sitebar-in:has(.jj-detail-back){gap:8px}.jj-sitebar-in:has(.jj-detail-back) .jj-brand-logo{width:88px}.jj-detail-back{white-space:normal}}
+@media(max-width:700px){.jj-filter-form>.jj-field{min-height:64px}.jj-filter-form>.jj-search-submit,.jj-filter-form>.jj-more-filters{min-height:64px;font-size:14px}.jj-field input,.jj-field select{font-size:16px}.jj-listing-actions select{max-width:184px}.jj-view-switch button{padding-inline:8px}.jj-card-overline{flex-wrap:wrap;gap:4px 12px}.jj-sitebar-in:has(.jj-detail-back){gap:8px}.jj-sitebar-in:has(.jj-detail-back) .jj-brand-logo{width:114px}.jj-detail-back{white-space:normal}}
 /* JOYJOY_APCA_READABILITY_V1_END */
