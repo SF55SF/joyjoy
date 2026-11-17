@@ -23,10 +23,11 @@ const related=(await import('../data/listings')).listings.filter(x=>x.slug!==lis
 // No map key required.
 
 const mapData=coords?[{slug:listing.slug,title:listing.title,lat:listing.lat,lng:listing.lng,area:listing.area,price:listing.priceUsd,image:listing.images?.[0]||'',url:base+'listing/'+listing.slug+'/'}]:[];
+// JOY2_NAV_SCROLL_AND_HEADER_V2
 ---
-<header class="jj-sitebar"><div class="jj-shell jj-sitebar-in"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><a href={base} class="jj-detail-back">← {c.back}</a><div class="jj-sitebar-right"><div class="jj-lang" aria-label="Language"><a href={'/listing/'+listing.slug+'/'} lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a><a href={'/uz/listing/'+listing.slug+'/'} lang="uz" aria-current={lang==='uz'?'page':undefined}>UZ</a><a href={'/en/listing/'+listing.slug+'/'} lang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div></div></div></header>
+<header class="jj-sitebar"><div class="jj-shell jj-sitebar-in"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><a href={base+'#jj-object-'+listing.slug} class="jj-detail-back">← {c.back}</a><div class="jj-sitebar-right"><div class="jj-lang" aria-label="Language"><a href={'/listing/'+listing.slug+'/'} lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a><a href={'/uz/listing/'+listing.slug+'/'} lang="uz" aria-current={lang==='uz'?'page':undefined}>UZ</a><a href={'/en/listing/'+listing.slug+'/'} lang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div></div></div></header>
 <main class="jj-shell jj-detail">
- <a href={base+'#catalog'} class="jj-back-link">← {c.back}</a>
+ <a href={base+'#jj-object-'+listing.slug} class="jj-back-link">← {c.back}</a>
  <p class="jj-crumb">JoyJoy / {c.forSale}</p>
  <div class="jj-detail-heading"><div><h1>{listing.title}</h1><p>{[listing.city,listing.district,listing.address].filter(Boolean).join(' · ')}</p></div>{listing.status&&<span class="jj-detail-status">{c[listing.status]}</span>}</div>
  <div class:list={['jj-photo-layout',{'is-single':listing.images.length<2}]}>

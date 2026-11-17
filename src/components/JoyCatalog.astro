@@ -48,7 +48,8 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
   <nav class="jj-mobile-sections jj-shell" aria-label={lang==='ru'?'Разделы сайта':lang==='en'?'Site sections':'Sayt bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{lang==='ru'?'Недвижимость':lang==='en'?'Properties':'Obyektlar'}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{lang==='ru'?'Инвестиции':lang==='en'?'Investments':'Investitsiyalar'}</a></nav>
   <!-- JOY2_HOME_REFERENCE_V1 -->
   {!projects?<section class="jj-ref-hero jj-shell" aria-label={lang==='ru'?'Недвижимость и инвестиции':lang==='uz'?'Ko‘chmas mulk va investitsiyalar':'Real estate and investments'}>
-    <h1>{lang==='ru'?<>Недвижимость<span>.</span><br/>Инвестиции<span>.</span></>:lang==='uz'?<>Ko‘chmas mulk<span>.</span><br/>Investitsiyalar<span>.</span></>:<>Real Estate<span>.</span><br/>Investments<span>.</span></>}</h1>
+    <p class="jj-concept-kicker">{lang==='ru'?'Недвижимость Узбекистана.':lang==='uz'?'O‘zbekiston ko‘chmas mulki.':'Real estate in Uzbekistan.'}</p>
+    <h1>{lang==='ru'?<>Недвижимость<span>.</span><br/><mark class="jj-concept-highlight">Инвестиции<span>.</span></mark></>:lang==='uz'?<>Ko‘chmas mulk<span>.</span><br/><mark class="jj-concept-highlight">Investitsiyalar<span>.</span></mark></>:<>Real Estate<span>.</span><br/><mark class="jj-concept-highlight">Investments<span>.</span></mark></>}</h1>
     <p>{lang==='ru'?'Коммерческие объекты и инвестиционные проекты Узбекистана':lang==='uz'?'O‘zbekistondagi tijorat obyektlari va investitsiya loyihalari':'Commercial properties and investment projects in Uzbekistan'}</p>
     <div class="jj-ref-actions"><a class="jj-ref-cta" href={base+'projects/'}>{lang==='ru'?'Инвестиционные объекты':lang==='uz'?'Investitsiya obyektlari':'Investment properties'} <span aria-hidden="true">→</span></a><a class="jj-ref-cta jj-ref-cta-secondary" href="#catalog">{lang==='ru'?'Все объекты':lang==='uz'?'Barcha obyektlar':'All properties'} <span aria-hidden="true">→</span></a></div>
   </section>:<section class="jj-intro jj-shell">
@@ -96,7 +97,7 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
  </div>
  <div class="jj-workspace" data-jj-mode="list">
   <div class="jj-card-grid" id="jj-results">
-   {listings.map((item,index)=><article class="jj-property-card" data-slug={item.slug} data-index={index}
+   {listings.map((item,index)=><article class="jj-property-card" id={'jj-object-'+item.slug} data-slug={item.slug} data-index={index}
     data-search={(item.title+' '+item.city+' '+item.district+' '+item.address+' '+item.description+' '+sourceListings[index].title+' '+sourceListings[index].address).toLocaleLowerCase()}
     data-type={item.type} data-status={item.status} data-area={item.units?.length?Math.min(...item.units.filter(u=>u.published!==false&&u.area>0).map(u=>u.area),item.area):item.area}
     data-price={item.units?.length?Math.min(...item.units.filter(u=>u.published!==false).map(u=>Number(u.area)*Number(u.pricePerSqm)).filter(n=>n>0)):item.priceUsd??''}>
@@ -138,6 +139,28 @@ document.addEventListener('click',event=>{
  select.dispatchEvent(new Event('change',{bubbles:true}));
  document.getElementById('catalog')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
 });
+</script>
+
+<script is:inline>
+/* JOY2_NAV_SCROLL_AND_HEADER_V2: возвращаем пользователя к исходному объекту, сохраняя сортировку и фильтры. */
+(()=>{
+  const key='joy2-catalog-return:'+location.pathname;
+  const fields=['jj-q','jj-type','jj-sort','jj-area-min','jj-area-max','jj-price-min','jj-price-max'];
+  document.addEventListener('click',e=>{
+    const a=e.target instanceof Element?e.target.closest('a[href*="/listing/"]'):null;
+    if(!a||!document.getElementById('jj-results'))return;
+    const values={};for(const id of fields){const el=document.getElementById(id);if(el&&'value'in el)values[id]=el.value;}
+    try{sessionStorage.setItem(key,JSON.stringify(values));}catch{}
+  },true);
+  function restore(){
+    const hash=decodeURIComponent(location.hash.slice(1));
+    if(!hash.startsWith('jj-object-'))return;
+    try{const state=JSON.parse(sessionStorage.getItem(key)||'null');if(state){for(const [id,v] of Object.entries(state)){const el=document.getElementById(id);if(el&&'value'in el&&el.value!==v){el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}}}}catch{}
+    const go=()=>{const el=document.getElementById(hash);if(el&&getComputedStyle(el).display!=='none')el.scrollIntoView({behavior:'instant',block:'start'});};
+    go();setTimeout(go,150);setTimeout(go,650);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restore,{once:true});else restore();
+})();
 </script>
 <script src="/js/joyjoy-marketplace.js" defer></script>
 
