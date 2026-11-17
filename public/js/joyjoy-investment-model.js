@@ -76,8 +76,8 @@ export function calculateInvestment(raw) {
    schedule.push({year,revenue,expenses,otherExpenses:annualExpenses,propertyTax,noi,taxableRentProfit,rentalProfitTax,sale:0,cashFlow});
  }
  const nextYearNOI=rentAtYear(nYears+1)-annualExpenses-propertyTaxForYear(nYears+1);
- // Exit value at end of holding year: same-year annual contractual rent before corporate income tax, divided by exit rate.
- // This is GROSS-rent capitalization, not conventional NOI-based capitalization.
+ // Sale at end of holding year = gross annual rental revenue earned during that same year / exit cap rate.
+ // Profit tax on sale is deducted after calculating this sale price.
  const exitAnnualRent=rentAtYear(nYears);
  const salePrice=exitAnnualRent>0?exitAnnualRent/(Number(m.exitCapRate)/100):0;
  const remainingBasis=costAtTime(nYears);

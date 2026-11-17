@@ -48,6 +48,7 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
   <nav class="jj-mobile-sections jj-shell" aria-label={lang==='ru'?'Разделы сайта':lang==='en'?'Site sections':'Sayt bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{lang==='ru'?'Недвижимость':lang==='en'?'Properties':'Obyektlar'}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{lang==='ru'?'Инвестиции':lang==='en'?'Investments':'Investitsiyalar'}</a></nav>
   <!-- JOY2_HOME_REFERENCE_V1 -->
   {!projects?<section class="jj-ref-hero jj-shell" aria-label={lang==='ru'?'Недвижимость и инвестиции':lang==='uz'?'Ko‘chmas mulk va investitsiyalar':'Real estate and investments'}>
+    
     <p class="jj-concept-kicker">{lang==='ru'?'Недвижимость Узбекистана.':lang==='uz'?'O‘zbekiston ko‘chmas mulki.':'Real estate in Uzbekistan.'}</p>
     <h1>{lang==='ru'?<>Недвижимость<span>.</span><br/><mark class="jj-concept-highlight">Инвестиции<span>.</span></mark></>:lang==='uz'?<>Ko‘chmas mulk<span>.</span><br/><mark class="jj-concept-highlight">Investitsiyalar<span>.</span></mark></>:<>Real Estate<span>.</span><br/><mark class="jj-concept-highlight">Investments<span>.</span></mark></>}</h1>
     <p>{lang==='ru'?'Коммерческие объекты и инвестиционные проекты Узбекистана':lang==='uz'?'O‘zbekistondagi tijorat obyektlari va investitsiya loyihalari':'Commercial properties and investment projects in Uzbekistan'}</p>
@@ -78,7 +79,7 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
   <section id="catalog" class="jj-filter-shell" hidden={projects}><div class="jj-shell"><form id="jj-filters" class="jj-filter-form" role="search" aria-label={copy.search}>
     <label class="jj-field jj-field-search"><span>{labels.location}</span><div class="jj-input-icon jj-input-icon-no-search"><input id="jj-q" type="search" placeholder={lang==='ru'?'Например, Ташкент или Trilliant':lang==='uz'?'Masalan, Toshkent yoki Trilliant':'Try Tashkent or Trilliant'} autocomplete="off"/></div></label>
     <label class="jj-field"><span>{copy.category}</span><select id="jj-type"><option value="">{copy.all}</option>{types.map(type=><option value={type}>{names[type]}</option>)}</select></label>
-    <button class="jj-more-filters" aria-label={labels.filters} type="button" id="jj-more-filters" aria-controls="jj-advanced-filters" aria-expanded="false"><JoyIcon name="filters"/><span>{labels.filters}</span><small id="jj-filter-counter" hidden>0</small></button>
+    <button class="jj-more-filters" aria-label={labels.filters} type="button" id="jj-more-filters" aria-controls="jj-advanced-filters" aria-expanded="false"><JoyIcon name="filters"/><span>{labels.allFilters}</span><small id="jj-filter-counter" hidden>0</small></button>
     
     <div class="jj-advanced-filters" id="jj-advanced-filters" hidden>
       <fieldset class="jj-range"><legend>{labels.area}</legend><div><label><span>{labels.from}</span><input id="jj-area-min" aria-label={copy.min} type="number" min="0" step="1" placeholder="0"/></label><label><span>{labels.to}</span><input id="jj-area-max" aria-label={copy.max} type="number" min="0" step="1" placeholder="—"/></label></div></fieldset>
@@ -108,7 +109,7 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
      <h3><a href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{item.title}</a></h3>
      <div class="jj-property-summary">
       <span class="jj-area-sign"><b>{item.units?.length?(()=>{const a=item.units.filter(u=>u.published!==false&&u.area>0).map(u=>u.area);return a.length?Math.min(...a).toLocaleString(numberLocale)+'–'+Math.max(...a).toLocaleString(numberLocale):item.area.toLocaleString(numberLocale)})():item.area.toLocaleString(numberLocale)}</b> m²</span>
-      <span class:list={['jj-card-price',{'is-request':item.priceUsd===null&&!item.units?.length}]}>{item.units?.length?(lang==='ru'?'от ':lang==='uz'?'dan ':'from ')+(Math.min(...item.units.filter(u=>u.published!==false).map(u=>Number(u.pricePerSqm)).filter(n=>n>0))).toLocaleString('en-US')+' $/м²':item.priceUsd===null?copy.price:'$'+item.priceUsd.toLocaleString('en-US')}</span>
+      <span class:list={['jj-card-price',{'is-request':item.priceUsd===null&&!item.units?.length}]}>{item.units?.length?(lang==='ru'?'от ':lang==='uz'?'dan ':'from ')+(Math.min(...item.units.filter(u=>u.published!==false).map(u=>Number(u.pricePerSqm)).filter(n=>n>0))).toLocaleString('en-US',{maximumFractionDigits:0})+' $/м²':item.priceUsd===null?copy.price:'$'+item.priceUsd.toLocaleString('en-US',{maximumFractionDigits:0})}</span>
      </div>
      <p class="jj-property-address">{[item.district,item.address].filter(Boolean).join(' · ')||item.city}</p>
      {item.units?.length>0&&<p class="jj-card-feature">{item.units.filter(u=>u.published!==false).length} {lang==='ru'?'вариантов в продаже':lang==='en'?'available units':'sotuvdagi joylar'}</p>}
@@ -123,6 +124,8 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
  <div class="jj-no-results" id="jj-empty" hidden><h3>{copy.nothing}</h3><button type="button" id="jj-clear-empty">{copy.clear}</button></div>
 </section>
 </main>
+<!-- JOY2_CATALOG_FOUR_LIME_V2 -->
+<script src="/js/joy2-quick-filters.js" defer></script>
 <footer class="jj-bottom"><div class="jj-shell"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><p>{lang==='ru'?'Условия покупки и исходные параметры уточняйте у продавца. Источники указаны в объявлениях.':lang==='en'?'Confirm purchase terms and inputs with the seller. Sources are listed on the property pages.':'Xarid shartlari va parametrlarini sotuvchi bilan aniqlang. Manbalar e’lonlarda ko‘rsatilgan.'}</p><span>© {new Date().getFullYear()}</span></div></footer>
 {projects&&<script type="application/json" id="jj-project-fx-data" set:html={JSON.stringify(sourceListings.filter(isPublishedProject).map(x=>({slug:x.slug,investment:x.investment}))).replace(/</g,'\\u003c')}></script>}
 {projects&&<script src="/js/joyjoy-project-fx.js" type="module"></script>}
@@ -163,6 +166,9 @@ document.addEventListener('click',event=>{
 })();
 </script>
 <script src="/js/joyjoy-marketplace.js" defer></script>
+<script src="/js/joy2-catalog-polish.js" defer></script>
 
 <script src="/js/joyjoy-unslop-stage1.js" defer></script>
 <script src="/js/joyjoy-maplibre.js" defer></script>
+<script src="/js/joy2-catalog-refine.js" defer></script>
+<script src="/js/joy2-filter-overlay-close.js" defer></script>
