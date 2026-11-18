@@ -23,7 +23,7 @@ for(const original of allListings){
   const name=[u.block?`${lang==='en'?'Block':lang==='uz'?'Blok':'Блок'} ${u.block}`:'',u.number||u.id||''].filter(Boolean).join(' · ')||`${lang==='en'?'Unit':lang==='uz'?'Xona':'Помещение'} ${i+1}`;
   rows.push({id:`${original.slug}-unit-${i}`,property:p,raw:original,unit:u,name,model,result,area:Number(u.area)||Number(model.lettableArea)||0,status:u.tenancyStatus||original.tenancyStatus||'',price:Number(model.purchasePrice)||Number(u.area)*Number(u.pricePerSqm)||0});
  }
- if(original.investment?.published===true&&original.showProjects===true){
+ if(original.investment?.published===true&&original.insestproject===true){
   const model=original.investment;
   const result=calculateInvestment({...model,propertyTaxArea:Number(original.area)||model.lettableArea,taxCity:original.city});
   if(result.ok)rows.push({id:`${original.slug}-property`,property:p,raw:original,unit:null,name:'',model,result,area:Number(model.lettableArea)||Number(original.area)||0,status:original.tenancyStatus||'',price:Number(model.purchasePrice)||0});

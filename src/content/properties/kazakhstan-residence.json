@@ -21,7 +21,6 @@
   ],
   "published": true,
   "showCatalog": true,
-  "showProjects": false,
   "order": 5,
   "tenancyStatus": "preliminary",
   "units": [
@@ -89,5 +88,6 @@
         "Narx QQS bilan"
       ]
     }
-  }
+  },
+  "insestproject": true
 }

@@ -99,7 +99,7 @@ export function hasPublishedInvestment(property) {
     ['assumption','asking','contract'].includes(m.rentBasis) && validDate(m.asOf);
 }
 export function hasPublishedUnitInvestment(unit){return unit?.published!==false && unit?.investment?.published===true && validateInvestment(unit.investment).length===0 && !!unit.investment.sourceNote && !!unit.investment.asOf && ['assumption','asking','contract'].includes(unit.investment.rentBasis);}
-export function isPublishedProject(property) {return property.showProjects===true && (hasPublishedInvestment(property)||(Array.isArray(property.units)&&property.units.some(hasPublishedUnitInvestment)));}
+export function isPublishedProject(property) {return property.insestproject===true && (hasPublishedInvestment(property)||(Array.isArray(property.units)&&property.units.some(hasPublishedUnitInvestment)));}
 function validDate(s) {return typeof s==='string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s+'T00:00:00Z')) && new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;}
 export function validateProperty(p) {
   const errors=[];
@@ -111,7 +111,7 @@ export function validateProperty(p) {
   if(p.status!==null&&!['existing','under_construction'].includes(p.status))errors.push('status');
   if(typeof p.area!=='number'||!Number.isFinite(p.area)||p.area<=0||p.area>1e9)errors.push('area');
   if(p.priceUsd!==null&&(typeof p.priceUsd!=='number'||!Number.isFinite(p.priceUsd)||p.priceUsd<=0||p.priceUsd>1e12))errors.push('priceUsd');
-  for(const key of ['published','showCatalog','showProjects'])if(p[key]!==undefined&&typeof p[key]!=='boolean')errors.push(key);
+  for(const key of ['published','showCatalog','insestproject'])if(p[key]!==undefined&&typeof p[key]!=='boolean')errors.push(key);
   if(p.order!==undefined&&(!Number.isInteger(p.order)||p.order<0))errors.push('order');
   const safeUrl=(s)=>{if(typeof s!=='string'||s.length>2048)return false;try{const u=new URL(s,'https://joyjoy.invalid');return u.protocol==='https:'&&!u.username&&!u.password&&(s.startsWith('https://')||s.startsWith('/')&&!s.startsWith('//'));}catch{return false;}};
   if(!Array.isArray(p.images)||p.images.length>30||p.images.some(x=>!safeUrl(x)))errors.push('images');
@@ -155,13 +155,12 @@ export function validateProperty(p) {
       if(m.rentBasis&&!['assumption','asking','contract'].includes(m.rentBasis))errors.push('investment.rentBasis');
       if(m.asOf&&!validDate(m.asOf))errors.push('investment.asOf');
       if(m.sourceNote!==undefined&&(typeof m.sourceNote!=='string'||m.sourceNote.length>4000))errors.push('investment.sourceNote');
-      if(m.published&&(!isPublishedProject({...p,published:true,showProjects:true})))errors.push('investment.incomplete');
+      if(m.published&&(!isPublishedProject({...p,published:true,insestproject:true})))errors.push('investment.incomplete');
     }
   }
-  if(p.showProjects&&!isPublishedProject({...p,published:true}))errors.push('showProjects');
   return [...new Set(errors)];
 }
 export function propertyErrorMessage(errors) {
- const labels={slug:'Адрес страницы: латинские буквы, цифры и дефисы',title:'Название',city:'Город',address:'Адрес',district:'Район',description:'Описание',area:'Общая площадь должна быть больше нуля',priceUsd:'Цена продажи должна быть больше нуля или пустой',images:'Фотографии: используйте HTTPS-ссылки или /images/…',sourceUrl:'Ссылка на источник: используйте HTTPS',features:'Характеристики',coordinates:'Укажите обе координаты или очистите обе',lat:'Широта от −90 до 90',lng:'Долгота от −180 до 180',translations:'Переводы',purchasePrice:'Цена покупки должна быть больше нуля',transactionCosts:'Расходы на сделку',fitOutCosts:'Ремонт и подготовка',otherCosts:'Прочие вложения',lettableArea:'Сдаваемая площадь должна быть больше нуля',monthlyRent:'Ставка аренды',occupancy:'Заполняемость от 0 до 100%',annualExpenses:'Годовые расходы',asOf:'Корректная дата исходных данных',currency:'Валюта модели — USD',rentBasis:'Основание ставки',sourceNote:'Источник и условия ставки','investment.incomplete':'Перед публикацией заполните всю модель, основание ставки, дату и источник',showProjects:'Для раздела проектов нужна полная опубликованная модель'};
+ const labels={slug:'Адрес страницы: латинские буквы, цифры и дефисы',title:'Название',city:'Город',address:'Адрес',district:'Район',description:'Описание',area:'Общая площадь должна быть больше нуля',priceUsd:'Цена продажи должна быть больше нуля или пустой',images:'Фотографии: используйте HTTPS-ссылки или /images/…',sourceUrl:'Ссылка на источник: используйте HTTPS',features:'Характеристики',coordinates:'Укажите обе координаты или очистите обе',lat:'Широта от −90 до 90',lng:'Долгота от −180 до 180',translations:'Переводы',purchasePrice:'Цена покупки должна быть больше нуля',transactionCosts:'Расходы на сделку',fitOutCosts:'Ремонт и подготовка',otherCosts:'Прочие вложения',lettableArea:'Сдаваемая площадь должна быть больше нуля',monthlyRent:'Ставка аренды',occupancy:'Заполняемость от 0 до 100%',annualExpenses:'Годовые расходы',asOf:'Корректная дата исходных данных',currency:'Валюта модели — USD',rentBasis:'Основание ставки',sourceNote:'Источник и условия ставки','investment.incomplete':'Перед публикацией заполните всю модель, основание ставки, дату и источник',insestproject:'Для включения в инвестиционный каталог опубликуйте полную модель'};
  return 'Проверьте: '+[...new Set(errors.map(key=>labels[key]||labels[key.replace(/^investment\./,'')]||'Параметры объекта'))].join(' · ');
 }

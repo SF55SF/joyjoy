@@ -1,0 +1,113 @@
+/* JOY2_CARD_MATCH_REFERENCE_V1 */
+/* Scope deliberately includes the catalog: legacy design patches must not affect cards here. */
+body .jj-ref-home #catalog-results .jj-card-grid { align-items:stretch!important; grid-auto-rows:auto!important; }
+body .jj-ref-home #catalog-results .jj-property-card {
+  align-self:stretch!important; height:auto!important; min-height:0!important;
+  display:flex!important; flex-direction:column!important;
+  border-radius:20px!important; background:#fff!important;
+  border:1px solid #e1e5e9!important; overflow:hidden!important;
+  box-shadow:0 9px 26px rgba(22,31,46,.065)!important;
+  font-family:Inter,Arial,Helvetica,sans-serif!important;
+}
+body .jj-ref-home #catalog-results .jj-property-card-image {
+  display:block!important; width:100%!important; aspect-ratio:1.75!important;
+  flex:0 0 auto!important; overflow:hidden!important;
+}
+body .jj-ref-home #catalog-results .jj-property-card-image img { width:100%!important;height:100%!important;object-fit:cover!important; }
+body .jj-ref-home #catalog-results .jj-property-card-main {
+  flex:1 1 auto!important; min-height:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:22px minmax(48px,auto) 75px minmax(51px,auto) 82px!important;
+  gap:0!important; align-content:start!important; align-items:stretch!important;
+  padding:18px 19px 18px!important; margin:0!important;
+  font-family:Inter,Arial,Helvetica,sans-serif!important;
+}
+body .jj-ref-home #catalog-results .jj-property-card-main > * {min-width:0!important;box-sizing:border-box!important;}
+body .jj-ref-home #catalog-results .jj-card-overline {
+  grid-row:1!important; margin:0!important; padding:0!important;
+  font-size:14px!important; font-weight:400!important; color:#505762!important;
+  line-height:20px!important;letter-spacing:0!important;
+}
+body .jj-ref-home #catalog-results .jj-property-card h3 {
+  grid-row:2!important; min-height:0!important; max-height:none!important;
+  margin:0!important; padding:3px 0 0!important;
+  font-family:Inter,Arial,Helvetica,sans-serif!important;
+  font-size:20px!important; font-weight:700!important;
+  line-height:1.27!important; letter-spacing:-.027em!important;
+  color:#111318!important;
+}
+body .jj-ref-home #catalog-results .jj-match-summary {
+  grid-row:3!important; display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:center!important; gap:0!important;
+  margin:0!important; padding:0 0 10px!important;
+  border-bottom:1px solid #e1e4e8!important; border-top:0!important;
+  min-height:0!important;
+}
+body .jj-ref-home #catalog-results .jj-match-metric {
+  position:relative!important; min-width:0!important;
+  display:flex!important; flex-direction:column!important;
+  justify-content:center!important; gap:5px!important;
+  padding:0 12px 0 0!important; text-align:left!important;
+}
+body .jj-ref-home #catalog-results .jj-match-metric + .jj-match-metric {
+  border-left:1px solid #d9dde2!important;
+  padding-left:18px!important; padding-right:0!important;
+}
+body .jj-ref-home #catalog-results .jj-match-metric-label {
+  display:block!important; color:#606773!important; font-size:12px!important;
+  font-weight:400!important; line-height:1.25!important;
+  letter-spacing:0!important;
+}
+body .jj-ref-home #catalog-results .jj-match-metric-value {
+  display:block!important; color:#111318!important;
+  font-size:clamp(14px,1.06vw,19px)!important;
+  font-weight:700!important; letter-spacing:-.022em!important;
+  line-height:1.24!important; overflow-wrap:anywhere!important;
+  font-variant-numeric:tabular-nums!important; white-space:normal!important;
+}
+body .jj-ref-home #catalog-results .jj-property-address {
+  grid-row:4!important; min-height:0!important; max-height:none!important;
+  display:flex!important; align-items:center!important;
+  margin:0!important; padding:9px 0!important;
+  border-bottom:0!important; border-top:0!important;
+  font-family:inherit!important; font-size:13px!important; font-weight:400!important;
+  line-height:1.4!important; color:#424b59!important;
+  overflow-wrap:anywhere!important;
+}
+body .jj-ref-home #catalog-results .jj-match-bottom {
+  grid-row:5!important; width:100%!important;
+  display:grid!important; align-items:center!important;
+  box-sizing:border-box!important; gap:0!important;
+  margin:0!important; padding:13px 15px!important;
+  background:#f2f3f5!important; border:0!important;
+  border-radius:12px!important; min-height:75px!important;
+}
+body .jj-ref-home #catalog-results .jj-match-bottom-invest {grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;}
+body .jj-ref-home #catalog-results .jj-match-bottom-status {grid-template-columns:minmax(0,1fr)!important;}
+body .jj-ref-home #catalog-results .jj-match-bottom .jj-match-metric-value {font-size:18px!important;}
+body .jj-ref-home #catalog-results .jj-invest-ribbon.jj-match-ribbon {
+  position:absolute!important; z-index:4!important; inset:auto!important;
+  left:16px!important; top:16px!important;
+  width:max-content!important; max-width:calc(100% - 78px)!important;
+  display:inline-flex!important; align-items:center!important;
+  padding:9px 14px!important; margin:0!important;
+  border:0!important; border-radius:10px!important;
+  color:#111!important; background:#b6ff00!important;
+  font:700 12px/1.25 Inter,Arial,sans-serif!important;
+  letter-spacing:0!important; text-transform:none!important;
+  clip-path:none!important; box-shadow:none!important;
+}
+/* Remove the old angled red line and all arrows associated with the original area metric. */
+body .jj-ref-home #catalog-results .jj-match-summary::before,
+body .jj-ref-home #catalog-results .jj-match-summary::after,
+body .jj-ref-home #catalog-results .jj-match-metric::before,
+body .jj-ref-home #catalog-results .jj-match-metric::after {content:none!important;display:none!important;}
+body .jj-ref-home #catalog-results .jj-property-card-main > :is(.jj-card-feature,.jj-card-bottom) {display:none!important;}
+@media(max-width:649px){
+ body .jj-ref-home #catalog-results .jj-property-card-main {padding:15px!important;grid-template-rows:21px minmax(42px,auto) 70px minmax(46px,auto) 80px!important;}
+ body .jj-ref-home #catalog-results .jj-property-card h3{font-size:18px!important;}
+ body .jj-ref-home #catalog-results .jj-match-summary .jj-match-metric-value {font-size:16px!important;}
+ body .jj-ref-home #catalog-results .jj-match-bottom .jj-match-metric-value{font-size:16px!important;}
+}

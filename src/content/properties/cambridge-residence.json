@@ -7,7 +7,7 @@
   "lat": 41.3501358,
   "lng": 69.2556152,
   "type": "retail",
-  "status": null,
+  "status": "existing",
   "area": 1472,
   "priceUsd": null,
   "images": [
@@ -23,5 +23,5 @@
   "order": 7,
   "published": true,
   "showCatalog": true,
-  "showProjects": false
+  "insestproject": false
 }

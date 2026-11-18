@@ -76,6 +76,7 @@
       const lat=group.reduce((v,i)=>v+i.lat,0)/group.length,lng=group.reduce((v,i)=>v+i.lng,0)/group.length;
       const item=group[0];const cluster=group.length>1;
       const el=markerElement(cluster?String(group.length):priceLabel(item.price),cluster);
+      el.dataset.joy2Shape=zoom<13?'square':'rectangle';
       if(!cluster){el.dataset.slug=item.slug;el.setAttribute('aria-label',item.title+(item.address?' · '+item.address:''));el.classList.toggle('is-selected',selectedSlug===item.slug);
         el.addEventListener('mouseenter',()=>window.dispatchEvent(new CustomEvent('joyjoy:highlight-card',{detail:{slug:item.slug,scroll:false}})));
         el.addEventListener('mouseleave',()=>window.dispatchEvent(new CustomEvent('joyjoy:highlight-card',{detail:{slug:null,scroll:false}})));

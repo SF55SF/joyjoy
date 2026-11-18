@@ -1,20 +1,50 @@
 ---
 // JOYJOY_LOOPNET_CATALOG_V5
 import { listings as availableListings } from '../data/listings';
-import {isPublishedProject,calculateInvestment} from '../../public/js/joyjoy-investment-model.js';
+import {isPublishedProject,calculateInvestment,hasPublishedInvestment,hasPublishedUnitInvestment} from '../../public/js/joyjoy-investment-model.js';
 import {investmentCopy} from '../../public/js/joyjoy-investment-copy.js';
 import { localizeListing } from '../data/listing-translations';
 import JoyIcon from './JoyIcon.astro';
 import JoyInvestmentRows from './JoyInvestmentRows.astro';
+import { buildJoyCardMeta } from '../lib/joy-card-meta.js';
 // JOY2_INVESTMENT_DIRECTORY_V19
 import type { Lang } from '../lib/i18n';
 const lang = (Astro.props.lang ?? 'ru') as Lang;
 const projects = Astro.props.projects === true;
 const investmentText = investmentCopy[lang];
-const sourceListings = availableListings.filter(item=>projects?isPublishedProject(item):item.showCatalog!==false);
+const sourceListings = availableListings.filter(item=>projects?isPublishedProject(item):true);
+const joyCardMatchData = sourceListings.map(buildJoyCardMeta);
 const unitMinPrice=(p)=>p.units?.length?Math.min(...p.units.filter(u=>u.published!==false).map(u=>u.area*u.pricePerSqm)):p.priceUsd;
 const unitAreaRange=(p)=>p.units?.length?(()=>{const a=p.units.filter(u=>u.published!==false).map(u=>u.area);return Math.min(...a).toLocaleString('ru-RU')+'–'+Math.max(...a).toLocaleString('ru-RU')})():null;
 const projectIrr=(p)=>{const m=(p.units||[]).filter(u=>u.investment?.published).map(u=>calculateInvestment(u.investment)).filter(r=>r.ok&&r.irrPercent!==null).map(r=>r.irrPercent);if(!m.length&&p.investment){const r=calculateInvestment(p.investment);if(r.ok&&r.irrPercent!==null)m.push(r.irrPercent);}return m.length?Math.min(...m).toFixed(1)+(m.length>1?'–'+Math.max(...m).toFixed(1):'')+'%':'—';};
+
+/* JOY2_SINGLE_CATALOG_INVEST_V1 */
+const joy2BestInvestment = (p) => {
+ if(!isPublishedProject(p))return null;
+ const models=[];
+ for(const u of p.units||[]){if(!hasPublishedUnitInvestment(u))continue;const r=calculateInvestment({...u.investment,propertyTaxArea:Number(u.area)>0?Number(u.area):u.investment.lettableArea,taxCity:p.city});if(r.ok&&Number.isFinite(r.irrPercent))models.push(r);}
+ if(hasPublishedInvestment(p)){const r=calculateInvestment(p.investment);if(r.ok&&Number.isFinite(r.irrPercent))models.push(r);}
+ models.sort((a,b)=>b.irrPercent-a.irrPercent||b.netProfit-a.netProfit);
+ return models[0]||null;
+};
+
+const investmentRanking=(p)=>{
+ if(!isPublishedProject(p))return {irr:'',profit:''};
+ const results=[];
+ for(const u of (p.units||[])){if(u.published===false||u.investment?.published!==true)continue;const r=calculateInvestment(u.investment);if(r.ok&&Number.isFinite(r.irrPercent))results.push(r);}
+ if(p.investment?.published===true){const r=calculateInvestment(p.investment);if(r.ok&&Number.isFinite(r.irrPercent))results.push(r);}
+ results.sort((a,b)=>b.irrPercent-a.irrPercent||(b.netProfit||0)-(a.netProfit||0));
+ return results.length?{irr:String(results[0].irrPercent),profit:String(results[0].netProfit||0)}:{irr:'',profit:''};
+};
+// JOY2_CONTACTS_TELEGRAM_V2: URLs read only from property contact fields.
+const joy2TgHref=(property:any):string=>{
+ const raw=String(property?.contacts?.telegram||property?.telegramUrl||property?.telegram||'').trim();
+ if(!raw)return '';
+ let name=raw.replace(/^@/,'');
+ if(/^https?:\/\//i.test(raw)){try{const u=new URL(raw);if(!['t.me','telegram.me','www.t.me','www.telegram.me'].includes(u.hostname.toLowerCase())||u.protocol!=='https:'||u.username||u.password)return '';return u.href;}catch{return ''}}
+ else name=name.replace(/^(?:t\.me|telegram\.me)\//i,'');
+ return /^[A-Za-z0-9_]{5,32}$/.test(name)?'https://t.me/'+name:'';
+};
 const listings = sourceListings.map(item => localizeListing(item, lang));
 const base = lang === 'ru' ? '/' : `/${lang}/`;
 const copy = {
@@ -34,25 +64,61 @@ const cardFeature = (features: string[]) => features.find(feature => !/^(?:19|20
 const areaNeedsCheck = (index: number) => sourceListings[index].features.some(feature => /площад.*(уточн|провер)/i.test(feature));
 const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US';
 const categoryCount=(type:string)=>sourceListings.filter(item=>item.type===type).length;
+// JOY2_ARCA_INVEST_V3
+const joyCardInvestment=(listing)=>{
+ const valid=(m)=>{if(!m||m.published!==true)return null;try{const r=calculateInvestment(m);return r&&r.ok?r:null;}catch{return null;}};
+ const units=(listing.units||[]).filter(u=>u.published!==false).map(u=>valid(u.investment)).filter(Boolean);
+ const results=units.length?units:[valid(listing.investment)].filter(Boolean);
+ return {count:results.length,model:results.length===1?results[0]:null};
+};
+const joyCardInvestments=sourceListings.map(joyCardInvestment);
+const joyCardProfit=(n)=>{if(!Number.isFinite(n))return '—';const magnitude=Math.round(Math.abs(n)).toLocaleString('en-US');return (n<0?'−':'')+'$'+magnitude;};
+const joyCardIrr=(n)=>Number.isFinite(n)?n.toLocaleString(numberLocale,{minimumFractionDigits:1,maximumFractionDigits:1})+'%':'—';
 const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='en'?'No properties yet':'Hozircha obyektlar yo‘q';
+// JOY2_CARD_CANONICAL_V1: canonical catalog card and published financial metrics.
+const cardMoney=(n)=>Number.isFinite(n)?Math.round(n).toLocaleString('en-US')+' $':'—';
+const cardIrr=(n)=>Number.isFinite(n)?n.toLocaleString(numberLocale,{minimumFractionDigits:1,maximumFractionDigits:1})+'%':'—';
+const cardArea=(p)=>{const arr=(p.units||[]).filter(u=>u.published!==false&&Number(u.area)>0).map(u=>Number(u.area));if(!arr.length)return Number(p.area).toLocaleString(numberLocale)+' м²';const min=Math.min(...arr),max=Math.max(...arr);return (min===max?min.toLocaleString(numberLocale):min.toLocaleString(numberLocale)+'–'+max.toLocaleString(numberLocale))+' м²';};
+const cardPrice=(p)=>{if(p.units?.length){const v=p.units.filter(u=>u.published!==false).map(u=>Number(u.pricePerSqm)).filter(n=>Number.isFinite(n)&&n>0);if(v.length)return (lang==='ru'?'от ':lang==='uz'?'dan ':'from ')+Math.min(...v).toLocaleString('en-US',{maximumFractionDigits:0})+' $/м²';}return p.priceUsd==null?copy.price:'$'+Number(p.priceUsd).toLocaleString('en-US',{maximumFractionDigits:0});};
+const cardFinance=(p)=>{if(p.insestproject!==true)return null;const candidates=[];for(const u of p.units||[]){if(!hasPublishedUnitInvestment(u))continue;const r=calculateInvestment(u.investment);if(r.ok)candidates.push(r);}if(!candidates.length&&hasPublishedInvestment(p)){const r=calculateInvestment(p.investment);if(r.ok)candidates.push(r);}if(!candidates.length)return null;candidates.sort((a,b)=>(Number.isFinite(b.irrPercent)?b.irrPercent:-Infinity)-(Number.isFinite(a.irrPercent)?a.irrPercent:-Infinity)||(Number(b.netProfit)||0)-(Number(a.netProfit)||0));return candidates[0];};
 // OpenFreeMap requires no API key. Unverified coordinates are never invented.
+
+// JOY2_UNIFIED_CARDS_V1: card data follows published model values and admin investment toggle.
+const joy2UnifiedCardDataV1 = sourceListings.map(p => {
+ const isInvestment = p.insestproject === true;
+ const candidates = [];
+ if(isInvestment){
+   if(Array.isArray(p.units) && p.units.length){
+     for(const u of p.units){
+       if(u.published===false || u.investment?.published!==true)continue;
+       const r=calculateInvestment(u.investment);
+       if(r.ok && Number.isFinite(r.irrPercent) && Number.isFinite(r.netProfit))candidates.push(r);
+     }
+   }else if(p.investment?.published===true){
+     const r=calculateInvestment(p.investment);
+     if(r.ok && Number.isFinite(r.irrPercent) && Number.isFinite(r.netProfit))candidates.push(r);
+   }
+ }
+ candidates.sort((a,b)=>(b.irrPercent-a.irrPercent)||(b.netProfit-a.netProfit));
+ return {slug:p.slug,investment:isInvestment&&candidates.length>0,irr:candidates[0]?.irrPercent??null,profit:candidates[0]?.netProfit??null,status:p.status??null};
+});
 
 ---
 <header class:list={["jj-sitebar",{"jj-ref-header":!projects,"jj-project-header":projects}]}><div class="jj-shell jj-sitebar-in">
   <a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a>
-  <nav class="jj-primary-nav" aria-label={labels.catalog}><a class:list={{'is-current':!projects}} aria-current={!projects?'page':undefined} href={base+'#catalog'}>{investmentText.estate}</a><a class:list={{'is-current':projects}} aria-current={projects?'page':undefined} href={base+'projects/'}>{investmentText.projects}</a></nav>
+  <nav class="jj-primary-nav" aria-label={labels.catalog}><a class:list={{'is-current':!projects}} aria-current={!projects?'page':undefined} href={base+'#catalog'}>{investmentText.estate}</a><a class:list={{'is-current':projects}} aria-current={projects?'page':undefined} href={base+'?investment=1#catalog'}>{investmentText.projects}</a></nav>
   <div class="jj-sitebar-right"><button class="jj-saved-link" id="jj-saved-only" type="button" aria-label={copy.favorites} aria-pressed="false"><JoyIcon name="heart"/><span>{copy.favorites}</span><small id="jj-saved-count">0</small></button>
   <div class="jj-lang" aria-label="Language"><a href={projects?'/projects/':'/'} lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a><a href={projects?'/uz/projects/':'/uz/'} lang="uz" aria-current={lang==='uz'?'page':undefined}>UZ</a><a href={projects?'/en/projects/':'/en/'} lang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div></div>
 </div></header>
 <main class:list={[{"jj-ref-home":!projects}]}>
-  <nav class="jj-mobile-sections jj-shell" aria-label={lang==='ru'?'Разделы сайта':lang==='en'?'Site sections':'Sayt bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{lang==='ru'?'Недвижимость':lang==='en'?'Properties':'Obyektlar'}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{lang==='ru'?'Инвестиции':lang==='en'?'Investments':'Investitsiyalar'}</a></nav>
+  <nav class="jj-mobile-sections jj-shell" aria-label={lang==='ru'?'Разделы сайта':lang==='en'?'Site sections':'Sayt bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{lang==='ru'?'Недвижимость':lang==='en'?'Properties':'Obyektlar'}</a><a href={base+'?investment=1#catalog'} aria-current={projects?'page':undefined}>{lang==='ru'?'Инвестиции':lang==='en'?'Investments':'Investitsiyalar'}</a></nav>
   <!-- JOY2_HOME_REFERENCE_V1 -->
   {!projects?<section class="jj-ref-hero jj-shell" aria-label={lang==='ru'?'Недвижимость и инвестиции':lang==='uz'?'Ko‘chmas mulk va investitsiyalar':'Real estate and investments'}>
     
     <p class="jj-concept-kicker">{lang==='ru'?'Недвижимость Узбекистана.':lang==='uz'?'O‘zbekiston ko‘chmas mulki.':'Real estate in Uzbekistan.'}</p>
     <h1>{lang==='ru'?<>Недвижимость<span>.</span><br/><mark class="jj-concept-highlight">Инвестиции<span>.</span></mark></>:lang==='uz'?<>Ko‘chmas mulk<span>.</span><br/><mark class="jj-concept-highlight">Investitsiyalar<span>.</span></mark></>:<>Real Estate<span>.</span><br/><mark class="jj-concept-highlight">Investments<span>.</span></mark></>}</h1>
     <p>{lang==='ru'?'Коммерческие объекты и инвестиционные проекты Узбекистана':lang==='uz'?'O‘zbekistondagi tijorat obyektlari va investitsiya loyihalari':'Commercial properties and investment projects in Uzbekistan'}</p>
-    <div class="jj-ref-actions"><a class="jj-ref-cta" href={base+'projects/'}>{lang==='ru'?'Инвестиционные объекты':lang==='uz'?'Investitsiya obyektlari':'Investment properties'} <span aria-hidden="true">→</span></a><a class="jj-ref-cta jj-ref-cta-secondary" href="#catalog">{lang==='ru'?'Все объекты':lang==='uz'?'Barcha obyektlar':'All properties'} <span aria-hidden="true">→</span></a></div>
+    <div class="jj-ref-actions"><a class="jj-ref-cta" href={base+"?investment=1#catalog"}>{lang==='ru'?'Инвестиционные объекты':lang==='uz'?'Investitsiya obyektlari':'Investment properties'} <svg class="joy2-cta-real-arrow" data-joy2-direct-arrow="invest" xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 40" fill="none" aria-hidden="true"><path d="M5 20H50M35 5L50 20L35 35" stroke="currentColor" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="jj-ref-cta jj-ref-cta-secondary" href="#catalog">{lang==='ru'?'Все объекты':lang==='uz'?'Barcha obyektlar':'All properties'} <svg class="joy2-cta-real-arrow" data-joy2-direct-arrow="all" xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 40" fill="none" aria-hidden="true"><path d="M5 20H50M35 5L50 20L35 35" stroke="currentColor" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
   </section>:<section class="jj-intro jj-shell">
     <!-- JOY2_PROJECT_NAV_CLEANUP_V1 -->
     <div class="jj-intro-copy"><p class="jj-crumb jj-project-back"><a href={base} aria-label={lang==='ru'?'На главную':lang==='uz'?'Bosh sahifaga':'Back to home'}><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M20 12H9"/></svg><span>{lang==='ru'?'На главную':lang==='uz'?'Bosh sahifaga':'Back to home'}</span></a></p><h1 class="jj-market-heading"><span class="jj-market-full">{projects?investmentText.projects:investmentText.heading}</span><span class="jj-market-short">{projects?investmentText.projects:lang==='ru'?'Недвижимость и инвестиции':lang==='en'?'Property and investment':'Ko‘chmas mulk va investitsiyalar'}</span></h1><p class="jj-intro-text">{projects?investmentText.projectIntro:investmentText.intro}</p></div>
@@ -70,7 +136,7 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
       <strong>{lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}<small> · {categoryCount(item.type)}</small></strong>
     </a>)}
   </nav>}
-  {!projects&&<nav class="jj-shell jj-market-nav" aria-label={lang==='ru'?'Разделы каталога':lang==='en'?'Catalog sections':'Katalog bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{investmentText.estate}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{investmentText.projects}</a></nav>}
+  {!projects&&<nav class="jj-shell jj-market-nav" aria-label={lang==='ru'?'Разделы каталога':lang==='en'?'Catalog sections':'Katalog bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{investmentText.estate}</a><a href={base+'?investment=1#catalog'} aria-current={projects?'page':undefined}>{investmentText.projects}</a></nav>}
   
 
   
@@ -98,24 +164,22 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
  </div>
  <div class="jj-workspace" data-jj-mode="list">
   <div class="jj-card-grid" id="jj-results">
-   {listings.map((item,index)=><article class="jj-property-card" id={'jj-object-'+item.slug} data-slug={item.slug} data-index={index}
+   {listings.map((item,index)=><article class="jj-property-card" id={'jj-object-'+item.slug} data-slug={item.slug} data-index={index} data-investment={isPublishedProject(sourceListings[index])?"true":"false"} data-irr={investmentRanking(sourceListings[index]).irr} data-profit={investmentRanking(sourceListings[index]).profit}
     data-search={(item.title+' '+item.city+' '+item.district+' '+item.address+' '+item.description+' '+sourceListings[index].title+' '+sourceListings[index].address).toLocaleLowerCase()}
     data-type={item.type} data-status={item.status} data-area={item.units?.length?Math.min(...item.units.filter(u=>u.published!==false&&u.area>0).map(u=>u.area),item.area):item.area}
     data-price={item.units?.length?Math.min(...item.units.filter(u=>u.published!==false).map(u=>Number(u.area)*Number(u.pricePerSqm)).filter(n=>n>0)):item.priceUsd??''}>
-    <a class="jj-property-card-image" href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{item.images?.[0]?<img src={item.images[0]} alt={item.title} width="800" height="560" loading={index<3?'eager':'lazy'}/>:<span class="jj-image-placeholder">joyjoy.</span>}{(item.units?.some(u=>u.published!==false&&u.investment?.published===true&&calculateInvestment(u.investment).ok)||item.investment?.published===true&&calculateInvestment(item.investment).ok)&&<span class="jj-invest-ribbon">{lang==='ru'?'Инвестиционный расчёт':lang==='uz'?'Investitsiya hisobi bor':'Investment analysis'}</span>}{item.status&&<span class="jj-label-status">{copy[item.status]}</span>}{/* JOY2_TENANCY_RIBBON_V13 */}{(sourceListings[index].tenancyStatus==='leased'||sourceListings[index].units?.some(u=>u.tenancyStatus==='leased'&&u.investment?.published===true))?<span class="jj-tenancy-ribbon">{lang==='ru'?'С арендаторами':lang==='uz'?'Ijarachilar bilan':'Tenanted'}</span>:(sourceListings[index].tenancyStatus==='preliminary'||sourceListings[index].units?.some(u=>u.tenancyStatus==='preliminary'&&u.investment?.published===true))?<span class="jj-tenancy-ribbon is-preliminary">{lang==='ru'?'Предварительные условия':lang==='uz'?'Dastlabki shartlar':'Preliminary terms'}</span>:null}</a>
-    <button type="button" class="jj-save" data-jj-save={item.slug} aria-label={copy.favorite} aria-pressed="false"><JoyIcon name="heart"/></button>
-    <div class="jj-property-card-main">
+    <a class="jj-property-card-image" href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{item.images?.[0]?<img src={item.images[0]} alt={item.title} width="800" height="560" loading={index<3?'eager':'lazy'}/>:<span class="jj-image-placeholder">joyjoy.</span>}{isPublishedProject(sourceListings[index])&&<span class="jj-invest-ribbon">{lang==='ru'?'Инвестиционный расчёт':lang==='uz'?'Investitsiya hisobi bor':'Investment analysis'}</span>}{item.status&&<span class="jj-label-status">{copy[item.status]}</span>}{/* JOY2_TENANCY_RIBBON_V13 */}{(sourceListings[index].tenancyStatus==='leased'||sourceListings[index].units?.some(u=>u.tenancyStatus==='leased'&&u.investment?.published===true))?<span class="jj-tenancy-ribbon">{lang==='ru'?'С арендаторами':lang==='uz'?'Ijarachilar bilan':'Tenanted'}</span>:(sourceListings[index].tenancyStatus==='preliminary'||sourceListings[index].units?.some(u=>u.tenancyStatus==='preliminary'&&u.investment?.published===true))?<span class="jj-tenancy-ribbon is-preliminary">{lang==='ru'?'Предварительные условия':lang==='uz'?'Dastlabki shartlar':'Preliminary terms'}</span>:null}</a>
+    {/* JOY2_CONTACTS_TELEGRAM_V2: Telegram instead of favorites on property card. */}
+    {joy2TgHref(sourceListings[index])?<a class="jj-save jj-telegram-link" href={joy2TgHref(sourceListings[index])} target="_blank" rel="noopener noreferrer" aria-label={lang==='ru'?'Написать в Telegram':lang==='uz'?'Telegram orqali yozish':'Message on Telegram'} title="Telegram" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.5 3.4c-.3-.25-.75-.29-1.2-.1L2.6 10.1c-1.1.42-1.08 1.09-.2 1.36l4.55 1.42 1.76 5.42c.2.57.34.78.68.78.28 0 .45-.13.68-.35l2.17-2.11 4.52 3.34c.86.48 1.5.22 1.72-.8l3.06-14.32c.11-.56.02-1.06-.04-1.44ZM8 12.51l10.98-6.9-8.54 8.16-.33 3.52-2.11-4.78Z"/></svg></a>:<span class="jj-save jj-telegram-unavailable" title={lang==='ru'?'Telegram не указан':lang==='uz'?'Telegram ko‘rsatilmagan':'Telegram unavailable'} aria-label="Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.5 3.4c-.3-.25-.75-.29-1.2-.1L2.6 10.1c-1.1.42-1.08 1.09-.2 1.36l4.55 1.42 1.76 5.42c.2.57.34.78.68.78.28 0 .45-.13.68-.35l2.17-2.11 4.52 3.34c.86.48 1.5.22 1.72-.8l3.06-14.32c.11-.56.02-1.06-.04-1.44ZM8 12.51l10.98-6.9-8.54 8.16-.33 3.52-2.11-4.78Z"/></svg></span>}
+    <div class="jj-property-card-main jj-canonical-main">
      <div class="jj-card-overline">{names[item.type]||copy.other}<span>{item.city}</span></div>
      <h3><a href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{item.title}</a></h3>
-     <div class="jj-property-summary">
-      <span class="jj-area-sign"><b>{item.units?.length?(()=>{const a=item.units.filter(u=>u.published!==false&&u.area>0).map(u=>u.area);return a.length?Math.min(...a).toLocaleString(numberLocale)+'–'+Math.max(...a).toLocaleString(numberLocale):item.area.toLocaleString(numberLocale)})():item.area.toLocaleString(numberLocale)}</b> m²</span>
-      <span class:list={['jj-card-price',{'is-request':item.priceUsd===null&&!item.units?.length}]}>{item.units?.length?(lang==='ru'?'от ':lang==='uz'?'dan ':'from ')+(Math.min(...item.units.filter(u=>u.published!==false).map(u=>Number(u.pricePerSqm)).filter(n=>n>0))).toLocaleString('en-US',{maximumFractionDigits:0})+' $/м²':item.priceUsd===null?copy.price:'$'+item.priceUsd.toLocaleString('en-US',{maximumFractionDigits:0})}</span>
+     <div class="jj-property-summary jj-canonical-price-row">
+      <span class="jj-area-sign"><small>{lang==='ru'?'Площадь':lang==='uz'?'Maydon':'Area'}</small><b>{cardArea(item)}</b></span>
+      <span class="jj-card-price"><small>{lang==='ru'?'Цена':lang==='uz'?'Narx':'Price'}</small><b>{cardPrice(item)}</b></span>
      </div>
-     <p class="jj-property-address">{[item.district,item.address].filter(Boolean).join(' · ')||item.city}</p>
-     {item.units?.length>0&&<p class="jj-card-feature">{item.units.filter(u=>u.published!==false).length} {lang==='ru'?'вариантов в продаже':lang==='en'?'available units':'sotuvdagi joylar'}</p>}
-     {item.features?.length>0&&<p class:list={['jj-card-feature',{'is-caution':areaNeedsCheck(index)}]}>{areaNeedsCheck(index)?labels.areaVerify:cardFeature(item.features)}</p>}
-     
-     <div class="jj-card-bottom"><a href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{copy.detail}<JoyIcon name="arrow"/></a></div>
+     <div class="jj-canonical-address"><p class="jj-property-address">{[item.district,item.address].filter(Boolean).join(' · ')||item.city}</p></div>
+     {(()=>{const financial=cardFinance(sourceListings[index]);return financial?<div class="jj-canonical-bottom jj-canonical-invest"><div><small>IRR</small><strong>{cardIrr(financial.irrPercent)}</strong></div><div><small>{lang==='ru'?'Прибыль на проект':lang==='uz'?'Loyiha foydasi':'Project profit'}</small><strong>{cardMoney(financial.netProfit)}</strong></div></div>:item.status?<div class="jj-canonical-bottom jj-canonical-status"><small>{lang==='ru'?'Статус проекта':lang==='uz'?'Loyiha holati':'Project status'}</small><strong>{copy[item.status]}</strong></div>:null;})()}
     </div>
    </article>)}
   </div>
@@ -123,12 +187,30 @@ const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='e
  </div>
  <div class="jj-no-results" id="jj-empty" hidden><h3>{copy.nothing}</h3><button type="button" id="jj-clear-empty">{copy.clear}</button></div>
 </section>
+<!-- JOY2_SINGLE_UNIT_TOTAL_PRICE_V2 -->
+<script type="application/json" id="jj-single-unit-price-data" set:html={JSON.stringify(sourceListings.map(p=>{const units=Array.isArray(p.units)?p.units.filter(u=>u.published!==false):[];if(units.length!==1)return null;const u=units[0];const direct=Number(p.priceUsd);const computed=Number(u.area)*Number(u.pricePerSqm);const total=p.priceUsd!==null&&p.priceUsd!==undefined&&Number.isFinite(direct)&&direct>0?direct:computed;return Number.isFinite(total)&&total>0?{slug:p.slug,price:total}:null}).filter(Boolean)).replace(/</g,'\u003c')}></script>
+<script src="/js/joy2-single-unit-total-price.js" defer></script>
+
+
+<script is:inline>
+/* JOY2_HERO_BOTH_FONT_INLINE_FIX_V1: neutralize older inline 32px override without altering arrow elements */
+(()=>{
+ const sync=()=>{for(const a of document.querySelectorAll('.jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta')){
+  a.style.setProperty('font-size',matchMedia('(max-width:700px)').matches?'14.95px':'24.15px','important');
+  a.style.setProperty('font-weight','800','important');
+ }};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});else sync();
+ window.addEventListener('load',sync,{once:true});window.addEventListener('resize',sync,{passive:true});
+})();
+</script>
 </main>
 <!-- JOY2_CATALOG_FOUR_LIME_V2 -->
-<script src="/js/joy2-quick-filters.js" defer></script>
+
 <footer class="jj-bottom"><div class="jj-shell"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><p>{lang==='ru'?'Условия покупки и исходные параметры уточняйте у продавца. Источники указаны в объявлениях.':lang==='en'?'Confirm purchase terms and inputs with the seller. Sources are listed on the property pages.':'Xarid shartlari va parametrlarini sotuvchi bilan aniqlang. Manbalar e’lonlarda ko‘rsatilgan.'}</p><span>© {new Date().getFullYear()}</span></div></footer>
 {projects&&<script type="application/json" id="jj-project-fx-data" set:html={JSON.stringify(sourceListings.filter(isPublishedProject).map(x=>({slug:x.slug,investment:x.investment}))).replace(/</g,'\\u003c')}></script>}
 {projects&&<script src="/js/joyjoy-project-fx.js" type="module"></script>}
+<script type="application/json" id="joy2-unified-card-data-v1" set:html={JSON.stringify(joy2UnifiedCardDataV1).replace(/</g,"\u003c")}></script>
+<script type="application/json" id="jj-hero-investment-ranks" set:html={JSON.stringify(Object.fromEntries(sourceListings.map(p=>{const selected=p.insestproject===true||(p.insestproject===undefined&&p.showProjects===true);const valid=selected&&isPublishedProject({...p,insestproject:true,showProjects:true});let highest=null; if(valid){const models=[...(Array.isArray(p.units)?p.units.filter(u=>u.published!==false&&u.investment?.published===true).map(u=>({...u.investment,propertyTaxArea:u.area,taxCity:p.city})):[]),...(p.investment?.published===true?[p.investment]:[])];for(const m of models){const r=calculateInvestment(m);if(r.ok&&Number.isFinite(r.irrPercent)&&(!highest||r.irrPercent>highest.irr||(r.irrPercent===highest.irr&&(r.netProfit||0)>highest.profit)))highest={irr:r.irrPercent,profit:r.netProfit||0}}}return [p.slug,{investment:!!valid,irr:highest?.irr??null,profit:highest?.profit??null}]}))).replace(/</g,'\u003c')}></script>
 <script type="application/json" id="jj-map-data" set:html={JSON.stringify(mapData).replace(/</g,'\\u003c')}></script>
 <script type="application/json" id="jj-i18n-data" set:html={JSON.stringify({found:copy.found,mapMissing:copy.mapMissing,mapFailed:copy.mapFailed,noCoords:labels.mapHelp,price:copy.price,detail:copy.detail,total:listings.length,lang})}></script>
 <script is:inline>
@@ -165,10 +247,42 @@ document.addEventListener('click',event=>{
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restore,{once:true});else restore();
 })();
 </script>
+<!-- JOY2_ALL_OBJECTS_SCROLL_V1 -->
+<script is:inline>
+(()=>{
+  document.addEventListener('click',function(event){
+    const link=event.target.closest?.('.jj-ref-actions .jj-ref-cta-secondary[href="#catalog"]');
+    if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    const catalog=document.getElementById('catalog');if(!catalog)return;
+    event.preventDefault();
+    if(location.hash!=='#catalog')history.pushState(null,'','#catalog');
+    const top=Math.max(0,catalog.getBoundingClientRect().top+window.scrollY);
+    window.scrollTo({top,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  });
+})();
+</script>
+<script id="jj-investment-sort-data" type="application/json" set:html={JSON.stringify(sourceListings.map(p=>{const result=joy2BestInvestment(p);return {slug:p.slug,active:!!result,irr:result?.irrPercent??null,profit:result?.netProfit??null};})).replace(/</g,'\\u003c')}></script>
+<script is:inline>
+/* JOY2_SINGLE_CATALOG_INVEST_V1: cards receive their investment sort keys before deferred catalog scripts run. */
+(()=>{try{const e=document.getElementById('jj-investment-sort-data');if(!e)return;for(const r of JSON.parse(e.textContent)){const c=document.getElementById('jj-object-'+r.slug);if(!c)continue;c.dataset.investment=r.active?'true':'false';c.dataset.irr=r.irr===null?'':String(r.irr);c.dataset.profit=r.profit===null?'':String(r.profit);}}catch(e){console.warn('Joy2 investment listing data:',e)}})();
+</script>
 <script src="/js/joyjoy-marketplace.js" defer></script>
 <script src="/js/joy2-catalog-polish.js" defer></script>
 
 <script src="/js/joyjoy-unslop-stage1.js" defer></script>
 <script src="/js/joyjoy-maplibre.js" defer></script>
 <script src="/js/joy2-catalog-refine.js" defer></script>
+<script src="/js/joy2-invest-navigation-v3.js" defer></script>
 <script src="/js/joy2-filter-overlay-close.js" defer></script>
+<script src="/js/joy2-ribbon-text-fix-v4.js" defer></script>
+<link rel="stylesheet" href="/css/joy2-card-match.css" />
+<script type="application/json" id="jj-card-match-data" set:html={JSON.stringify(joyCardMatchData).replace(/</g,'\\u003c')}></script>
+<script src="/js/joy2-card-match.js" defer></script>
+
+<script src="/js/joy2-card-unified-v1.js" defer></script>
+
+<script src="/js/joy2-sticky-catalog.js" defer></script>
+
+
+
+<script src="/js/joy2-hero-investment-entrance-v5.js" defer></script>

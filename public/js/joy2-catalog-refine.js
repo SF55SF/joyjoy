@@ -77,25 +77,10 @@
       if(el===top||el===advanced||el.id==='jj-active-filters')continue;
       el.classList.add('jj-rf-legacy-hidden');
     }
-    const state={marketSlugs:null};let broadcasting=false;
-    function investmentVisibility(){
-      if(state.marketSlugs===null) return;
-      const cards=[...grid.querySelectorAll('.jj-property-card')];
-      const selected=state.marketSlugs.filter(slug=>{
-        const card=cards.find(x=>x.dataset.slug===slug);
-        return card&&(!inv.checked||Boolean(card.querySelector('.jj-invest-ribbon')));
-      });
-      for(const c of cards)c.hidden=!selected.includes(c.dataset.slug);
-      const counter=get('jj-count');if(counter){const before=counter.textContent||'';counter.textContent=before.replace(/\d+\s*$/,String(selected.length));}
-      const empty=get('jj-empty');if(empty)empty.hidden=selected.length>0;
-      if(!broadcasting){broadcasting=true;window.dispatchEvent(new CustomEvent('joyjoy:filter-change',{detail:{slugs:selected,joy2Refined:true}}));broadcasting=false;}
-    }
-    window.addEventListener('joyjoy:filter-change',e=>{
-      if(e.detail?.joy2Refined||!Array.isArray(e.detail?.slugs))return;
-      state.marketSlugs=e.detail.slugs;
-      investmentVisibility();
-    });
-    inv.addEventListener('change',investmentVisibility);
+    // JOY2_INVEST_CATALOG_NAV_FIX_V3: one checkbox and one filtering engine.
+    inv.id='jj-investment-only';
+    inv.checked=new URLSearchParams(location.search).get('investment')==='1';
+    inv.addEventListener('change',()=>get('jj-type')?.dispatchEvent(new Event('change',{bubbles:true})));
     document.addEventListener('click',e=>{if(!top.contains(e.target))closeAll();
       const card=e.target?.closest?.('.jj-property-card');if(!card)return;
       if(e.target.closest('a,button,input,select,textarea,label,[role="button"]'))return;
@@ -110,7 +95,7 @@
       card.tabIndex=0;card.setAttribute('role','link');card.classList.add('jj-rf-clickable');
       const foot=card.querySelector('.jj-card-bottom');if(foot)foot.hidden=true;
     }
-    form.addEventListener('reset',()=>{inv.checked=false;setTimeout(()=>{typeUI.paint();priceUI.paint();areaUI.paint();investmentVisibility()},0)});
+    form.addEventListener('reset',()=>{inv.checked=false;setTimeout(()=>{typeUI.paint();priceUI.paint();areaUI.paint();get('jj-type')?.dispatchEvent(new Event('change',{bubbles:true}))},0)});
     document.addEventListener('click',e=>{if(e.target.closest('#jj-reset, #jj-clear-empty'))inv.checked=false},true);
     // Include original mapping whenever filters were initialized before this enhancement.
     const refreshMarket=()=>{get('jj-type')?.dispatchEvent(new Event('change',{bubbles:true}))};

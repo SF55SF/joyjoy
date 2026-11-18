@@ -38,5 +38,5 @@ const image=Astro.props.image;
 <meta name="apple-mobile-web-app-title" content="Joy²" />
 </head>
 <body><slot /><script src="/js/joyjoy-money-display.js" defer></script>
-</body>
+<script is:inline>/* JOY2_SINGLE_CATALOG_INVEST_V1 site navigation */document.addEventListener('click',function(e){const a=e.target?.closest?.('a[href]');if(!a)return;let u;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin||!/^\/(?:uz\/|en\/)?projects\/?$/.test(u.pathname))return;e.preventDefault();const lang=document.documentElement.lang;location.assign((lang==='uz'?'/uz/':lang==='en'?'/en/':'/')+'?investment=1#catalog');},false);</script></body>
 </html>

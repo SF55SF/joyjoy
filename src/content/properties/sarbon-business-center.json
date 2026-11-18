@@ -7,7 +7,7 @@
   "lat": 41.2861155,
   "lng": 69.414938,
   "type": "office",
-  "status": null,
+  "status": "existing",
   "area": 16768,
   "priceUsd": null,
   "images": [
@@ -24,5 +24,5 @@
   "order": 9,
   "published": true,
   "showCatalog": true,
-  "showProjects": false
+  "insestproject": false
 }

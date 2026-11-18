@@ -5,7 +5,7 @@ import {validateProperty,isPublishedProject} from '../../public/js/joyjoy-invest
 export type PropertyType = 'office' | 'retail' | 'warehouse' | 'land';
 export type PropertyStatus = 'existing' | 'under_construction' | null;
 export interface Listing {
- published?: boolean; showCatalog?: boolean; showProjects?: boolean; order?: number;
+ published?: boolean; showCatalog?: boolean; insestproject?: boolean; order?: number;
  translations?: Partial<Record<'uz'|'en',Partial<Pick<Listing,'title'|'city'|'district'|'address'|'description'|'features'>>>>;
  investment?: Record<string,any> | null;
  units?: Array<Record<string,any>>;
@@ -25,7 +25,8 @@ export const allListings: Listing[] = Object.entries(files).map(([path,value])=>
  return item;
 }).sort((a,b)=>(a.order??0)-(b.order??0)||a.slug.localeCompare(b.slug));
 if(new Set(allListings.map(x=>x.slug)).size!==allListings.length)throw new Error('Duplicate property slug');
-export const listings: Listing[] = allListings.filter(item=>item.published!==false&&(item.showCatalog!==false||isPublishedProject(item)));
+/* JOY2_ALL_PUBLISHED_CATALOG_INVEST_V1 */
+export const listings: Listing[] = allListings.filter(item=>item.published!==false);
 export function getListing(slug: string): Listing | undefined {
   return listings.find((item) => item.slug === slug);
 }

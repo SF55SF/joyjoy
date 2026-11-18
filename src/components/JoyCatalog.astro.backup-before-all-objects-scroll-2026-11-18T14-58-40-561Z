@@ -1,0 +1,174 @@
+---
+// JOYJOY_LOOPNET_CATALOG_V5
+import { listings as availableListings } from '../data/listings';
+import {isPublishedProject,calculateInvestment} from '../../public/js/joyjoy-investment-model.js';
+import {investmentCopy} from '../../public/js/joyjoy-investment-copy.js';
+import { localizeListing } from '../data/listing-translations';
+import JoyIcon from './JoyIcon.astro';
+import JoyInvestmentRows from './JoyInvestmentRows.astro';
+// JOY2_INVESTMENT_DIRECTORY_V19
+import type { Lang } from '../lib/i18n';
+const lang = (Astro.props.lang ?? 'ru') as Lang;
+const projects = Astro.props.projects === true;
+const investmentText = investmentCopy[lang];
+const sourceListings = availableListings.filter(item=>projects?isPublishedProject(item):item.showCatalog!==false);
+const unitMinPrice=(p)=>p.units?.length?Math.min(...p.units.filter(u=>u.published!==false).map(u=>u.area*u.pricePerSqm)):p.priceUsd;
+const unitAreaRange=(p)=>p.units?.length?(()=>{const a=p.units.filter(u=>u.published!==false).map(u=>u.area);return Math.min(...a).toLocaleString('ru-RU')+'–'+Math.max(...a).toLocaleString('ru-RU')})():null;
+const projectIrr=(p)=>{const m=(p.units||[]).filter(u=>u.investment?.published).map(u=>calculateInvestment(u.investment)).filter(r=>r.ok&&r.irrPercent!==null).map(r=>r.irrPercent);if(!m.length&&p.investment){const r=calculateInvestment(p.investment);if(r.ok&&r.irrPercent!==null)m.push(r.irrPercent);}return m.length?Math.min(...m).toFixed(1)+(m.length>1?'–'+Math.max(...m).toFixed(1):'')+'%':'—';};
+const listings = sourceListings.map(item => localizeListing(item, lang));
+const base = lang === 'ru' ? '/' : `/${lang}/`;
+const copy = {
+  ru: {market:'Коммерческая недвижимость',sale:'Продажа',title:'Коммерческая недвижимость на продажу',intro:'Подберите помещение для бизнеса или инвестиций в Узбекистане',q:'Город, район, адрес или название',category:'Тип недвижимости',all:'Все типы',office:'Офисы',retail:'Ритейл',warehouse:'Склады',industrial:'Производство',building:'Здание',land:'Земля',other:'Другое',min:'Площадь от, м²',max:'Площадь до, м²',minPrice:'Цена от, $',maxPrice:'Цена до, $',unknown:'Включая цены по запросу',status:'Стадия строительства',existing:'Существующий',under_construction:'Строящийся',search:'Найти',reset:'Сбросить',found:'Найдено объектов',results:'Объекты',sort:'Сортировка',default:'По умолчанию',priceAsc:'Сначала дешевле',priceDesc:'Сначала дороже',areaDesc:'Площадь: по убыванию',areaAsc:'Площадь: по возрастанию',list:'Список',split:'Список + карта',map:'Карта',mapTitle:'Расположение объектов',searchArea:'Искать в этой области',resetArea:'Сбросить область',mapNote:'Расположение по данным объявлений',noCoords:'Пока нет объектов с подтверждёнными координатами',detail:'Смотреть объект',price:'Цена по запросу',clear:'Очистить фильтры',nothing:'По выбранным параметрам ничего не найдено',favorites:'Избранное',favorite:'В избранное',source:'Источник',mapMissing:'Карта временно недоступна',mapFailed:'Не удалось загрузить карту',notMapped:'Без координат',photos:'Фотографии объектов',disclaimer:'Предложения и параметры уточняйте у продавца. Информация об объектах носит справочный характер.'},
+  uz: {market:'Tijorat ko‘chmas mulki',sale:'Sotuv',title:'Sotuvdagi tijorat ko‘chmas mulki',intro:'O‘zbekistonda biznes yoki investitsiya uchun obyekt toping',q:'Shahar, tuman, manzil yoki nom',category:'Mulk turi',all:'Barcha turlar',office:'Ofislar',retail:'Riteyl',warehouse:'Omborlar',industrial:'Ishlab chiqarish',building:'Bino',land:'Yer',other:'Boshqa',min:'Maydon, m² dan',max:'Maydon, m² gacha',minPrice:'Narx, $ dan',maxPrice:'Narx, $ gacha',unknown:'So‘rov asosidagi narxlarni kiritish',status:'Qurilish holati',existing:'Mavjud',under_construction:'Qurilmoqda',search:'Qidirish',reset:'Tozalash',found:'Obyektlar soni',results:'Obyektlar',sort:'Saralash',default:'Standart',priceAsc:'Arzonidan',priceDesc:'Qimmatidan',areaDesc:'Maydon: kattasidan',areaAsc:'Maydon: kichigidan',list:'Ro‘yxat',split:'Ro‘yxat + xarita',map:'Xarita',mapTitle:'Obyektlar xaritada',searchArea:'Shu hududda qidirish',resetArea:'Hududni tozalash',mapNote:'Joylashuv e’lonlar asosida ko‘rsatilgan',noCoords:'Tasdiqlangan koordinatali obyektlar hozircha yo‘q',detail:'Obyektni ko‘rish',price:'Narx so‘rov asosida',clear:'Filtrlarni tozalash',nothing:'Mos obyektlar topilmadi',favorites:'Saqlanganlar',favorite:'Saqlash',source:'Источник',mapMissing:'Xarita vaqtincha ishlamayapti',mapFailed:'Xaritani yuklab bo‘lmadi',notMapped:'Koordinatasiz',photos:'Obyekt suratlari',disclaimer:'Taklif va parametrlarni sotuvchi bilan aniqlang. Ma’lumotlar ma’lumot uchun berilgan.'},
+  en: {market:'Commercial real estate',sale:'For sale',title:'Commercial properties for sale',intro:'Explore spaces for business and investment in Uzbekistan',q:'City, district, address or property',category:'Property type',all:'All types',office:'Offices',retail:'Retail',warehouse:'Warehouses',industrial:'Industrial',building:'Building',land:'Land',other:'Other',min:'Min area, m²',max:'Max area, m²',minPrice:'Min price, $',maxPrice:'Max price, $',unknown:'Include price on request',status:'Construction status',existing:'Existing',under_construction:'Under construction',search:'Search',reset:'Reset',found:'Properties found',results:'Listings',sort:'Sort by',default:'Default',priceAsc:'Price: low to high',priceDesc:'Price: high to low',areaDesc:'Area: largest first',areaAsc:'Area: smallest first',list:'List',split:'List + map',map:'Map',mapTitle:'Property locations',searchArea:'Search this area',resetArea:'Clear map area',mapNote:'Locations from the property listings',noCoords:'No listings with verified coordinates yet',detail:'View property',price:'Price on request',clear:'Clear filters',nothing:'No listings match your search',favorites:'Saved',favorite:'Save property',source:'Источник',mapMissing:'Map temporarily unavailable',mapFailed:'Unable to load the map',notMapped:'No coordinates',photos:'Property photos',disclaimer:'Confirm pricing and availability with seller. Property details are for information only.'}
+}[lang];
+const types = ['retail','office','warehouse','land'] as const;
+const names = Object.fromEntries(types.map(k=>[k,copy[k]]));
+const mapData = listings.filter(x => Number.isFinite(x.lat) && Number.isFinite(x.lng) && Math.abs(x.lat!)<=90 && Math.abs(x.lng!)<=180).map(x=>({slug:x.slug,title:x.title,address:x.address,lat:x.lat,lng:x.lng,price:x.priceUsd,area:x.area,image:x.images?.[0]||'',url:base+'listing/'+encodeURIComponent(x.slug)+'/'}));
+const labels = {
+ ru:{title:'Коммерческая недвижимость',intro:'Офисы, торговые помещения и здания на продажу',catalog:'Каталог',location:'Город, адрес или объект',filters:'Фильтры',range:'Площадь и цена',allFilters:'Все фильтры',featured:'В каталоге',area:'Площадь, м²',budget:'Бюджет, $',from:'От',to:'До',mapHelp:'У объявлений пока нет подтверждённых координат. Все объекты доступны в каталоге',list:'Каталог',split:'С картой',map:'Карта',source:'Источник данных',anyStatus:'Любой статус',areaVerify:'Площадь требует уточнения'},
+ uz:{title:'Tijorat ko‘chmas mulki',intro:'Sotuvdagi ofislar, savdo maydonlari va binolar',catalog:'Katalog',location:'Shahar, manzil yoki obyekt',filters:'Filtrlar',range:'Maydon va narx',allFilters:'Barcha filtrlar',featured:'Katalogda',area:'Maydon, m²',budget:'Byudjet, $',from:'Dan',to:'Gacha',mapHelp:'E’lonlarning koordinatalari hali tasdiqlanmagan. Barcha obyektlar katalogda mavjud',list:'Katalog',split:'Xarita bilan',map:'Xarita',source:'Ma’lumot manbasi',anyStatus:'Istalgan holat',areaVerify:'Maydonni aniqlashtirish kerak'},
+ en:{title:'Commercial real estate',intro:'Offices, retail spaces and buildings for sale',catalog:'Catalog',location:'City, address or property',filters:'Filters',range:'Area and price',allFilters:'All filters',featured:'In the catalog',area:'Area, m²',budget:'Budget, $',from:'From',to:'To',mapHelp:'Listing coordinates have not been verified yet. All properties remain available in the catalog',list:'Catalog',split:'With map',map:'Map',source:'Data source',anyStatus:'Any status',areaVerify:'Area requires confirmation'}
+}[lang];
+const cardFeature = (features: string[]) => features.find(feature => !/^(?:19|20)\d{2}/.test(feature)) || features[0];
+const areaNeedsCheck = (index: number) => sourceListings[index].features.some(feature => /площад.*(уточн|провер)/i.test(feature));
+const numberLocale = lang === 'ru' ? 'ru-RU' : lang === 'uz' ? 'uz-UZ' : 'en-US';
+const categoryCount=(type:string)=>sourceListings.filter(item=>item.type===type).length;
+const noCategoryObjects=lang==='ru'?'Пока нет объектов':lang==='en'?'No properties yet':'Hozircha obyektlar yo‘q';
+// OpenFreeMap requires no API key. Unverified coordinates are never invented.
+
+---
+<header class:list={["jj-sitebar",{"jj-ref-header":!projects,"jj-project-header":projects}]}><div class="jj-shell jj-sitebar-in">
+  <a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a>
+  <nav class="jj-primary-nav" aria-label={labels.catalog}><a class:list={{'is-current':!projects}} aria-current={!projects?'page':undefined} href={base+'#catalog'}>{investmentText.estate}</a><a class:list={{'is-current':projects}} aria-current={projects?'page':undefined} href={base+'projects/'}>{investmentText.projects}</a></nav>
+  <div class="jj-sitebar-right"><button class="jj-saved-link" id="jj-saved-only" type="button" aria-label={copy.favorites} aria-pressed="false"><JoyIcon name="heart"/><span>{copy.favorites}</span><small id="jj-saved-count">0</small></button>
+  <div class="jj-lang" aria-label="Language"><a href={projects?'/projects/':'/'} lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a><a href={projects?'/uz/projects/':'/uz/'} lang="uz" aria-current={lang==='uz'?'page':undefined}>UZ</a><a href={projects?'/en/projects/':'/en/'} lang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div></div>
+</div></header>
+<main class:list={[{"jj-ref-home":!projects}]}>
+  <nav class="jj-mobile-sections jj-shell" aria-label={lang==='ru'?'Разделы сайта':lang==='en'?'Site sections':'Sayt bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{lang==='ru'?'Недвижимость':lang==='en'?'Properties':'Obyektlar'}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{lang==='ru'?'Инвестиции':lang==='en'?'Investments':'Investitsiyalar'}</a></nav>
+  <!-- JOY2_HOME_REFERENCE_V1 -->
+  {!projects?<section class="jj-ref-hero jj-shell" aria-label={lang==='ru'?'Недвижимость и инвестиции':lang==='uz'?'Ko‘chmas mulk va investitsiyalar':'Real estate and investments'}>
+    
+    <p class="jj-concept-kicker">{lang==='ru'?'Недвижимость Узбекистана.':lang==='uz'?'O‘zbekiston ko‘chmas mulki.':'Real estate in Uzbekistan.'}</p>
+    <h1>{lang==='ru'?<>Недвижимость<span>.</span><br/><mark class="jj-concept-highlight">Инвестиции<span>.</span></mark></>:lang==='uz'?<>Ko‘chmas mulk<span>.</span><br/><mark class="jj-concept-highlight">Investitsiyalar<span>.</span></mark></>:<>Real Estate<span>.</span><br/><mark class="jj-concept-highlight">Investments<span>.</span></mark></>}</h1>
+    <p>{lang==='ru'?'Коммерческие объекты и инвестиционные проекты Узбекистана':lang==='uz'?'O‘zbekistondagi tijorat obyektlari va investitsiya loyihalari':'Commercial properties and investment projects in Uzbekistan'}</p>
+    <div class="jj-ref-actions"><a class="jj-ref-cta" href={base+'projects/'}>{lang==='ru'?'Инвестиционные объекты':lang==='uz'?'Investitsiya obyektlari':'Investment properties'} <span aria-hidden="true">→</span></a><a class="jj-ref-cta jj-ref-cta-secondary" href="#catalog">{lang==='ru'?'Все объекты':lang==='uz'?'Barcha obyektlar':'All properties'} <span aria-hidden="true">→</span></a></div>
+  </section>:<section class="jj-intro jj-shell">
+    <!-- JOY2_PROJECT_NAV_CLEANUP_V1 -->
+    <div class="jj-intro-copy"><p class="jj-crumb jj-project-back"><a href={base} aria-label={lang==='ru'?'На главную':lang==='uz'?'Bosh sahifaga':'Back to home'}><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M20 12H9"/></svg><span>{lang==='ru'?'На главную':lang==='uz'?'Bosh sahifaga':'Back to home'}</span></a></p><h1 class="jj-market-heading"><span class="jj-market-full">{projects?investmentText.projects:investmentText.heading}</span><span class="jj-market-short">{projects?investmentText.projects:lang==='ru'?'Недвижимость и инвестиции':lang==='en'?'Property and investment':'Ko‘chmas mulk va investitsiyalar'}</span></h1><p class="jj-intro-text">{projects?investmentText.projectIntro:investmentText.intro}</p></div>
+  </section>}
+  <!-- JOYJOY_UNSLOP_SEARCH_FIRST_V1 -->
+  
+  {!projects&&<nav class="jj-ref-panels" aria-label={lang==='ru'?'Категории недвижимости':lang==='uz'?'Mulk toifalari':'Property categories'}>
+    {([
+      {type:'office',ru:'Офисы',uz:'Ofislar',en:'Offices',photo:sourceListings.find(x=>x.type==='office')?.images?.[0]},
+      {type:'retail',ru:'Ритейл',uz:'Savdo',en:'Retail',photo:sourceListings.find(x=>x.type==='retail')?.images?.[0]},
+      {type:'warehouse',ru:'Склады',uz:'Omborlar',en:'Warehouses',photo:sourceListings.find(x=>x.type==='warehouse')?.images?.[0]},
+      {type:'land',ru:'Участки',uz:'Yer uchastkalari',en:'Land',photo:sourceListings.find(x=>x.type==='land')?.images?.[0]}
+    ] as const).map(item=><a class="jj-ref-panel" href="#catalog" data-jj-hero-type={item.type} aria-label={lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}>
+      {item.photo?<img src={item.photo} alt="" loading="eager" decoding="async"/>:<span class="jj-category-empty">{noCategoryObjects}</span>}
+      <strong>{lang==='ru'?item.ru:lang==='uz'?item.uz:item.en}<small> · {categoryCount(item.type)}</small></strong>
+    </a>)}
+  </nav>}
+  {!projects&&<nav class="jj-shell jj-market-nav" aria-label={lang==='ru'?'Разделы каталога':lang==='en'?'Catalog sections':'Katalog bo‘limlari'}><a href={base} aria-current={!projects?'page':undefined}>{investmentText.estate}</a><a href={base+'projects/'} aria-current={projects?'page':undefined}>{investmentText.projects}</a></nav>}
+  
+
+  
+<!-- JOY2_CASHFLOWS_FILTERS_V8: the All properties link lands on filters -->
+{projects&&<JoyInvestmentRows lang={lang}/> }
+  <section id="catalog" class="jj-filter-shell" hidden={projects}><div class="jj-shell"><form id="jj-filters" class="jj-filter-form" role="search" aria-label={copy.search}>
+    <label class="jj-field jj-field-search"><span>{labels.location}</span><div class="jj-input-icon jj-input-icon-no-search"><input id="jj-q" type="search" placeholder={lang==='ru'?'Например, Ташкент или Trilliant':lang==='uz'?'Masalan, Toshkent yoki Trilliant':'Try Tashkent or Trilliant'} autocomplete="off"/></div></label>
+    <label class="jj-field"><span>{copy.category}</span><select id="jj-type"><option value="">{copy.all}</option>{types.map(type=><option value={type}>{names[type]}</option>)}</select></label>
+    <button class="jj-more-filters" aria-label={labels.filters} type="button" id="jj-more-filters" aria-controls="jj-advanced-filters" aria-expanded="false"><JoyIcon name="filters"/><span>{labels.allFilters}</span><small id="jj-filter-counter" hidden>0</small></button>
+    
+    <div class="jj-advanced-filters" id="jj-advanced-filters" hidden>
+      <fieldset class="jj-range"><legend>{labels.area}</legend><div><label><span>{labels.from}</span><input id="jj-area-min" aria-label={copy.min} type="number" min="0" step="1" placeholder="0"/></label><label><span>{labels.to}</span><input id="jj-area-max" aria-label={copy.max} type="number" min="0" step="1" placeholder="—"/></label></div></fieldset>
+      <fieldset class="jj-range"><legend>{labels.budget}</legend><div><label><span>{labels.from}</span><input id="jj-price-min" aria-label={copy.minPrice} type="number" min="0" step="1" placeholder="0"/></label><label><span>{labels.to}</span><input id="jj-price-max" aria-label={copy.maxPrice} type="number" min="0" step="1" placeholder="—"/></label></div></fieldset>
+      <div class="jj-filter-options"><label class="jj-field"><span>{copy.status}</span><select id="jj-status"><option value="">{labels.anyStatus}</option><option value="existing">{copy.existing}</option><option value="under_construction">{copy.under_construction}</option></select></label><label class="jj-price-unknown"><input id="jj-unknown" type="checkbox" checked/>{copy.unknown}</label></div>
+    </div>
+    <div id="jj-active-filters" class="jj-active-filters" hidden aria-live="polite"></div>
+  </form></div></section>
+  <section class="jj-shell jj-listing-section" id="catalog-results" hidden={projects&&listings.length===0}>
+ <div class="jj-catalog-toolbar">
+  <div class="jj-listing-heading">
+   <div class="jj-results-title"><h2>{labels.catalog}</h2><p id="jj-count" aria-live="polite">{copy.found}: {listings.length}</p></div>
+   <div class="jj-listing-actions"><label><span class="jj-sort-label">{copy.sort}</span><select id="jj-sort" aria-label={copy.sort}><option value="default">{copy.default}</option><option value="priceAsc">{copy.priceAsc}</option><option value="priceDesc">{copy.priceDesc}</option><option value="areaDesc">{copy.areaDesc}</option><option value="areaAsc">{copy.areaAsc}</option></select></label><button type="button" id="jj-reset" hidden>{copy.reset}</button></div>
+  </div>
+  <div class="jj-catalog-tools"><div class="jj-view-switch" role="group" aria-label={labels.catalog}><button type="button" data-jj-view="list" aria-pressed="true"><JoyIcon name="grid"/><span>{labels.list}</span></button><button type="button" data-jj-view="split" aria-pressed="false"><JoyIcon name="split"/><span>{labels.split}</span></button><button type="button" data-jj-view="map" aria-pressed="false"><JoyIcon name="map"/><span>{labels.map}</span></button></div></div>
+ </div>
+ <div class="jj-workspace" data-jj-mode="list">
+  <div class="jj-card-grid" id="jj-results">
+   {listings.map((item,index)=><article class="jj-property-card" id={'jj-object-'+item.slug} data-slug={item.slug} data-index={index}
+    data-search={(item.title+' '+item.city+' '+item.district+' '+item.address+' '+item.description+' '+sourceListings[index].title+' '+sourceListings[index].address).toLocaleLowerCase()}
+    data-type={item.type} data-status={item.status} data-area={item.units?.length?Math.min(...item.units.filter(u=>u.published!==false&&u.area>0).map(u=>u.area),item.area):item.area}
+    data-price={item.units?.length?Math.min(...item.units.filter(u=>u.published!==false).map(u=>Number(u.area)*Number(u.pricePerSqm)).filter(n=>n>0)):item.priceUsd??''}>
+    <a class="jj-property-card-image" href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{item.images?.[0]?<img src={item.images[0]} alt={item.title} width="800" height="560" loading={index<3?'eager':'lazy'}/>:<span class="jj-image-placeholder">joyjoy.</span>}{(item.units?.some(u=>u.published!==false&&u.investment?.published===true&&calculateInvestment(u.investment).ok)||item.investment?.published===true&&calculateInvestment(item.investment).ok)&&<span class="jj-invest-ribbon">{lang==='ru'?'Инвестиционный расчёт':lang==='uz'?'Investitsiya hisobi bor':'Investment analysis'}</span>}{item.status&&<span class="jj-label-status">{copy[item.status]}</span>}{/* JOY2_TENANCY_RIBBON_V13 */}{(sourceListings[index].tenancyStatus==='leased'||sourceListings[index].units?.some(u=>u.tenancyStatus==='leased'&&u.investment?.published===true))?<span class="jj-tenancy-ribbon">{lang==='ru'?'С арендаторами':lang==='uz'?'Ijarachilar bilan':'Tenanted'}</span>:(sourceListings[index].tenancyStatus==='preliminary'||sourceListings[index].units?.some(u=>u.tenancyStatus==='preliminary'&&u.investment?.published===true))?<span class="jj-tenancy-ribbon is-preliminary">{lang==='ru'?'Предварительные условия':lang==='uz'?'Dastlabki shartlar':'Preliminary terms'}</span>:null}</a>
+    <button type="button" class="jj-save" data-jj-save={item.slug} aria-label={copy.favorite} aria-pressed="false"><JoyIcon name="heart"/></button>
+    <div class="jj-property-card-main">
+     <div class="jj-card-overline">{names[item.type]||copy.other}<span>{item.city}</span></div>
+     <h3><a href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{item.title}</a></h3>
+     <div class="jj-property-summary">
+      <span class="jj-area-sign"><b>{item.units?.length?(()=>{const a=item.units.filter(u=>u.published!==false&&u.area>0).map(u=>u.area);return a.length?Math.min(...a).toLocaleString(numberLocale)+'–'+Math.max(...a).toLocaleString(numberLocale):item.area.toLocaleString(numberLocale)})():item.area.toLocaleString(numberLocale)}</b> m²</span>
+      <span class:list={['jj-card-price',{'is-request':item.priceUsd===null&&!item.units?.length}]}>{item.units?.length?(lang==='ru'?'от ':lang==='uz'?'dan ':'from ')+(Math.min(...item.units.filter(u=>u.published!==false).map(u=>Number(u.pricePerSqm)).filter(n=>n>0))).toLocaleString('en-US',{maximumFractionDigits:0})+' $/м²':item.priceUsd===null?copy.price:'$'+item.priceUsd.toLocaleString('en-US',{maximumFractionDigits:0})}</span>
+     </div>
+     <p class="jj-property-address">{[item.district,item.address].filter(Boolean).join(' · ')||item.city}</p>
+     {item.units?.length>0&&<p class="jj-card-feature">{item.units.filter(u=>u.published!==false).length} {lang==='ru'?'вариантов в продаже':lang==='en'?'available units':'sotuvdagi joylar'}</p>}
+     {item.features?.length>0&&<p class:list={['jj-card-feature',{'is-caution':areaNeedsCheck(index)}]}>{areaNeedsCheck(index)?labels.areaVerify:cardFeature(item.features)}</p>}
+     
+     <div class="jj-card-bottom"><a href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{copy.detail}<JoyIcon name="arrow"/></a></div>
+    </div>
+   </article>)}
+  </div>
+  <aside class="jj-map-panel"><div class="jj-map-top"><strong>{copy.mapTitle}</strong><span id="jj-map-count">0 / {listings.length}</span></div><div class="jj-map-wrap"><div id="jj-map" role="region" aria-label={copy.mapTitle} data-map-provider="openfreemap"></div><div class="jj-map-empty" id="jj-map-state"><JoyIcon name="pin"/><p>{labels.mapHelp}</p></div><button type="button" id="jj-map-search-area" hidden>{copy.searchArea}</button></div><div class="jj-map-foot"><button id="jj-map-reset-area" type="button" hidden>{copy.resetArea}</button><small>{copy.mapNote}</small></div></aside>
+ </div>
+ <div class="jj-no-results" id="jj-empty" hidden><h3>{copy.nothing}</h3><button type="button" id="jj-clear-empty">{copy.clear}</button></div>
+</section>
+</main>
+<!-- JOY2_CATALOG_FOUR_LIME_V2 -->
+<script src="/js/joy2-quick-filters.js" defer></script>
+<footer class="jj-bottom"><div class="jj-shell"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><p>{lang==='ru'?'Условия покупки и исходные параметры уточняйте у продавца. Источники указаны в объявлениях.':lang==='en'?'Confirm purchase terms and inputs with the seller. Sources are listed on the property pages.':'Xarid shartlari va parametrlarini sotuvchi bilan aniqlang. Manbalar e’lonlarda ko‘rsatilgan.'}</p><span>© {new Date().getFullYear()}</span></div></footer>
+{projects&&<script type="application/json" id="jj-project-fx-data" set:html={JSON.stringify(sourceListings.filter(isPublishedProject).map(x=>({slug:x.slug,investment:x.investment}))).replace(/</g,'\\u003c')}></script>}
+{projects&&<script src="/js/joyjoy-project-fx.js" type="module"></script>}
+<script type="application/json" id="jj-map-data" set:html={JSON.stringify(mapData).replace(/</g,'\\u003c')}></script>
+<script type="application/json" id="jj-i18n-data" set:html={JSON.stringify({found:copy.found,mapMissing:copy.mapMissing,mapFailed:copy.mapFailed,noCoords:labels.mapHelp,price:copy.price,detail:copy.detail,total:listings.length,lang})}></script>
+<script is:inline>
+document.addEventListener('click',event=>{
+ const link=event.target instanceof Element?event.target.closest('[data-jj-hero-type]'):null;
+ if(!link)return;
+ const type=link.getAttribute('data-jj-hero-type');
+ const select=document.getElementById('jj-type');
+ if(!(select instanceof HTMLSelectElement)||!type)return;
+ select.value=type;
+ select.dispatchEvent(new Event('change',{bubbles:true}));
+ document.getElementById('catalog')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+});
+</script>
+
+<script is:inline>
+/* JOY2_NAV_SCROLL_AND_HEADER_V2: возвращаем пользователя к исходному объекту, сохраняя сортировку и фильтры. */
+(()=>{
+  const key='joy2-catalog-return:'+location.pathname;
+  const fields=['jj-q','jj-type','jj-sort','jj-area-min','jj-area-max','jj-price-min','jj-price-max'];
+  document.addEventListener('click',e=>{
+    const a=e.target instanceof Element?e.target.closest('a[href*="/listing/"]'):null;
+    if(!a||!document.getElementById('jj-results'))return;
+    const values={};for(const id of fields){const el=document.getElementById(id);if(el&&'value'in el)values[id]=el.value;}
+    try{sessionStorage.setItem(key,JSON.stringify(values));}catch{}
+  },true);
+  function restore(){
+    const hash=decodeURIComponent(location.hash.slice(1));
+    if(!hash.startsWith('jj-object-'))return;
+    try{const state=JSON.parse(sessionStorage.getItem(key)||'null');if(state){for(const [id,v] of Object.entries(state)){const el=document.getElementById(id);if(el&&'value'in el&&el.value!==v){el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}}}}catch{}
+    const go=()=>{const el=document.getElementById(hash);if(el&&getComputedStyle(el).display!=='none')el.scrollIntoView({behavior:'instant',block:'start'});};
+    go();setTimeout(go,150);setTimeout(go,650);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restore,{once:true});else restore();
+})();
+</script>
+<script src="/js/joyjoy-marketplace.js" defer></script>
+<script src="/js/joy2-catalog-polish.js" defer></script>
+
+<script src="/js/joyjoy-unslop-stage1.js" defer></script>
+<script src="/js/joyjoy-maplibre.js" defer></script>
+<script src="/js/joy2-catalog-refine.js" defer></script>
+<script src="/js/joy2-filter-overlay-close.js" defer></script>

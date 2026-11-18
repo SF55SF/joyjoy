@@ -52,7 +52,7 @@ export async function onRequestPost({request,env}){
   if(file&&file.sha!==payload.sha)return reply({error:'Объект изменён в другом окне. Скопируйте свои правки и загрузите объект заново.'},409);
   // Merge unknown top-level fields from the current object rather than discarding them.
   const previous=file?JSON.parse(decode(file.content)):{};
-  const property={...previous,...p,slug:payload.slug};
+  const property={...previous,...p,slug:payload.slug};delete property.showProjects;
   const validation=validateProperty(property);if(validation.length)return reply({error:propertyErrorMessage(validation)},400);
   const content=JSON.stringify(property,null,2)+'\n';
   if(file&&decode(file.content).replace(/\r\n/g,'\n')===content)return reply({ok:true,unchanged:true,sha:file.sha});

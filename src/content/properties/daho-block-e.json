@@ -26,7 +26,6 @@
   "order": 2,
   "published": true,
   "showCatalog": true,
-  "showProjects": true,
   "units": [
     {
       "id": "b-1-1",
@@ -202,5 +201,6 @@
         "Narxlar QQSsiz"
       ]
     }
-  }
+  },
+  "insestproject": true
 }
