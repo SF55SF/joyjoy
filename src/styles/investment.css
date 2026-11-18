@@ -1518,15 +1518,41 @@ body .jj-ref-home .jj-ref-actions .jj-ref-cta{align-items:center!important;gap:3
 }
 /* JOY2_CTA_DIRECT_SVG_V1_END */
 
-/* JOY2_HERO_BOTH_LABELS_PLUS_15_V1: same bold typography on the two hero buttons, +15% from original 21px. Arrows and geometry unchanged. */
-.jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta,
-.jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta.jj-ref-cta-secondary{
-  font-family:Arial,Helvetica,sans-serif!important;
-  font-size:24.15px!important;
-  font-weight:800!important;
+
+/* JOY2_HERO_TEXT_RECREATED_21PX_V1_START */
+/* Fresh labels, identical glyph sizing. No arrow graphics, colors or button dimensions changed. */
+body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta {
+  font-family:Arial,Helvetica,sans-serif!important; font-size:21px!important; font-weight:700!important;
+  display:inline-flex!important; align-items:center!important;
+}
+body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta > .joy2-hero-cta-label {
+  display:inline-block!important; flex:0 1 auto!important;
+  font-family:Arial,Helvetica,sans-serif!important; font-size:21px!important; font-weight:700!important;
+  font-style:normal!important; font-variant:normal!important; letter-spacing:normal!important;
+  line-height:1.2!important; text-transform:none!important; white-space:nowrap!important;
+  transform:none!important; zoom:1!important; margin:0!important; padding:0!important;
+  align-self:center!important;
+}
+body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta > svg.joy2-cta-real-arrow {
+  align-self:center!important; vertical-align:middle!important; transform:none!important;
 }
 @media(max-width:700px){
- .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta,
- .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta.jj-ref-cta-secondary{font-size:14.95px!important;font-weight:800!important;}
+  body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta,
+  body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta > .joy2-hero-cta-label{font-size:14px!important;}
 }
-/* JOY2_HERO_BOTH_LABELS_PLUS_15_V1_END */
+/* JOY2_HERO_TEXT_RECREATED_21PX_V1_END */
+
+/* JOY2_HERO_LABELS_VISIBLE_21PX_V2_START */
+/* Restore labels hidden by obsolete CTA span rules. SVG arrows remain untouched. */
+body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta {font-family:Arial,Helvetica,sans-serif!important;font-size:21px!important;font-weight:700!important;align-items:center!important;}
+body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta > span.joy2-hero-cta-label {display:inline-block!important;visibility:visible!important;opacity:1!important;position:static!important;flex:0 1 auto!important;width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;font-family:Arial,Helvetica,sans-serif!important;font-size:21px!important;font-weight:700!important;font-style:normal!important;line-height:1.2!important;letter-spacing:normal!important;color:inherit!important;background:none!important;background-image:none!important;filter:none!important;clip-path:none!important;mask:none!important;-webkit-mask:none!important;text-shadow:none!important;text-transform:none!important;white-space:nowrap!important;transform:none!important;scale:none!important;zoom:1!important;margin:0!important;padding:0!important;align-self:center!important;}
+body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta > svg.joy2-cta-real-arrow{align-self:center!important;vertical-align:middle!important;}
+@media(max-width:700px){body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta,body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta > span.joy2-hero-cta-label{font-size:14px!important;}}
+/* JOY2_HERO_LABELS_VISIBLE_21PX_V2_END */
+
+/* JOY2_INVESTMENT_LABEL_22PX_V1_START */
+/* Only first hero CTA (investment). Second button remains 21px; arrows unchanged. */
+body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta:first-child {font-size:22px!important;}
+body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta:first-child > span.joy2-hero-cta-label {font-size:22px!important;}
+@media(max-width:700px){body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta:first-child,body .jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta:first-child > span.joy2-hero-cta-label{font-size:14px!important;}}
+/* JOY2_INVESTMENT_LABEL_22PX_V1_END */

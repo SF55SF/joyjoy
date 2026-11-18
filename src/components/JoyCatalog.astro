@@ -118,7 +118,7 @@ const joy2UnifiedCardDataV1 = sourceListings.map(p => {
     <p class="jj-concept-kicker">{lang==='ru'?'Недвижимость Узбекистана.':lang==='uz'?'O‘zbekiston ko‘chmas mulki.':'Real estate in Uzbekistan.'}</p>
     <h1>{lang==='ru'?<>Недвижимость<span>.</span><br/><mark class="jj-concept-highlight">Инвестиции<span>.</span></mark></>:lang==='uz'?<>Ko‘chmas mulk<span>.</span><br/><mark class="jj-concept-highlight">Investitsiyalar<span>.</span></mark></>:<>Real Estate<span>.</span><br/><mark class="jj-concept-highlight">Investments<span>.</span></mark></>}</h1>
     <p>{lang==='ru'?'Коммерческие объекты и инвестиционные проекты Узбекистана':lang==='uz'?'O‘zbekistondagi tijorat obyektlari va investitsiya loyihalari':'Commercial properties and investment projects in Uzbekistan'}</p>
-    <div class="jj-ref-actions"><a class="jj-ref-cta" href={base+"?investment=1#catalog"}>{lang==='ru'?'Инвестиционные объекты':lang==='uz'?'Investitsiya obyektlari':'Investment properties'} <svg class="joy2-cta-real-arrow" data-joy2-direct-arrow="invest" xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 40" fill="none" aria-hidden="true"><path d="M5 20H50M35 5L50 20L35 35" stroke="currentColor" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="jj-ref-cta jj-ref-cta-secondary" href="#catalog">{lang==='ru'?'Все объекты':lang==='uz'?'Barcha obyektlar':'All properties'} <svg class="joy2-cta-real-arrow" data-joy2-direct-arrow="all" xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 40" fill="none" aria-hidden="true"><path d="M5 20H50M35 5L50 20L35 35" stroke="currentColor" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+    <div class="jj-ref-actions"><a class="jj-ref-cta" href={base+"?investment=1#catalog"}><span class="joy2-hero-cta-label">{lang==='ru'?'Инвестиционные объекты':lang==='uz'?'Investitsiya obyektlari':'Investment properties'}</span> <svg class="joy2-cta-real-arrow" data-joy2-direct-arrow="invest" xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 40" fill="none" aria-hidden="true"><path d="M5 20H50M35 5L50 20L35 35" stroke="currentColor" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="jj-ref-cta jj-ref-cta-secondary" href="#catalog"><span class="joy2-hero-cta-label">{lang==='ru'?'Все объекты':lang==='uz'?'Barcha obyektlar':'All properties'}</span> <svg class="joy2-cta-real-arrow" data-joy2-direct-arrow="all" xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 40" fill="none" aria-hidden="true"><path d="M5 20H50M35 5L50 20L35 35" stroke="currentColor" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
   </section>:<section class="jj-intro jj-shell">
     <!-- JOY2_PROJECT_NAV_CLEANUP_V1 -->
     <div class="jj-intro-copy"><p class="jj-crumb jj-project-back"><a href={base} aria-label={lang==='ru'?'На главную':lang==='uz'?'Bosh sahifaga':'Back to home'}><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M20 12H9"/></svg><span>{lang==='ru'?'На главную':lang==='uz'?'Bosh sahifaga':'Back to home'}</span></a></p><h1 class="jj-market-heading"><span class="jj-market-full">{projects?investmentText.projects:investmentText.heading}</span><span class="jj-market-short">{projects?investmentText.projects:lang==='ru'?'Недвижимость и инвестиции':lang==='en'?'Property and investment':'Ko‘chmas mulk va investitsiyalar'}</span></h1><p class="jj-intro-text">{projects?investmentText.projectIntro:investmentText.intro}</p></div>
@@ -192,17 +192,6 @@ const joy2UnifiedCardDataV1 = sourceListings.map(p => {
 <script src="/js/joy2-single-unit-total-price.js" defer></script>
 
 
-<script is:inline>
-/* JOY2_HERO_BOTH_FONT_INLINE_FIX_V1: neutralize older inline 32px override without altering arrow elements */
-(()=>{
- const sync=()=>{for(const a of document.querySelectorAll('.jj-ref-home .jj-ref-hero .jj-ref-actions > a.jj-ref-cta')){
-  a.style.setProperty('font-size',matchMedia('(max-width:700px)').matches?'14.95px':'24.15px','important');
-  a.style.setProperty('font-weight','800','important');
- }};
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});else sync();
- window.addEventListener('load',sync,{once:true});window.addEventListener('resize',sync,{passive:true});
-})();
-</script>
 </main>
 <!-- JOY2_CATALOG_FOUR_LIME_V2 -->
 
