@@ -61,3 +61,24 @@ export async function onRequestPost({request,env}){
   const result=await saved.json();return reply({ok:true,sha:result.content.sha,commit:result.commit.sha});
  }catch{return reply({error:'Ошибка соединения с GitHub. Перед повтором загрузите объект и проверьте, сохранился ли он.'},502);}
 }
+
+// JOY2_ADMIN_DELETE_V70: authenticated object deletion with origin and version checks.
+export async function onRequestDelete({request,env}){
+ if(!await authorized(request,env))return reply({error:'Authentication required'},401);
+ if(request.headers.get('origin')!==new URL(request.url).origin)return reply({error:'Origin mismatch'},403);
+ if(!request.headers.get('content-type')?.startsWith('application/json'))return reply({error:'Expected application/json'},415);
+ let payload;try{payload=await request.json()}catch{return reply({error:'Неверный JSON'},400)}
+ if(!slugOK(payload?.slug)||!/^[a-f0-9]{40}$/.test(payload?.sha||''))return reply({error:'Неверные данные удаления'},400);
+ let c;try{c=settings(env)}catch(e){return reply({error:e.message},503)}
+ try{
+  const url=base(c)+'/'+payload.slug+'.json';
+  const existing=await fetch(url+'?ref='+c.branch,{headers:c.headers});
+  if(existing.status===404)return reply({error:'Объект уже удалён'},404);
+  if(!existing.ok)return reply({error:'Не удалось проверить объект'},502);
+  const file=await existing.json();
+  if(file.sha!==payload.sha)return reply({error:'Объект изменился после загрузки. Перезагрузите данные перед удалением.'},409);
+  const deleted=await fetch(url,{method:'DELETE',headers:{...c.headers,'content-type':'application/json'},body:JSON.stringify({message:'Delete JoyJoy property '+payload.slug,sha:file.sha,branch:c.branch})});
+  if(!deleted.ok)return reply({error:deleted.status===409?'Конфликт удаления':'GitHub отклонил удаление'},deleted.status===409?409:502);
+  const result=await deleted.json();return reply({ok:true,commit:result.commit?.sha});
+ }catch{return reply({error:'Не удалось удалить объект. Проверьте подключение к GitHub.'},502)}
+}

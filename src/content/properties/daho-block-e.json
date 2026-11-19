@@ -202,5 +202,10 @@
       ]
     }
   },
-  "insestproject": true
+  "insestproject": true,
+  "contacts": {
+    "name": "Санжар",
+    "phone": "+998 50 590 60 59",
+    "telegram": "@sanjar_saymatov_cmwp"
+  }
 }

@@ -1,6 +1,11 @@
-import {calculateInvestment,investmentFields,validateProperty,propertyErrorMessage} from './joyjoy-investment-model.js';
+import {calculateInvestment,investmentFields,validateProperty,propertyErrorMessage,validateInvestment} from './joyjoy-investment-model.js';
 import {loadFx,lastFx} from './joyjoy-fx.js';
 const root=document.querySelector('[data-joyjoy-admin]');
+// JOY2_LOCAL_ADMIN_PREVIEW_V34
+const JOY2_DEV_ADMIN = root?.dataset.joy2AdminLocal === 'true';
+const JOY2_DEV_DATA = (()=>{if(!JOY2_DEV_ADMIN)return new Map();try{const raw=document.getElementById('joy2-dev-admin-seed')?.textContent||'[]';return new Map(JSON.parse(raw).map(p=>[p.slug,p]));}catch(e){console.error('Local admin seed:',e);return new Map();}})();
+const JOY2_DEV_SAVED = (()=>{if(!JOY2_DEV_ADMIN)return new Map();try{return new Map(JSON.parse(sessionStorage.getItem('joy2-dev-admin-drafts-v34')||'[]'));}catch{return new Map();}})();
+
 if(root){
  const form=root.querySelector('form'),status=root.querySelector('[data-save-status]'),list=root.querySelector('[data-property-list]'),listStatus=root.querySelector('[data-list-status]'),save=form.querySelector('[data-save-property]');
  let current=null,sha=null,isNew=false,dirty=false,busy=false,loadId=0;
@@ -48,51 +53,83 @@ if(root){
 
  const nullable=k=>field(k).value.trim()===''?null:field(k).valueAsNumber;
  const lines=k=>field(k).value.split('\n').map(x=>x.trim()).filter(Boolean);
- const showInvestment=()=>{let group=false;try{group=JSON.parse(field('unitsJson')?.value||'[]').length>0;}catch{}const v=field('insestproject').checked&&!group;root.querySelector('[data-investment-editor]').hidden=!v;};
- function setStatus(text,error=false){status.textContent=text;status.dataset.error=String(error);}
- async function api(url,options){const res=await fetch(url,{credentials:'same-origin',...options});let body;try{body=await res.json();}catch{throw Error('API недоступен. В StackBlitz preview доступны страницы, но сохранение работает на Cloudflare Pages.');}if(!res.ok)throw Error(res.status===401?'Сессия истекла. Откройте /admin-login/ и войдите снова.':body.error||'Ошибка API');return body;}
+ const showInvestment=()=>{root.querySelector('[data-investment-editor]').hidden=true;};
+ function setStatus(text,error=false){if(JOY2_DEV_ADMIN&&/Сохранено в GitHub/.test(text))text='Локально сохранено в этой вкладке. Cloudflare/GitHub не изменены.';status.textContent=text;status.dataset.error=String(error);}
+ async function api(url,options){
+   if(JOY2_DEV_ADMIN){
+     const method=(options?.method||'GET').toUpperCase();
+     const requestPath=new URL(url,location.href);
+     if(requestPath.pathname==='/api/admin/properties'){
+       if(method==='GET'&&requestPath.searchParams.has('slug')){const slug=requestPath.searchParams.get('slug');const data=JOY2_DEV_SAVED.get(slug)||JOY2_DEV_DATA.get(slug);if(!data)throw Error('Объект не найден в локальном режиме: '+slug);return {property:structuredClone(data),sha:'local-preview'};}
+       if(method==='GET')return {items:[...new Map([...JOY2_DEV_DATA,...JOY2_DEV_SAVED]).values()].map(p=>({slug:p.slug,title:p.title}))};
+       if(method==='POST'){const body=JSON.parse(options?.body||'{}');const p=structuredClone(body.property);JOY2_DEV_SAVED.set(p.slug,p);try{sessionStorage.setItem('joy2-dev-admin-drafts-v34',JSON.stringify([...JOY2_DEV_SAVED]));}catch{}return {sha:'local-preview',commit:'LOCALPREVIEW',unchanged:false};}
+     }
+     if(requestPath.pathname==='/api/admin/translate')throw Error('Перевод через Cloudflare временно отключён.');
+     if(requestPath.pathname==='/api/admin/property-media')throw Error('Загрузка файлов через Cloudflare временно отключена. Используй ссылки на файлы в полях изображений.');
+     if(requestPath.pathname==='/api/admin/logout')return {ok:true};
+     throw Error('Cloudflare API отключён в локальном режиме: '+requestPath.pathname);
+   }
+   const res=await fetch(url,{credentials:'same-origin',...options});let body;try{body=await res.json();}catch{throw Error('API недоступен. В StackBlitz preview доступны страницы, но сохранение работает на Cloudflare Pages.');}if(!res.ok)throw Error(res.status===401?'Сессия истекла. Откройте /admin-login/ и войдите снова.':body.error||'Ошибка API');return body;}
  function read(){
   const p={...current,slug:field('slug').value.trim(),published:field('published').checked,showCatalog:true,insestproject:field('insestproject').checked};
   // JOY2_CONTACTS_TELEGRAM_V2: saved in the same property JSON.
-  p.contacts={...(current?.contacts||{}),phone:field('contactPhone').value.trim(),telegram:field('contactTelegram').value.trim()};
+  p.contacts={...(current?.contacts||{}),name:field('contactName').value.trim(),phone:field('contactPhone').value.trim(),telegram:field('contactTelegram').value.trim()};
   for(const key of ['title','city','district','address','description','type','status','sourceUrl'])p[key]=field(key).value.trim();
   for(const key of ['area','priceUsd'])p[key]=nullable(key);
   for(const key of ['lat','lng'])p[key]=nullable(key);
-  p.images=lines('images');p.features=lines('features');
+  p.images=lines('images');p.planImages=lines('planImages');p.features=lines('features');
   p.translations={};for(const lang of ['uz','en']){const row={};for(const key of ['title','city','district','address','description','features']){const value=field(lang+'_'+key).value.trim();if(value)row[key]=key==='features'?lines(lang+'_'+key):value;}if(Object.keys(row).length)p.translations[lang]=row;}
   p.investment={...(current.investment||{}),currency:'USD',published:field('modelPublished').checked};
   for(const key of investmentFields)p.investment[key]=nullable(key);
   for(const key of ['rentBasis','asOf','sourceNote','rentCurrency'])p.investment[key]=field(key).value.trim();
   for(const key of ['usdUzs','uzsDevaluation'])p.investment[key]=nullable(key);
   if(field('unitsJson'))p.units=JSON.parse(field('unitsJson').value||'[]');
+  // Computed designation. An empty or invalid model never makes the object investment-grade.
+  p.insestproject=Array.isArray(p.units)&&p.units.some(u=>u.published!==false&&u.investment?.published===true&&validateInvestment(u.investment).length===0&&String(u.investment.sourceNote||'').trim()&&String(u.investment.asOf||'').trim());
+  if(Array.isArray(p.units)&&p.units.length)p.investment.published=false;
   p.tenancyStatus=field('tenancyStatus')?.value||null;
   if(Array.isArray(p.units)){for(const selector of form.querySelectorAll('[data-unit-tenancy]')){const index=Number(selector.dataset.unitTenancy);if(p.units[index]){if(selector.value)p.units[index].tenancyStatus=selector.value;else delete p.units[index].tenancyStatus;}}}
   return p;
  }
  function preview(){const r=calculateInvestment(read().investment);root.querySelector('[data-admin-model-status]').textContent=r.ok?'Предпросмотр по введённым параметрам':'Для расчёта заполните все числовые параметры. Цена и площадь — больше нуля; заполняемость 0–100%.';for(const el of root.querySelectorAll('[data-admin-result]')){const k=el.dataset.adminResult;el.textContent=!r.ok?'—':k==='paybackYears'?(r[k]===null?'Не окупается':r[k].toLocaleString('ru-RU',{maximumFractionDigits:1})+' лет'):['yieldPercent','irrPercent'].includes(k)?(r[k]===null?'—':r[k].toLocaleString('ru-RU',{maximumFractionDigits:2})+'%'):r[k].toLocaleString('ru-RU',{style:'currency',currency:'USD',maximumFractionDigits:0});}}
  function render(p,version,creating=false){
-  queueMicrotask(()=>{ensureTenancyUI();const selected=field('tenancyStatus');if(selected)selected.value=p.tenancyStatus||'';renderUnitTenancies(p);});
+  queueMicrotask(()=>{ensureTenancyUI();const selected=field('tenancyStatus');if(selected)selected.value=p.tenancyStatus||'';renderUnitTenancies({...p,units:[]});});
   form.reset();field('slug').dataset.manuallyEdited='false';current=p;sha=version;isNew=creating;
   // JOY2_CONTACTS_TELEGRAM_V2: legacy contact keys remain readable.
+  field('contactName').value=p.contacts?.name||p.contactName||'';
   field('contactPhone').value=p.contacts?.phone||p.contactPhone||p.phone||'';
   field('contactTelegram').value=p.contacts?.telegram||p.telegramUrl||p.telegram||'';
   for(const key of ['slug','title','city','district','address','description','type','status','sourceUrl','area','priceUsd','lat','lng'])field(key).value=p[key]??'';
   field('slug').readOnly=!creating;field('published').checked=p.published!==false;field('insestproject').checked=p.insestproject===true;
-  for(const k of ['images','features'])field(k).value=(p[k]||[]).join('\n');
+  for(const k of ['images','features','planImages'])field(k).value=(p[k]||[]).join('\n');
   for(const lang of ['uz','en'])for(const k of ['title','city','district','address','description','features']){const value=p.translations?.[lang]?.[k];field(lang+'_'+k).value=Array.isArray(value)?value.join('\n'):value??'';}
   if(field('unitsJson')){field('unitsJson').value=JSON.stringify(p.units||[]);window.dispatchEvent(new CustomEvent('joyjoy:units-loaded',{detail:{units:p.units||[]}}));}
   const m=p.investment||{};for(const k of investmentFields)field(k).value=m[k]??'';
   for(const k of ['rentBasis','asOf','sourceNote','rentCurrency'])field(k).value=m[k]??(k==='rentCurrency'?'USD':'');
   for(const k of ['usdUzs','uzsDevaluation'])field(k).value=m[k]??'';field('modelPublished').checked=m.published===true;showInvestment();const fx=lastFx();if(fx){field('usdUzs').value=fx.usdUzs;field('uzsDevaluation').value=fx.annualDevaluation;}
-  root.querySelector('[data-editor-title]').textContent=p.title||'Новый объект';form.hidden=false;dirty=false;preview();refreshMedia();refreshPreview();
+  root.querySelector('[data-editor-title]').textContent=p.title||'Новый объект';form.hidden=false;const deleteControl=root.querySelector('[data-delete-property]');if(deleteControl)deleteControl.hidden=creating;dirty=false;preview();refreshMedia();refreshPlanMedia();refreshPreview();
  }
  function discard(){return !dirty||window.confirm('Есть несохранённые правки. Перейти без сохранения?');}
  async function load(slug){if(busy||!discard())return;const id=++loadId;setStatus('Загружаем актуальную версию…');try{const data=await api('/api/admin/properties?slug='+encodeURIComponent(slug));if(id!==loadId)return;render(data.property,data.sha);setStatus('Загружено из GitHub. Изменения пока не сохранены.');list.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.slug===slug?'true':'false'));}catch(e){setStatus(e.message,true);}}
  async function loadList(){try{const data=await api('/api/admin/properties');list.replaceChildren();for(const item of data.items){const b=document.createElement('button');b.type='button';b.textContent=item.title||item.slug;b.dataset.slug=item.slug;b.addEventListener('click',()=>load(item.slug));list.append(b);}listStatus.textContent=data.items.length+' объектов';return data.items.map(item=>item.slug);}catch(e){listStatus.textContent=e.message;return [];}}
  form.addEventListener('input',()=>{dirty=true;preview();});form.addEventListener('change',e=>{if(e.target===field('insestproject'))showInvestment();dirty=true;preview();});
- form.addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const p=read(),errors=validateProperty(p);if(errors.length){setStatus(propertyErrorMessage(errors),true);return;}busy=true;save.disabled=true;form.querySelectorAll('input,textarea,select').forEach(el=>el.disabled=true);setStatus('Сохраняем в GitHub…');try{const data=await api('/api/admin/properties',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({slug:p.slug,sha,create:isNew,property:p})});current=p;sha=data.sha;isNew=false;dirty=false;field('slug').readOnly=true;setStatus(data.unchanged?'Изменений нет.':('Сохранено в GitHub · '+data.commit.slice(0,7)+'. На сайте изменения появятся после успешной сборки и публикации Cloudflare Pages.'));await loadList();}catch(e){setStatus(e.message,true);}finally{busy=false;save.disabled=false;form.querySelectorAll('input,textarea,select').forEach(el=>el.disabled=false);}});
- root.querySelector('[data-new-property]').addEventListener('click',()=>{if(busy||!discard())return;++loadId;render({slug:'',title:'',city:'',district:'',address:'',description:'',area:null,priceUsd:null,type:'office',status:'existing',images:[],features:[],published:false,showCatalog:true,insestproject:false,order:Date.now()},null,true);setStatus('Новый объект. Заполните данные и переводы. Публикация по умолчанию отключена.');dirty=true;field('slug').focus();});
- root.querySelector('[data-admin-logout]').addEventListener('click',async()=>{if(busy||!discard())return;try{await api('/api/admin/logout',{method:'POST'});dirty=false;location.assign('/admin-login/');}catch(e){setStatus(e.message,true);}});
+ form.addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const p=read(),errors=validateProperty(p);if(errors.length){setStatus(propertyErrorMessage(errors),true);return;}busy=true;save.disabled=true;form.querySelectorAll('input,textarea,select').forEach(el=>el.disabled=true);setStatus('Сохраняем в GitHub…');try{const data=await api('/api/admin/properties',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({slug:p.slug,sha,create:isNew,property:p})});current=p;sha=data.sha;isNew=false;dirty=false;field('slug').readOnly=true;setStatus(JOY2_DEV_ADMIN?'Сохранено локально в этой вкладке. Cloudflare/GitHub не затронуты.':(data.unchanged?'Изменений нет.':('Сохранено в GitHub · '+data.commit.slice(0,7)+'. На сайте изменения появятся после успешной сборки и публикации Cloudflare Pages.')));await loadList();}catch(e){setStatus(e.message,true);}finally{busy=false;save.disabled=false;form.querySelectorAll('input,textarea,select').forEach(el=>el.disabled=false);}});
+ root.querySelector('[data-delete-property]').addEventListener('click',async()=>{
+  if(busy||isNew||!current?.slug||!sha)return;
+  const name=current.title||current.slug;
+  if(!window.confirm('Вы уверены, что хотите удалить ВЕСЬ объект «'+name+'»?\n\nИз каталога исчезнут все его помещения, фотографии и инвестиционные модели. Исходные медиафайлы в репозитории не удаляются. Это действие нельзя отменить.\n\nНажмите «ОК» для подтверждения удаления.'))return;
+  busy=true;save.disabled=true;root.querySelector('[data-delete-property]').disabled=true;
+  setStatus('Удаляем объект из GitHub…');
+  try{
+   await api('/api/admin/properties',{method:'DELETE',headers:{'content-type':'application/json'},body:JSON.stringify({slug:current.slug,sha})});
+   // Avoid redirecting away before the updated list is loaded.
+   dirty=false;current=null;sha=null;isNew=false;form.hidden=true;
+   setStatus('Объект удалён из GitHub. После деплоя он исчезнет с сайта.');
+   const remaining=await loadList();busy=false;if(remaining.length)await load(remaining[0]);
+  }catch(e){setStatus(e.message||'Ошибка удаления',true)}finally{busy=false;save.disabled=false;root.querySelector('[data-delete-property]').disabled=false;}
+ });
+ root.querySelector('[data-new-property]').addEventListener('click',()=>{if(busy||!discard())return;++loadId;render({slug:'',title:'',city:'',district:'',address:'',description:'',area:null,priceUsd:null,type:'office',status:'existing',images:[],features:[],units:[],published:false,showCatalog:true,insestproject:false,order:Date.now()},null,true);setStatus('Новый объект. Заполните данные и переводы. Публикация по умолчанию отключена.');dirty=true;field('slug').focus();});
+ root.querySelector('[data-admin-logout]')?.addEventListener('click',async()=>{if(busy||!discard())return;try{await api('/api/admin/logout',{method:'POST'});dirty=false;location.assign('/admin-login/');}catch(e){setStatus(e.message,true);}});
  window.addEventListener('beforeunload',e=>{if(dirty||busy){e.preventDefault();e.returnValue='';}});
  const applyFx=d=>{if(!d)return;for(const key of ['usdUzs','uzsDevaluation'])field(key).value=d[key];root.querySelector('[data-fx-status]').textContent='ЦБ Узбекистана: 1 USD = '+d.usdUzs.toLocaleString('ru-RU',{maximumFractionDigits:2})+' UZS · девальвация '+d.annualDevaluation.toFixed(2)+'% в год · '+(d.stale?'последние сохранённые данные':'актуальные данные')+' · '+(d.rateDate||'');preview();};
  const saved=lastFx();
@@ -115,8 +152,19 @@ if(root){
   }
  }
  field('images').addEventListener('input',refreshMedia);
+ function refreshPlanMedia(){
+  const target=root.querySelector('[data-joy-plan-gallery]');if(!target)return;target.replaceChildren();
+  for(const [idx,url] of lines('planImages').entries()){
+   const figure=document.createElement('figure'),img=document.createElement('img'),caption=document.createElement('figcaption'),button=document.createElement('button');
+   img.src=url;img.alt='Планировка '+(idx+1);img.loading='lazy';caption.textContent='Планировка '+(idx+1);
+   button.type='button';button.textContent='Убрать планировку';button.addEventListener('click',()=>{const arr=lines('planImages');arr.splice(idx,1);field('planImages').value=arr.join('\n');dirty=true;refreshPlanMedia()});
+   figure.append(img,caption,button);target.append(figure);
+  }
+ }
+ field('planImages').addEventListener('input',refreshPlanMedia);
+
  const mediaInput=root.querySelector('[data-joy-images]');
- mediaInput.addEventListener('change',async()=>{
+ mediaInput.addEventListener('change',async()=>{if(JOY2_DEV_ADMIN){const state=root.querySelector('[data-media-status]');if(state)state.textContent='Cloudflare отключён. Для просмотра интерфейса используй существующие URL изображений.';mediaInput.value='';return;}
   const files=[...mediaInput.files];mediaInput.value='';if(!files.length)return;
   if(isNew||!current?.slug){setStatus('Сначала сохраните новый объект, затем загрузите фотографии.',true);return;}
   if(dirty){setStatus('Сначала сохраните изменения в объекте, затем загружайте изображения.',true);return;}
@@ -126,12 +174,12 @@ if(root){
    const bitmap=await createImageBitmap(file),canvas=document.createElement('canvas');canvas.width=1200;canvas.height=675;
    const ctx=canvas.getContext('2d');if(!ctx){bitmap.close();throw Error('Canvas недоступен');}
    ctx.fillStyle='#fff';ctx.fillRect(0,0,1200,675);
-   const k=Math.max(1200/bitmap.width,675/bitmap.height),w=bitmap.width*k,h=bitmap.height*k;
+   const mode=root.querySelector('[data-joy-upload-kind]')?.value||'photo';const k=(mode==='plan'?Math.min:Math.max)(1200/bitmap.width,675/bitmap.height),w=bitmap.width*k,h=bitmap.height*k;
    ctx.drawImage(bitmap,(1200-w)/2,(675-h)/2,w,h);bitmap.close();
    const dataUrl=canvas.toDataURL('image/jpeg',0.82);state.textContent='Загружаем '+file.name+'…';
    const result=await api('/api/admin/property-media',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({slug:current.slug,dataUrl})});
-   const all=lines('images');if(!all.includes(result.path))all.push(result.path);
-   field('images').value=all.join('\n');dirty=true;refreshMedia();
+   const destination=mode==='plan'?'planImages':'images';const all=lines(destination);if(!all.includes(result.path))all.push(result.path);
+   field(destination).value=all.join('\n');dirty=true;refreshMedia();refreshPlanMedia();
   }state.textContent='Фотографии загружены в Joy². Нажмите «Сохранить в GitHub», чтобы добавить их в карточку.';
   }catch(e){state.textContent=e.message||'Ошибка загрузки';}finally{mediaInput.disabled=false;}
  });
@@ -152,5 +200,5 @@ if(root){
  field('slug').addEventListener('input',()=>{field('slug').dataset.manuallyEdited='true';refreshPreview();});
 
  const slugs=await loadList();if(slugs.length)await load(slugs[0]);
- const latest=await loadFx();if(latest){const fx={...latest,uzsDevaluation:latest.annualDevaluation};applyFx(fx);}else if(initialFx)applyFx(initialFx);else root.querySelector('[data-fx-status]').textContent='ЦБ недоступен. Последнего курса нет: для модели с арендой в UZS необходим официальный курс.';
+ const latest=JOY2_DEV_ADMIN?null:await loadFx();if(latest){const fx={...latest,uzsDevaluation:latest.annualDevaluation};applyFx(fx);}else if(initialFx)applyFx(initialFx);else root.querySelector('[data-fx-status]').textContent='ЦБ недоступен. Последнего курса нет: для модели с арендой в UZS необходим официальный курс.';
 }

@@ -1,0 +1,70 @@
+---
+// JOYJOY_LOOPNET_DETAIL_V5
+import type { Listing } from '../data/listings';
+import JoyInvestment from './JoyInvestment.astro';
+import JoyUnits from './JoyUnits.astro';
+import { localizeListing } from '../data/listing-translations';
+// JOY2_SINGLE_VIRTUAL_UNIT_V27: virtual row for a property with no explicit units; never mutate the stored listing.
+const {listing:rawListing,lang='ru'}=Astro.props as {listing:Listing;lang:'ru'|'uz'|'en'};
+const originalListing = rawListing.units?.length ? rawListing : {...rawListing,units:[{
+ id:'whole-property',number:'1',block:rawListing.slug==='the-business-park-block-3'?'3':'—',title:rawListing.title,area:rawListing.area,
+ pricePerSqm:rawListing.priceUsd!=null&&rawListing.area>0?rawListing.priceUsd/rawListing.area:null,
+ priceUsd:rawListing.priceUsd,investment:rawListing.investment??null,
+ tenancyStatus:rawListing.tenancyStatus??null,published:rawListing.published!==false,
+ floor:rawListing.slug==='the-business-park-block-3'?'2, 4, 5':'—',features:rawListing.features??[],category:rawListing.type
+}]};
+const listing=localizeListing(originalListing,lang);
+// JOY2_CONTACTS_TELEGRAM_V2: phone is stored per property.
+const joy2ContactPhone=String((rawListing as any).contacts?.phone||(rawListing as any).contactPhone||(rawListing as any).phone||'').trim();
+const joy2PhoneDial=joy2ContactPhone.replace(/[^+\d]/g,'');
+const numberLocale=lang==='en'?'en-US':lang==='uz'?'uz-UZ':'ru-RU';
+const base=lang==='ru'?'/':`/${lang}/`;
+const c={ru:{back:'Назад',forSale:'Коммерческая недвижимость · продажа',description:'Описание объекта',features:'Характеристики',area:'Площадь',price:'Цена',unit:'Цена за м²',request:'Цена по запросу',source:'Информация об объекте',gallery:'Галерея',location:'Расположение',mapNote:'Точное местоположение уточняется',contact:'Запросить информацию',contactNote:'Условия приобретения уточняются по запросу.',open:'Подробнее об объекте',more:'Другие объекты',status:'Стадия строительства',existing:'Существующий',under_construction:'Строящийся'},uz:{back:'Orqaga',forSale:'Tijorat ko‘chmas mulki · sotuv',description:'Tavsif',features:'Xususiyatlar',area:'Maydon',price:'Narx',unit:'m² narxi',request:'So‘rov asosida',source:'Obyekt haqida ma’lumot',gallery:'Galereya',location:'Joylashuv',mapNote:'Aniq manzil tasdiqlanmagan',contact:'Ma’lumot so‘rash',contactNote:'Xarid shartlari so‘rov asosida aniqlanadi.',open:'Obyekt haqida batafsil',more:'Boshqa obyektlar',status:'Qurilish holati',existing:'Mavjud',under_construction:'Qurilmoqda'},en:{back:'Back',forSale:'Commercial real estate · for sale',description:'Property description',features:'Features',area:'Area',price:'Price',unit:'Price per m²',request:'Price on request',source:'Property information',gallery:'Gallery',location:'Location',mapNote:'Exact location is not confirmed',contact:'Request information',contactNote:'Purchase terms are available on request.',open:'Property details',more:'Other properties',status:'Construction stage',existing:'Existing',under_construction:'Under construction'}}[lang];
+const price=listing.priceUsd===null?c.request:'$'+listing.priceUsd.toLocaleString('en-US',{maximumFractionDigits:0});
+const coords=Number.isFinite(listing.lat)&&Number.isFinite(listing.lng);
+const related=(await import('../data/listings')).listings.filter(x=>x.slug!==listing.slug&&x.showCatalog!==false).slice(0,3).map(x=>localizeListing(x,lang));
+// No map key required.
+
+const mapData=coords?[{slug:listing.slug,title:listing.title,lat:listing.lat,lng:listing.lng,area:listing.area,price:listing.priceUsd,image:listing.images?.[0]||'',url:base+'listing/'+listing.slug+'/'}]:[];
+// JOY2_NAV_SCROLL_AND_HEADER_V2
+---
+<!-- JOY2_DETAIL_HEADER_SYNC_V1 -->
+<header class="jj-sitebar jj-ref-header jj-detail-sitebar"><div class="jj-shell jj-sitebar-in">
+<a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a>
+<a href={base+'#jj-object-'+listing.slug} class="jj-detail-back-nav" aria-label={c.back}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span>{c.back}</span></a>
+<div class="jj-sitebar-right"><a class="jj-saved-link jj-detail-saved" href={base+'#catalog'} aria-label={lang==='ru'?'Избранное':lang==='uz'?'Saqlanganlar':'Favorites'}><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"/></svg><span>{lang==='ru'?'Избранное':lang==='uz'?'Saqlanganlar':'Favorites'}</span><small id="jj-detail-saved-count">0</small></a>
+<div class="jj-lang" aria-label="Language"><a href={'/listing/'+listing.slug+'/'} lang="ru" aria-current={lang==='ru'?'page':undefined}>RU</a><a href={'/uz/listing/'+listing.slug+'/'} lang="uz" aria-current={lang==='uz'?'page':undefined}>UZ</a><a href={'/en/listing/'+listing.slug+'/'} lang="en" aria-current={lang==='en'?'page':undefined}>EN</a></div></div>
+</div></header>
+<main class="jj-shell jj-detail jj-detail-clarity">
+ <p class="jj-crumb">JoyJoy / {c.forSale}</p>
+ <div class="jj-detail-heading"><div><h1>{listing.title}</h1><p>{[listing.city,listing.district,listing.address].filter(Boolean).join(' · ')}</p></div><div class="jj-detail-price-top"><span>{lang==='ru'?'Стоимость объекта':lang==='en'?'Property price':'Obyekt narxi'}</span><strong>{price}</strong></div>{listing.status&&<span class="jj-detail-status">{c[listing.status]}</span>}</div>
+ <div class:list={['jj-photo-layout',{'is-single':listing.images.length<2}]}>
+  <div class="jj-photo-main">{listing.images?.[0]?<button type="button" class="jj-gallery-launch" data-gallery-index="0" aria-label={c.gallery}><img src={listing.images[0]} alt={listing.title}/></button>:<div class="jj-image-placeholder">joyjoy.</div>}</div>
+  <div class="jj-photo-thumbs" hidden={listing.images.length<2}>{listing.images?.slice(1,3).map((img,i)=><button type="button" data-gallery-index={i+1} aria-label={c.gallery+' '+(i+2)}><img src={img} alt={listing.title} loading="lazy"/></button>)}</div>
+ </div>
+ <div class="jj-detail-units-wide"><JoyUnits listing={originalListing} lang={lang}/></div>
+ <div class="jj-detail-columns">
+  <div class="jj-detail-main">
+   <section><h2>{c.description}</h2><p>{listing.description}</p></section>
+   {listing.features?.length>0&&<section><h2>{c.features}</h2><ul class="jj-feature-list">{listing.features.map(x=><li>{x}</li>)}</ul></section>}
+   
+   
+   {related.length>0&&<section><h2>{c.more}</h2><div class="jj-related-grid">{related.map(x=><a href={base+'listing/'+x.slug+'/'}>{x.images?.[0]&&<img src={x.images[0]} alt="" loading="lazy"/>}<b>{x.title}</b><small>{x.area.toLocaleString(numberLocale)} m²</small></a>)}</div></section>}
+  </div>
+  <aside class="jj-detail-sidebar"><div class="jj-detail-finance"><small>{c.price}</small><strong>{listing.units?.filter(u=>u.published!==false).length>1?'от $'+Math.min(...listing.units.filter(u=>u.published!==false).map(u=>Number(u.area)*Number(u.pricePerSqm))).toLocaleString('en-US',{maximumFractionDigits:0}):price}</strong></div>
+   <div class="jj-detail-metrics"><div><span>{c.area}</span><b>{listing.units?.filter(u=>u.published!==false).length>1?(()=>{const a=listing.units.filter(u=>u.published!==false).map(u=>u.area);return Math.min(...a).toLocaleString(numberLocale)+'–'+Math.max(...a).toLocaleString(numberLocale)})():listing.area.toLocaleString(numberLocale)} m²</b></div>{listing.status&&<div><span>{c.status}</span><b>{c[listing.status]}</b></div>}{listing.priceUsd!==null&&listing.area>0&&!listing.units?.length&&<div><span>{c.unit}</span><b>{'$'+Math.round(listing.priceUsd/listing.area).toLocaleString('en-US',{maximumFractionDigits:0})}</b></div>}</div>
+   <div class="jj-detail-contact">{/* JOY2_CONTACTS_TELEGRAM_V2 */}{joy2ContactPhone&&<div class="jj-detail-phone"><small>{lang==='ru'?'Телефон':lang==='uz'?'Telefon':'Phone'}</small><a href={'tel:'+joy2PhoneDial}>{joy2ContactPhone}</a></div>}<h3>{c.contact}</h3><p>{c.contactNote}</p></div>
+  </aside>
+ </div>
+<div class="jj-detail-location-wide"><section><h2>{c.location}</h2>{coords?<><div class="jj-map-wrap jj-detail-map"><div id="jj-map" data-map-provider="openfreemap"></div><div id="jj-map-state" class="jj-map-empty"><p>{c.mapNote}</p></div></div><p><a href={'https://yandex.uz/maps/?ll='+listing.lng+','+listing.lat+'&z=16&pt='+listing.lng+','+listing.lat+',pm2rdm'} target="_blank" rel="noopener noreferrer">Yandex Maps ↗</a></p></>:<p>{c.mapNote}</p>}</section></div>
+</main>
+<footer class="jj-bottom jj-detail-bottom"><div class="jj-shell"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><p class="jj-footer-disclaimer">{lang==='ru'?"Информация на сайте носит исключительно ознакомительный характер и не является финансовой или инвестиционной рекомендацией. Все расчёты основаны на индикативных параметрах и прогнозных допущениях. Фактические результаты и доходность могут отличаться от представленных значений.":lang==='en'?"The information on this website is for informational purposes only and does not constitute financial or investment advice. All calculations are based on indicative parameters and forecast assumptions. Actual results and returns may differ from the figures presented.":"Saytdagi ma’lumotlar faqat tanishish uchun taqdim etilgan bo‘lib, moliyaviy yoki investitsiyaviy tavsiya hisoblanmaydi. Barcha hisob-kitoblar indikativ parametrlar va prognoz farazlariga asoslangan. Haqiqiy natijalar va daromadlilik ko‘rsatilgan qiymatlardan farq qilishi mumkin."}</p><span>© {new Date().getFullYear()}</span></div></footer>
+{listing.images?.length>0&&<dialog id="jj-gallery" class="jj-lightbox"><button type="button" id="jj-gallery-close" aria-label={lang==='ru'?'Закрыть':lang==='uz'?'Yopish':'Close'}>✕</button><button type="button" id="jj-gallery-prev" hidden={listing.images.length<2} aria-label={lang==='ru'?'Предыдущее фото':lang==='uz'?'Oldingi surat':'Previous photo'}>‹</button><img id="jj-gallery-image" src={listing.images[0]} alt={listing.title}/><button type="button" id="jj-gallery-next" hidden={listing.images.length<2} aria-label={lang==='ru'?'Следующее фото':lang==='uz'?'Keyingi surat':'Next photo'}>›</button><small id="jj-gallery-count"></small></dialog>}
+{coords&&<><script type="application/json" id="jj-map-data" set:html={JSON.stringify(mapData).replace(/</g,'\\u003c')}></script><script type="application/json" id="jj-i18n-data" set:html={JSON.stringify({noCoords:c.mapNote,price:c.request,detail:c.open,mapMissing:c.mapNote,mapFailed:c.mapNote})}></script><script src="/js/joyjoy-maplibre.js" defer></script></>}
+<script type="application/json" id="jj-gallery-data" set:html={JSON.stringify(listing.images).replace(/</g,'\\u003c')}></script>
+<script src="/js/joyjoy-detail.js" defer></script>
+
+<script is:inline>
+/* JOY2_DETAIL_FAVORITES_COUNT_V1 */
+(()=>{try{const values=JSON.parse(localStorage.getItem('joyjoy-favorites-v1')||'[]');const el=document.getElementById('jj-detail-saved-count');if(el)el.textContent=Array.isArray(values)?String(values.filter(v=>typeof v==='string').length):'0'}catch{}})();
+</script>

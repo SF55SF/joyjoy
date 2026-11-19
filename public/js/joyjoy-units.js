@@ -5,7 +5,7 @@ for(const root of document.querySelectorAll('[data-jj-units]')){
  root.addEventListener('click',event=>{
   const close=event.target.closest('[data-jj-finance-close]');
   if(close){const p=close.closest('[data-jj-unit-panel]');if(p)p.hidden=true;for(const b of rows){b.setAttribute('aria-expanded','false');b.setAttribute('aria-pressed','false');b.classList.remove('is-active');}return;}
-  const b=event.target.closest('[data-jj-unit-select]');if(!b||!root.contains(b))return;
+  const b=event.target.closest('[data-jj-unit-select]');if(!b||!root.contains(b))return; /* JOY2_V28_NON_INVEST_CLICK_GUARD */ if(root.dataset.jjInvestProject!=="yes"||!b.querySelector(".jj-unit-finance-flag"))return;
   const id=b.dataset.jjUnitSelect,p=panels.find(x=>x.dataset.jjUnitPanel===id);
   if(!p)return;const shouldOpen=p.hidden;
   for(const x of panels)x.hidden=true;

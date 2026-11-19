@@ -36,6 +36,66 @@ const image=Astro.props.image;
 {origin&&<><link rel="alternate" hreflang="ru" href={new URL(Astro.url.pathname.replace(/^\/(uz|en)\//,'/'),origin).toString()}/><link rel="alternate" hreflang="uz" href={new URL('/uz/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/><link rel="alternate" hreflang="en" href={new URL('/en/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/></>}
 <link rel="manifest" href="/site.webmanifest?v=joy2-icon-20261117" />
 <meta name="apple-mobile-web-app-title" content="Joy²" />
+<!-- JOY2_HOME_START_TOP_V12_START -->
+<script is:inline>
+/* On a fresh home visit or reload begin at the site header, not the catalog. */
+(()=>{
+  if(!/^\/(?:uz\/|en\/)?$/.test(location.pathname))return;
+  const nav=performance.getEntriesByType?.('navigation')?.[0];
+  const reloaded=nav?.type==='reload';
+  if(!reloaded && location.hash)return; // preserve deliberate deep links on normal navigation
+  if(reloaded && location.hash){
+    history.replaceState(history.state,'',location.pathname+location.search);
+  }
+  try{history.scrollRestoration='manual';}catch(_){}
+  const top=()=>{window.scrollTo({top:0,left:0,behavior:'instant'});};
+  top();
+  document.addEventListener('DOMContentLoaded',top,{once:true});
+  window.addEventListener('load',top,{once:true});
+  window.addEventListener('pageshow',top,{once:true});
+  window.setTimeout(top,120);
+})();
+</script>
+<!-- JOY2_HOME_START_TOP_V12_END -->
+<!-- JOY2_FINAL_HEADER_V38_START -->
+<style is:inline>
+/* JOY2_FINAL_HEADER_V38: one static header, no JS reveal, no legacy nav. */
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] {display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;animation:none!important;transition:none!important;position:relative!important;top:auto!important;height:98px!important;background:transparent!important;border:0!important;box-shadow:none!important;z-index:5!important}
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] > .jj-sitebar-in {display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:85px!important;height:100%!important;width:calc(100% - 36px)!important;max-width:none!important;margin:0 18px!important;padding:0!important;gap:18px!important;background:transparent!important;box-shadow:none!important}
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-wordmark {display:inline-flex!important;align-items:center!important;flex-shrink:0!important;background:transparent!important;box-shadow:none!important}
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-brand-logo {display:block!important;width:181.2px!important;max-height:75px!important;height:auto!important;object-fit:contain!important;filter:drop-shadow(0 3px 3px rgba(0,0,0,.20)) drop-shadow(0 8px 11px rgba(0,0,0,.09))!important}
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-primary-nav {display:none!important}
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-sitebar-right {display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:clamp(12px,1.6vw,25px)!important;margin-left:auto!important}
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang {display:flex!important;align-items:center!important;gap:3px!important;padding:0!important;border:0!important}
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a {display:flex!important;align-items:center!important;justify-content:center!important;min-width:41px!important;min-height:43px!important;border:0!important;font-size:15px!important}
+html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a[aria-current] {background:#b6ff00!important;color:#000!important;border-radius:12px!important;text-decoration:none!important;box-shadow:none!important}
+@media(max-width:700px){html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header]{height:78px!important}html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] > .jj-sitebar-in{min-height:70px!important;width:calc(100% - 32px)!important;margin:0 16px!important;gap:9px!important}html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-brand-logo{width:159.6px!important;max-height:65px!important}html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-sitebar-right{gap:4px!important}html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a{min-width:29px!important;min-height:34px!important;font-size:11px!important}}
+
+</style>
+<!-- JOY2_FINAL_HEADER_V38_END -->
+<!-- JOY2_HERO_SINGLE_FINAL_V45_START -->
+<style is:inline>
+/* No transitional old hero: reveal only when the investment card is constructed. */
+html body > main.jj-ref-home > section.jj-ref-hero{visibility:hidden!important}
+html.joy2-hero-final-v45 body > main.jj-ref-home > section.jj-ref-hero{visibility:visible!important}
+</style>
+<script is:inline>
+(function(){
+ var doc=document;
+ function ready(){
+  var hero=doc.querySelector('main.jj-ref-home > .jj-ref-hero');
+  if(!hero)return false;
+  var stage=hero.querySelector('.jj-hero-right-v2');
+  if(!stage||!stage.querySelector('.jj-property-card'))return false;
+  doc.documentElement.classList.add('joy2-hero-final-v45');return true;
+ }
+ if(ready())return;
+ var observer=new MutationObserver(function(){if(ready())observer.disconnect()});
+ observer.observe(doc.documentElement,{childList:true,subtree:true});
+ doc.addEventListener('DOMContentLoaded',function(){if(ready())observer.disconnect()},{once:true});
+})();
+</script>
+<!-- JOY2_HERO_SINGLE_FINAL_V45_END -->
 </head>
 <body><slot /><script src="/js/joyjoy-money-display.js" defer></script>
 <script is:inline>/* JOY2_SINGLE_CATALOG_INVEST_V1 site navigation */document.addEventListener('click',function(e){const a=e.target?.closest?.('a[href]');if(!a)return;let u;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin||!/^\/(?:uz\/|en\/)?projects\/?$/.test(u.pathname))return;e.preventDefault();const lang=document.documentElement.lang;location.assign((lang==='uz'?'/uz/':lang==='en'?'/en/':'/')+'?investment=1#catalog');},false);</script></body>

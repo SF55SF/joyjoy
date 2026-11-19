@@ -1,0 +1,211 @@
+{
+  "slug": "daho-block-e",
+  "title": "DAHO · Коммерческие помещения",
+  "city": "Ташкент",
+  "district": "",
+  "address": "пересечение улиц Саида Барака и Тараса Шевченко",
+  "lat": 41.296862,
+  "lng": 69.281666,
+  "type": "retail",
+  "status": null,
+  "area": 388,
+  "priceUsd": 1746000,
+  "images": [
+    "https://api.cmwp.uz/storage/projects/previews/s3ycojaN7vQySqIJOFtRqFaWVW6d2waewpUEfnTV.jpg"
+  ],
+  "description": "Многофункциональный комплекс DAHO на пересечении улиц Саида Барака и Тараса Шевченко в центре Ташкента. В продаже отдельные коммерческие помещения в блоках B, C, F и E. Комплекс объединяет жильё, офисы и street-retail. Стоимость лотов указана без НДС. Доступность уточняется.",
+  "features": [
+    "517 квартир в корпусах B и C",
+    "114 000 м² общая площадь помещений",
+    "Более 700 машиномест",
+    "Жильё, офисы и street-retail",
+    "8 лотов в предложении",
+    "Стоимость лотов без НДС"
+  ],
+  "sourceUrl": "https://cmwp.uz/sales/daho-block-e",
+  "order": 2,
+  "published": true,
+  "showCatalog": true,
+  "units": [
+    {
+      "id": "b-1-1",
+      "block": "B",
+      "floor": "1",
+      "number": "1-1",
+      "area": 363,
+      "pricePerSqm": 7000,
+      "published": true,
+      "images": [],
+      "investment": {
+        "currency": "USD",
+        "published": true,
+        "purchasePrice": 2541000,
+        "transactionCosts": 0,
+        "fitOutCosts": 0,
+        "otherCosts": 0,
+        "capex": 0,
+        "lettableArea": 363,
+        "monthlyRent": 35,
+        "mezzanineArea": 254.1,
+        "mezzanineRent": 35,
+        "occupancy": 100,
+        "annualExpenses": 0,
+        "propertyTaxRate": 1.5,
+        "profitTaxRate": 15,
+        "holdYears": 8,
+        "exitCapRate": 12,
+        "annualRentGrowth": 6.8627451,
+        "rentCurrency": "USD",
+        "usdUzs": null,
+        "uzsDevaluation": null,
+        "rentBasis": "assumption",
+        "asOf": "2026-11-15",
+        "sourceNote": "Ставка аренды $35/м²/мес на 1 этаже и мезонине; мезонин 70% от площади 1 этажа. Из финансовой модели DAHO, скорректировано на 363 м² по презентации. Допущения: индексация в USD 6,8627%/год, налог на имущество 1,5%, на прибыль 15%, 100% заполняемость, CAPEX 0. Не подтверждённые договором арендные условия."
+      },
+      "planImage": "/images/joyjoy/daho-plan-b.jpg"
+    },
+    {
+      "id": "b-1-4",
+      "block": "B",
+      "floor": "1",
+      "number": "1-4",
+      "area": 319,
+      "pricePerSqm": 7000,
+      "published": true,
+      "images": [],
+      "investment": null,
+      "planImage": "/images/joyjoy/daho-plan-b.jpg"
+    },
+    {
+      "id": "b-2-1",
+      "block": "B",
+      "floor": "2",
+      "number": "2-1",
+      "area": 1305,
+      "pricePerSqm": 4000,
+      "published": true,
+      "images": [],
+      "investment": null,
+      "note": "Блок B: площадь включает входную группу 94 м² (1 этаж)",
+      "planImage": "/images/joyjoy/daho-plan-b.jpg"
+    },
+    {
+      "id": "c-1-1",
+      "block": "C",
+      "floor": "1",
+      "number": "1-1",
+      "area": 410,
+      "pricePerSqm": 7000,
+      "published": true,
+      "images": [],
+      "investment": null,
+      "planImage": "/images/joyjoy/daho-plan-c.jpg"
+    },
+    {
+      "id": "c-1-2",
+      "block": "C",
+      "floor": "1",
+      "number": "1-2",
+      "area": 832,
+      "pricePerSqm": 7000,
+      "published": true,
+      "images": [],
+      "investment": null,
+      "planImage": "/images/joyjoy/daho-plan-c.jpg"
+    },
+    {
+      "id": "c-2-1",
+      "block": "C",
+      "floor": "2",
+      "number": "2-1",
+      "area": 1385,
+      "pricePerSqm": 4000,
+      "published": true,
+      "images": [],
+      "investment": null,
+      "note": "",
+      "planImage": "/images/joyjoy/daho-plan-c.jpg"
+    },
+    {
+      "id": "f-whole",
+      "block": "F",
+      "floor": "1–2",
+      "number": "Весь блок",
+      "area": 919,
+      "pricePerSqm": 4500,
+      "published": true,
+      "images": [],
+      "investment": {
+        "currency": "USD",
+        "published": true,
+        "purchasePrice": 4135500,
+        "transactionCosts": 0,
+        "fitOutCosts": 0,
+        "otherCosts": 0,
+        "capex": 0,
+        "lettableArea": 919,
+        "monthlyRent": 30,
+        "mezzanineArea": 0,
+        "mezzanineRent": 0,
+        "occupancy": 100,
+        "annualExpenses": 0,
+        "propertyTaxRate": 1.5,
+        "profitTaxRate": 15,
+        "holdYears": 8,
+        "exitCapRate": 12,
+        "annualRentGrowth": 6.8627451,
+        "rentCurrency": "USD",
+        "usdUzs": null,
+        "uzsDevaluation": null,
+        "rentBasis": "assumption",
+        "asOf": "2026-11-15",
+        "sourceNote": "Инвестиционный сценарий: аренда 919 м² по $30/м²/мес; дополнительный мезонин 0 м². Остальные исходные предположения приняты из модели DAHO: 100% заполняемость, индексация USD 6,8627%, налоги 1,5% и 15%, CAPEX 0. Не подтверждено договором аренды."
+      },
+      "planImage": "/images/joyjoy/daho-plan-f.jpg"
+    },
+    {
+      "id": "e-12-1",
+      "block": "E",
+      "floor": "12",
+      "number": "12-1",
+      "area": 388,
+      "pricePerSqm": 4500,
+      "published": true,
+      "images": [],
+      "investment": null,
+      "planImage": "/images/joyjoy/daho-plan-e.jpg"
+    }
+  ],
+  "translations": {
+    "en": {
+      "title": "DAHO · Commercial premises",
+      "description": "Mixed-use DAHO complex in central Tashkent, with eight commercial units in blocks B, C, F and E. Prices exclude VAT. Please confirm availability.",
+      "features": [
+        "517 apartments in blocks B and C",
+        "114,000 m² of total premises",
+        "More than 700 parking spaces",
+        "Residential, offices and street retail",
+        "Eight offered units",
+        "Prices exclude VAT"
+      ]
+    },
+    "uz": {
+      "title": "DAHO · Tijorat binolari",
+      "description": "Toshkent markazidagi DAHO majmuasining B, C, F va E bloklarida sakkizta tijorat xonasi sotuvga taklif etilgan. Narxlar QQSsiz. Mavjudligini aniqlashtiring.",
+      "features": [
+        "B va C bloklarida 517 ta kvartira",
+        "114 000 m² umumiy maydon",
+        "700 dan ortiq avtoturargoh",
+        "Uy-joy, ofis va riteyl",
+        "8 ta taklif",
+        "Narxlar QQSsiz"
+      ]
+    }
+  },
+  "insestproject": true,
+  "contacts": {
+    "name": "Санжар",
+    "phone": "+998 50 590 60 59",
+    "telegram": "@sanjar_saymatov_cmwp"
+  }
+}

@@ -1,22 +1,73 @@
+// JOY2_ADMIN_UNITS_V68: one object -> independent unit investment models.
+import {validateInvestment} from './joyjoy-investment-model.js';
 const root=document.querySelector('[data-joyjoy-admin]');
-if(root){const form=root.querySelector('form'),holder=root.querySelector('[data-units-list]'),enabled=root.querySelector('[data-units-enabled]'),json=form.elements.namedItem('unitsJson');
- const num=(v,d=0)=>{const n=Number(v);return Number.isFinite(n)?n:d};const moneyKeys=['purchasePrice','transactionCosts','fitOutCosts','otherCosts','capex','lettableArea','monthlyRent','occupancy','annualExpenses','holdYears','exitCapRate','annualRentGrowth','mezzanineArea','mezzanineRent','propertyTaxRate','profitTaxRate'];
- const example=()=>({id:'unit-'+Math.random().toString(36).slice(2,9),block:'',floor:'',number:'',area:0,pricePerSqm:0,published:false,planImage:'',images:[],investment:null});
- let units=[];const sync=()=>{json.value=JSON.stringify(enabled.checked?units:[]);const active=enabled.checked&&units.some(u=>u.published!==false&&u.investment?.published===true);const flag=form.elements.namedItem('showProjects');flag.checked=!!active;flag.dispatchEvent(new Event('change',{bubbles:true}));json.dispatchEvent(new Event('input',{bubbles:true}));};
- function draw(){holder.replaceChildren();holder.hidden=!enabled.checked;if(!enabled.checked)return;
- for(const u of units){const card=document.createElement('section');card.className='jj-unit-admin-card';const heading=document.createElement('h3');heading.textContent='Помещение '+(u.block||'')+' '+(u.number||'');card.append(heading);
- const grid=document.createElement('div');grid.className='jj-admin-fields';card.append(grid);
- const input=(key,label,type='text')=>{const wrap=document.createElement('label'),span=document.createElement('span'),el=document.createElement('input');span.textContent=label;el.type=type;el.value=u[key]??'';el.step='any';el.addEventListener('input',()=>{u[key]=type==='number'?(el.value===''?0:num(el.value)):el.value;sync();});wrap.append(span,el);grid.append(wrap);return el;};
- input('id','Идентификатор (уникальный)');input('block','Блок');input('floor','Этаж');input('number','Номер помещения');input('area','Площадь, м²','number');input('pricePerSqm','Цена за м², $','number');input('planImage','Поэтажный план (/images/…)');
- const pub=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.checked=u.published!==false;check.addEventListener('change',()=>{u.published=check.checked;sync()});pub.append(check,document.createTextNode(' Публиковать помещение'));card.append(pub);
- const inv=document.createElement('label'),invBox=document.createElement('input');invBox.type='checkbox';invBox.checked=!!u.investment?.published;invBox.addEventListener('change',()=>{if(invBox.checked){u.investment={...(u.investment||{}),published:true,currency:'USD',rentCurrency:'USD',purchasePrice:u.area*u.pricePerSqm,transactionCosts:0,fitOutCosts:0,otherCosts:0,capex:0,lettableArea:u.area,monthlyRent:0,mezzanineArea:0,mezzanineRent:0,occupancy:100,annualExpenses:0,propertyTaxRate:0,profitTaxRate:0,holdYears:8,exitCapRate:12,annualRentGrowth:0,rentBasis:'assumption',asOf:new Date().toISOString().slice(0,10),sourceNote:'Расчётное допущение'};}else{if(u.investment)u.investment.published=false;}sync();draw();});inv.append(invBox,document.createTextNode(' Инвестиционный вариант'));card.append(inv);
- if(u.investment?.published){const box=document.createElement('div');box.className='jj-unit-admin-model';const title=document.createElement('h4');title.textContent='Финансовые допущения';box.append(title);const fields=document.createElement('div');fields.className='jj-admin-fields';box.append(fields);
- const names={purchasePrice:'Цена покупки, $',transactionCosts:'Расходы на сделку, $',fitOutCosts:'Подготовка, $',otherCosts:'Прочее, $',capex:'CAPEX, $',lettableArea:'Основная арендуемая площадь, м²',monthlyRent:'Аренда основной площади, $/м²/мес',mezzanineArea:'Дополнительный мезонин, м²',mezzanineRent:'Аренда мезонина, $/м²/мес',occupancy:'Загрузка, %',annualExpenses:'Годовые расходы, $',propertyTaxRate:'Налог на имущество, %',profitTaxRate:'Налог на прибыль, %',holdYears:'Срок, лет',exitCapRate:'Exit Cap Rate, %',annualRentGrowth:'Индексация аренды USD, %'};
- for(const k of moneyKeys){const label=document.createElement('label'),sp=document.createElement('span'),inpt=document.createElement('input');sp.textContent=names[k]||k;inpt.type='number';inpt.step='any';inpt.min='0';inpt.value=u.investment[k]??0;inpt.addEventListener('input',()=>{u.investment[k]=num(inpt.value);sync()});label.append(sp,inpt);fields.append(label)}
- const src=document.createElement('label'),sp=document.createElement('span'),ta=document.createElement('textarea');sp.textContent='Источник и условия расчёта';ta.rows=3;ta.value=u.investment.sourceNote||'';ta.addEventListener('input',()=>{u.investment.sourceNote=ta.value;sync()});src.append(sp,ta);box.append(src);card.append(box);}
- const remove=document.createElement('button');remove.type='button';remove.textContent='Удалить помещение';remove.addEventListener('click',()=>{if(!confirm('Удалить помещение '+u.id+'?'))return;units=units.filter(x=>x!==u);sync();draw()});card.append(remove);holder.append(card);}
+if(root){
+ const form=root.querySelector('form'),holder=root.querySelector('[data-units-list]'),json=form.elements.namedItem('unitsJson');
+ let units=[];
+ const number=(v)=>v===''?0:Number(v);
+ const uid=()=> 'unit-'+(globalThis.crypto?.randomUUID?.().slice(0,12)||Math.random().toString(36).slice(2,14));
+ const fresh=()=>({id:uid(),block:'',floor:'',number:'',area:0,pricePerSqm:0,published:true,planImage:'',images:[],investment:null});
+ const keys=[['purchasePrice','Цена покупки, $'],['transactionCosts','Расходы на сделку, $'],['fitOutCosts','Подготовка, $'],['otherCosts','Прочие затраты, $'],['capex','CAPEX, $'],['lettableArea','Арендуемая площадь, м²'],['monthlyRent','Ставка аренды, $/м²/мес'],['mezzanineArea','Площадь мезонина, м²'],['mezzanineRent','Ставка мезонина, $/м²/мес'],['occupancy','Заполняемость, %'],['annualExpenses','Годовые расходы, $'],['propertyTaxRate','Налог на имущество, %'],['profitTaxRate','Налог на прибыль, %'],['holdYears','Срок владения, лет'],['exitCapRate','Exit Cap Rate, %'],['annualRentGrowth','Индексация, %']];
+ const initial=u=>({published:true,currency:'USD',rentCurrency:'USD',purchasePrice:Number(u.area)*Number(u.pricePerSqm)||0,transactionCosts:0,fitOutCosts:0,otherCosts:0,capex:0,lettableArea:Number(u.area)||0,monthlyRent:0,mezzanineArea:0,mezzanineRent:0,occupancy:100,annualExpenses:0,propertyTaxRate:0,profitTaxRate:0,holdYears:8,exitCapRate:12,annualRentGrowth:0,rentBasis:'assumption',asOf:new Date().toISOString().slice(0,10),sourceNote:''});
+ const hasComplete=u=>u.published!==false&&u.investment?.published===true&&validateInvestment(u.investment).length===0&&String(u.investment.sourceNote||'').trim()&&String(u.investment.asOf||'').trim()&&['assumption','asking','contract'].includes(u.investment.rentBasis);
+ const sync=()=>{
+  json.value=JSON.stringify(units);
+  const flag=form.elements.namedItem('insestproject');
+  if(flag){flag.checked=units.some(hasComplete);flag.disabled=true;}
+  json.dispatchEvent(new Event('input',{bubbles:true}));
+ };
+ const text=(tag,value)=>{const el=document.createElement(tag);el.textContent=value;return el};
+ function input(parent,label,key,obj,type='text'){
+  const wrap=document.createElement('label'),name=text('span',label),el=document.createElement('input');
+  el.type=type;el.value=obj[key]??'';
+  if(type==='number'){el.min='0';el.step='any';}
+  el.addEventListener('input',()=>{obj[key]=type==='number'?number(el.value):el.value;sync();});
+  wrap.append(name,el);parent.append(wrap);return el;
  }
- enabled.addEventListener('change',()=>{if(!enabled.checked&&units.length&&!confirm('Скрыть список помещений? Данные будут удалены из объекта только после сохранения.')){enabled.checked=true;return;}if(enabled.checked&&!units.length)units=[example()];sync();draw()});
- root.querySelector('[data-add-unit]').addEventListener('click',()=>{enabled.checked=true;units.push(example());sync();draw()});
- window.addEventListener('joyjoy:units-loaded',e=>{units=structuredClone(e.detail.units||[]);enabled.checked=units.length>0;draw()});
+ function select(parent,label,key,obj,opts){const wrap=document.createElement('label'),el=document.createElement('select');wrap.append(text('span',label));
+  for(const [value,title] of opts){const opt=document.createElement('option');opt.value=value;opt.textContent=title;el.append(opt)}
+  el.value=obj[key]||'';el.addEventListener('change',()=>{obj[key]=el.value;sync()});wrap.append(el);parent.append(wrap);return el;
+ }
+ function draw(){holder.replaceChildren();
+  units.forEach((u,index)=>{
+   const card=document.createElement('section');card.className='jj-unit-admin-card';card.dataset.joy2Unit=String(index);
+   card.append(text('h3','Помещение №'+(index+1)));
+   const grid=document.createElement('div');grid.className='jj-admin-fields';card.append(grid);
+   input(grid,'Идентификатор (уникальный)','id',u);input(grid,'Блок','block',u);input(grid,'Этаж','floor',u);
+   input(grid,'Номер помещения','number',u);input(grid,'Площадь, м²','area',u,'number');input(grid,'Цена за м², $','pricePerSqm',u,'number');
+   input(grid,'Поэтажный план (/images/…)','planImage',u);
+   const pub=document.createElement('label'),pubbox=document.createElement('input');pubbox.type='checkbox';pubbox.checked=u.published!==false;
+   pubbox.addEventListener('change',()=>{u.published=pubbox.checked;sync()});pub.append(pubbox,text('span',' Публиковать помещение'));card.append(pub);
+   select(grid,'Арендный статус','tenancyStatus',u,[['','Без статуса'],['leased','С арендаторами'],['preliminary','Предварительные условия аренды']]);
+   const flag=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.checked=u.investment?.published===true;
+   check.addEventListener('change',()=>{if(check.checked)u.investment={...initial(u),...(u.investment||{}),published:true};else if(u.investment)u.investment.published=false;sync();draw()});
+   flag.append(check,text('strong',' Инвестиционное помещение'));card.append(flag);
+   if(u.investment?.published){
+    const box=document.createElement('div');box.className='jj-unit-admin-model';box.append(text('h4','Финансовая модель · помещение №'+(index+1)));
+    const fields=document.createElement('div');fields.className='jj-admin-fields';box.append(fields);
+    for(const [key,label] of keys)input(fields,label,key,u.investment,'number');
+    select(fields,'Валюта аренды','rentCurrency',u.investment,[['USD','USD'],['UZS','UZS']]);
+    select(fields,'Основание ставки','rentBasis',u.investment,[['assumption','Расчётное допущение'],['asking','Ставка предложения'],['contract','По договору']]);
+    input(fields,'Дата исходных данных','asOf',u.investment,'date');
+    input(fields,'Курс USD/UZS (для аренды в UZS)','usdUzs',u.investment,'number');
+    input(fields,'Девальвация UZS, % (для аренды в UZS)','uzsDevaluation',u.investment,'number');
+    const src=document.createElement('label');src.append(text('span','Источник и условия расчёта'));const note=document.createElement('textarea');note.rows=3;note.value=u.investment.sourceNote||'';
+    note.addEventListener('input',()=>{u.investment.sourceNote=note.value;sync()});src.append(note);box.append(src);
+    const error=text('small','Инвестиционный статус объекта включится после заполнения корректной модели и сохранения.');box.append(error);
+    card.append(box);
+   }
+   const remove=document.createElement('button');remove.type='button';remove.textContent='Удалить помещение';remove.className='jj-admin-danger';
+   remove.addEventListener('click',()=>{
+    if(!confirm('Удалить помещение №'+(index+1)+'? Данные этого помещения и его инвестиционной модели будут удалены при сохранении объекта.'))return;
+    units.splice(index,1);if(!units.length)units.push(fresh());sync();draw();
+   });
+   card.append(remove);holder.append(card);
+  });
+ }
+ root.querySelector('[data-add-unit]')?.addEventListener('click',()=>{units.push(fresh());sync();draw();});
+ window.addEventListener('joyjoy:units-loaded',event=>{
+  const original=event.detail?.units;
+  units=Array.isArray(original)&&original.length?structuredClone(original):[fresh()];
+  draw();sync();
+ });
 }

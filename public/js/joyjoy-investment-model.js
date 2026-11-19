@@ -99,7 +99,12 @@ export function hasPublishedInvestment(property) {
     ['assumption','asking','contract'].includes(m.rentBasis) && validDate(m.asOf);
 }
 export function hasPublishedUnitInvestment(unit){return unit?.published!==false && unit?.investment?.published===true && validateInvestment(unit.investment).length===0 && !!unit.investment.sourceNote && !!unit.investment.asOf && ['assumption','asking','contract'].includes(unit.investment.rentBasis);}
-export function isPublishedProject(property) {return property.insestproject===true && (hasPublishedInvestment(property)||(Array.isArray(property.units)&&property.units.some(hasPublishedUnitInvestment)));}
+export function isPublishedProject(property) {
+ if(property?.published===false)return false;
+ if(Array.isArray(property?.units)&&property.units.length)return property.units.some(hasPublishedUnitInvestment);
+ // Compatibility for previously published legacy properties until their first unit is saved.
+ return property?.insestproject===true && hasPublishedInvestment(property);
+}
 function validDate(s) {return typeof s==='string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(s+'T00:00:00Z')) && new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;}
 export function validateProperty(p) {
   const errors=[];

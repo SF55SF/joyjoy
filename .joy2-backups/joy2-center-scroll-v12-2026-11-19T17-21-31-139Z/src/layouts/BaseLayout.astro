@@ -1,0 +1,42 @@
+---
+// JOYJOY_LOOPNET_LAYOUT_V3
+import '../styles/joyjoy.css';
+import '../styles/investment.css';
+const lang=Astro.props.lang??'ru';
+const title=Astro.props.title??'JoyJoy — коммерческая недвижимость';
+const description=Astro.props.description??'Продажа коммерческой недвижимости: офисы, торговые и складские помещения в Узбекистане.';
+const rawSite=import.meta.env.PUBLIC_SITE_URL||'';
+const origin=/^https:\/\/[^/]+\.[^/]+$/.test(rawSite)?rawSite:'';
+const canonical=origin?new URL(Astro.url.pathname,origin).toString():undefined;
+const image=Astro.props.image;
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={Astro.props.robots??(origin?'index,follow':'noindex,follow')} />
+<meta name="theme-color" content="#ffffff" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=joy2-icon-20261117" />
+<link rel="alternate icon" href="/favicon.ico?v=joy2-icon-20261117" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=joy2-icon-20261117" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=joy2-icon-20261117" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=joy2-icon-20261117" />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="JoyJoy" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{canonical&&<><link rel="canonical" href={canonical}/><meta property="og:url" content={canonical}/></>}
+{image&&<meta property="og:image" content={image}/>}
+{origin&&<><link rel="alternate" hreflang="ru" href={new URL(Astro.url.pathname.replace(/^\/(uz|en)\//,'/'),origin).toString()}/><link rel="alternate" hreflang="uz" href={new URL('/uz/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/><link rel="alternate" hreflang="en" href={new URL('/en/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/></>}
+<link rel="manifest" href="/site.webmanifest?v=joy2-icon-20261117" />
+<meta name="apple-mobile-web-app-title" content="Joy²" />
+</head>
+<body><slot /><script src="/js/joyjoy-money-display.js" defer></script>
+<script is:inline>/* JOY2_SINGLE_CATALOG_INVEST_V1 site navigation */document.addEventListener('click',function(e){const a=e.target?.closest?.('a[href]');if(!a)return;let u;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin||!/^\/(?:uz\/|en\/)?projects\/?$/.test(u.pathname))return;e.preventDefault();const lang=document.documentElement.lang;location.assign((lang==='uz'?'/uz/':lang==='en'?'/en/':'/')+'?investment=1#catalog');},false);</script></body>
+</html>

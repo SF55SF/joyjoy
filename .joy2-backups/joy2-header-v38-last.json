@@ -1,0 +1,8 @@
+{
+  "dir": ".joy2-backups/joy2-header-v38-2026-11-19T19-12-39-138Z",
+  "files": [
+    "src/layouts/BaseLayout.astro",
+    "src/components/JoyCatalog.astro",
+    "src/styles/investment.css"
+  ]
+}

@@ -3,6 +3,7 @@ import {calculateInvestment} from '../../public/js/joyjoy-investment-model.js';
 // JOY2_UNIT_FLAG_ROW_DRAWER_V2 JOY2_INLINE_ROW_INVESTMENT_FIXED_TAX_V6 JOY2_TAX_REALISM_CLEAN_UI_V7 - public models are read-only
 const {listing,lang='ru'}=Astro.props;
 const units=(listing.units||[]).filter(u=>u.published!==false);
+const investmentEnabled=listing.insestproject===true;
 const L={
  ru:{heading:'Помещения в продаже',block:'Блок',floor:'Этаж',area:'Площадь',rate:'Цена за м²',price:'Стоимость',flag:'Инвестиционный расчёт',select:'Нажмите на помещение, чтобы посмотреть его параметры и расчёт',plan:'Поэтажный план',input:'Исходные параметры',results:'Показатели инвестиционного расчёта',cash:'Денежные потоки по годам',purchase:'Цена покупки',sale:'Цена продажи',returns:'Прогнозируемая прибыль проекта',rent:'Арендная ставка',mezz:'Мезонин',mezzRent:'Ставка мезонина',index:'Индексация',capex:'CAPEX',hold:'Срок владения',occupancy:'Заполняемость',expenses:'Годовые расходы',saleTax:'Налог при продаже',netSale:'После налога',taxUnset:'Налог при продаже: 15% от положительной разницы между ценой продажи и остаточной стоимостью после амортизации за 20 лет. НДС не включён.',year:'Год',exit:'Выход',outflow:'Первоначальные вложения',note:'Чистая прибыль = сумма всех денежных потоков: NOI + продажа − первоначальные вложения − налог и расходы на продажу. Налог при продаже: 15% от положительной разницы между продажной и остаточной стоимостью после 20-летней амортизации. НДС не учитывается.',disclaimer:'Расчёт основан на опубликованных допущениях. Фактическая доходность может отличаться.',noModel:'Для этого помещения инвестиционный расчёт не опубликован.',years:'лет'},
  en:{heading:'Available units',block:'Block',floor:'Floor',area:'Area',rate:'Price per m²',price:'Total price',flag:'Investment analysis',select:'Select a unit to see its details and investment analysis',plan:'Floor plan',input:'Assumptions',results:'Investment metrics',cash:'Annual cash flows',purchase:'Purchase price',sale:'Exit sale price',returns:'Projected project profit',rent:'Monthly rent',mezz:'Mezzanine',mezzRent:'Mezzanine rent',index:'Annual rent growth',capex:'CAPEX',hold:'Holding period',occupancy:'Occupancy',expenses:'Annual expenses',saleTax:'Tax on disposal',netSale:'Net sale proceeds',taxUnset:'Exit tax assumption: 15% on positive gain after 20-year straight-line depreciation of purchase price. VAT excluded.',year:'Year',exit:'Exit',outflow:'Initial investment',note:'Net profit = sum of annual cash flows, including rent, net exit proceeds and initial investment.',disclaimer:'Indicative assumptions; actual returns may differ.',noModel:'No published investment analysis for this unit.',years:'years'},
@@ -13,7 +14,7 @@ const money=n=>Number.isFinite(Number(n))?'$'+Math.round(Number(n)).toLocaleStri
 const signedMoney=n=>Number.isFinite(n)?(n<0?'(':'')+'$'+Math.abs(Math.round(n)).toLocaleString('en-US')+(n<0?')':''):'—';
 const num=n=>Number.isFinite(Number(n))?Number(n).toLocaleString('en-US',{maximumFractionDigits:2}):'—';
 const pct=n=>Number.isFinite(n)?n.toLocaleString('en-US',{maximumFractionDigits:2})+'%':'—';
-const getModel=u=>{const m=u.investment;if(!m||m.published!==true)return null;const r=calculateInvestment({...m,propertyTaxArea:Number(u.area)>0?Number(u.area):m.lettableArea,taxCity:listing.city});if(!r.ok)return null;return {m,r,total:r.netProfit,flow:[{year:0,cashFlow:r.cashFlows[0]},...r.schedule.map(y=>({...y}))]};};
+const getModel=u=>{ /* JOY2_V28_INVEST_FLAG_GATE */ if(listing.insestproject!==true)return null;const m=u.investment;if(!m||m.published!==true)return null;const r=calculateInvestment({...m,propertyTaxArea:Number(u.area)>0?Number(u.area):m.lettableArea,taxCity:listing.city});if(!r.ok)return null;return {m,r,total:r.netProfit,flow:[{year:0,cashFlow:r.cashFlows[0]},...r.schedule.map(y=>({...y}))]};};
 // The model only exposes non-zero optional costs and mezzanine data.
 const assumptions=x=>{
  const m=x.m, rows=[];
@@ -36,20 +37,20 @@ const compact=value=>{
  return value<0?'('+amount+')':amount;
 };
 ---
-<section class="jj-units" data-jj-units aria-label={c.heading}>
+<section class="jj-units" data-jj-units data-jj-invest-project={listing.insestproject===true?"yes":"no"} aria-label={c.heading}>
  <header class="jj-units-heading"><h2>{c.heading}</h2><span>{units.length}</span></header>
  <p class="jj-units-intro">{c.select}</p>
  <div class="jj-unit-table-wrap">
   <div class="jj-unit-table-heading" aria-hidden="true"><span>{c.block} / {c.floor}</span><span>{c.area}</span><span>{c.rate}</span><span>{c.price}</span><span>{c.flag}</span></div>
   <div class="jj-units-list" role="group" aria-label={c.heading}>
-   {units.map((u,i)=>{const x=getModel(u);return <><button type="button" class:list={['jj-unit-option','jj-unit-data-row',{'is-active':false}]} data-jj-unit-select={u.id} aria-pressed="false" aria-controls={'jj-unit-detail-'+i}>
+   {units.map((u,i)=>{const x=investmentEnabled?getModel(u):null;return <><button type="button" class:list={['jj-unit-option','jj-unit-data-row',{'is-active':false}]} data-jj-unit-select={investmentEnabled?u.id:undefined} disabled={!investmentEnabled} aria-pressed="false" aria-controls={investmentEnabled?'jj-unit-detail-'+i:undefined}>
      <span class="jj-unit-row-title"><b>{c.block} {u.block} · {u.number}</b><small>{c.floor} {u.floor}</small></span>
      <span class="jj-unit-col-area"><b>{num(u.area)}</b><small>м²</small></span>
      <span class="jj-unit-col-rate"><b>{money(u.pricePerSqm)}</b><small>/м²</small></span>
      <span class="jj-unit-col-price"><b>{money(u.area*u.pricePerSqm)}</b></span>
-     <span class="jj-unit-col-flag">{getModel(u)&&<span class="jj-unit-finance-flag">{c.flag}</span>}{getModel(u)&&u.tenancyStatus==='leased'&&<span class="jj-unit-tenancy-tag">{lang==='ru'?'С арендаторами':lang==='en'?'Tenanted':'Ijarachilar bilan'}</span>}{getModel(u)&&u.tenancyStatus==='preliminary'&&<span class="jj-unit-tenancy-tag">{lang==='ru'?'Предварительные условия':lang==='en'?'Preliminary terms':'Dastlabki shartlar'}</span>}</span>{/* JOY2_UNIT_TENANCY_V13 */}
+     <span class="jj-unit-col-flag">{x&&<span class="jj-unit-finance-flag">{c.flag}</span>}{x&&u.tenancyStatus==='leased'&&<span class="jj-unit-tenancy-tag">{lang==='ru'?'С арендаторами':lang==='en'?'Tenanted':'Ijarachilar bilan'}</span>}{x&&u.tenancyStatus==='preliminary'&&<span class="jj-unit-tenancy-tag">{lang==='ru'?'Предварительные условия':lang==='en'?'Preliminary terms':'Dastlabki shartlar'}</span>}</span>{/* JOY2_UNIT_TENANCY_V13 */}
    </button>
-  <article id={'jj-unit-detail-'+i} data-jj-unit-panel={u.id} hidden class="jj-unit-details">
+  {investmentEnabled&&<article id={'jj-unit-detail-'+i} data-jj-unit-panel={u.id} hidden class="jj-unit-details">
    <div class="jj-unit-summary"><strong>{c.block} {u.block} · {u.number}</strong><span>{num(u.area)} м²</span></div>
    {x&&<div class="jj-unit-finance-drawer" data-jj-finance-drawer>
      <header class="jj-rinv-header"><div><span class="jj-unit-finance-flag">{c.flag}</span><h3>{c.results} · {u.block} {u.number}</h3></div><button type="button" class="jj-rinv-close" data-jj-finance-close aria-label="Close" title="Close">×</button></header>
@@ -79,8 +80,8 @@ const compact=value=>{
      <p class="jj-rinv-disclaimer">{lang==='ru'?'Расчёт основан на допущениях. Фактические результаты могут отличаться. Не является финансовой или инвестиционной рекомендацией.':lang==='uz'?'Hisob taxminlarga asoslangan. Amaldagi natijalar farq qilishi mumkin. Moliyaviy yoki investitsiyaviy tavsiya emas.':'Calculations are based on assumptions. Actual results may differ. This is not financial or investment advice.'}</p></div><button type="button" class="jj-rinv-pdf" data-jj-investment-print aria-label={lang==='ru'?'Сохранить расчёт как PDF':lang==='en'?'Save as PDF':'PDF sifatida saqlash'}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 16v4h16v-4"/></svg><span>{lang==='ru'?'Скачать PDF':lang==='en'?'Save as PDF':'PDF yuklash'}</span></button></div><!-- JOY2_FINANCE_REFERENCE_20261119 -->
    </div>}
    {!x&&u.note&&<p class="jj-unit-note">{u.note}</p>}
-   {u.planImage&&<figure class="jj-unit-plan"><figcaption>{c.plan} · {c.block} {u.block}</figcaption><img src={u.planImage} alt={c.plan+' '+u.block} loading="lazy"/></figure>}
-  </article></>})}
+   {!x&&u.planImage&&<figure class="jj-unit-plan"><figcaption>{c.plan} · {c.block} {u.block}</figcaption><img src={u.planImage} alt={c.plan+' '+u.block} loading="lazy"/></figure>}
+  </article>}</>})}
   </div>
  </div>
 </section>

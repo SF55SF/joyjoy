@@ -1,0 +1,26 @@
+/* JOY2 ADMIN MAP AND MEDIA V35 */
+.jj-admin .jj-admin-geo-old-hide{display:none!important}
+.jj-admin label[hidden],.jj-admin .jj-v35-original-hidden{display:none!important}
+.jj-admin .jj-admin-geo-v35,.jj-admin .jj-admin-v35-media{grid-column:1/-1;min-width:0;margin:10px 0 16px;padding:17px;border:1px solid #dfe5e7;border-radius:16px;background:#fafbfa;box-sizing:border-box}
+.jj-admin .jj-admin-geo-v35 h3,.jj-admin .jj-admin-v35-media h3{font-size:19px;line-height:1.2;margin:0 0 8px;font-weight:750}
+.jj-admin .jj-v35-hint{font-size:12px;color:#58636a;margin:0 0 12px;line-height:1.5}
+.jj-admin .jj-v35-map{height:355px;min-height:250px;border:1px solid #d6dde1;border-radius:13px;overflow:hidden;background:#e5ece8;position:relative}
+.jj-admin .jj-v35-map-bar{display:flex;gap:10px;margin:12px 0 6px;flex-wrap:wrap}
+.jj-admin .jj-v35-map-bar button{cursor:pointer;border:1px solid #cbd2d5;border-radius:10px;background:white;color:#17191b;padding:10px 15px;font-size:13px;font-weight:700}
+.jj-admin .jj-v35-map-bar button.jj-v35-confirm{background:#b6ff00;border-color:#a7e900}
+.jj-admin .jj-v35-map-bar button:disabled{opacity:.48;cursor:not-allowed}
+.jj-admin .jj-v35-status,.jj-admin .jj-v35-notice{font-size:12px;color:#526168;line-height:1.4;margin:8px 0}
+.jj-admin .jj-v35-address{display:grid!important;margin-top:12px}
+.jj-admin .jj-v35-media-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.jj-admin .jj-v35-media-card{min-width:0;padding:13px;background:#fff;border:1px solid #e1e5e6;border-radius:13px}
+.jj-admin .jj-v35-media-card h4{margin:0 0 5px;font-size:15px}
+.jj-admin .jj-v35-media-card>p{font-size:11px;color:#657077;line-height:1.5;margin:0 0 9px}
+.jj-admin .jj-v35-file{max-width:100%;width:100%;font-size:12px}
+.jj-admin .jj-v35-preview{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;margin-top:12px}
+.jj-admin .jj-v35-media-figure{margin:0;max-width:100%;width:240px;min-width:0}
+.jj-admin .jj-v35-media-figure img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#f0f1f1;border:1px solid #d9e0e1;border-radius:7px}
+.jj-admin .jj-v35-media-card:nth-child(3) .jj-v35-media-figure img{aspect-ratio:4/3}
+.jj-admin .jj-v35-media-figure figcaption{font-size:11px;color:#38464f;margin-top:5px;overflow-wrap:anywhere}
+.jj-admin .jj-v35-remove{font-size:11px;padding:5px 8px;margin:4px 0;border:1px solid #d7dde0;border-radius:6px;background:white;cursor:pointer}
+@media(max-width:1100px){.jj-admin .jj-v35-media-grid{grid-template-columns:1fr}.jj-admin .jj-v35-media-figure{width:240px}}
+@media(max-width:650px){.jj-admin .jj-v35-map{height:285px}.jj-admin .jj-admin-geo-v35,.jj-admin .jj-admin-v35-media{padding:12px}}
