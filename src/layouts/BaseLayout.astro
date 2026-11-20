@@ -14,6 +14,7 @@ const image=Astro.props.image;
 <html lang={lang}>
 <head>
 <meta charset="utf-8" />
+
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>{title}</title>
 <meta name="description" content={description} />
@@ -96,6 +97,11 @@ html.joy2-hero-final-v45 body > main.jj-ref-home > section.jj-ref-hero{visibilit
 })();
 </script>
 <!-- JOY2_HERO_SINGLE_FINAL_V45_END -->
+
+
+
+
+<!-- JOY2_HERO_FAST_AREA_SPACING_V88: no legacy multi-component reveal gates; v45 checks only hero card -->
 </head>
 <body><slot /><script src="/js/joyjoy-money-display.js" defer></script>
 <script is:inline>/* JOY2_SINGLE_CATALOG_INVEST_V1 site navigation */document.addEventListener('click',function(e){const a=e.target?.closest?.('a[href]');if(!a)return;let u;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin||!/^\/(?:uz\/|en\/)?projects\/?$/.test(u.pathname))return;e.preventDefault();const lang=document.documentElement.lang;location.assign((lang==='uz'?'/uz/':lang==='en'?'/en/':'/')+'?investment=1#catalog');},false);</script></body>

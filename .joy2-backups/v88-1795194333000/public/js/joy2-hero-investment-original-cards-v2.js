@@ -1,0 +1,154 @@
+/* JOY2 ORIGINAL CATALOG CARD ROTATOR V6 — one real DOM clone per slide. */
+(()=>{
+  function init(){
+    const hero=document.querySelector('main.jj-ref-home > .jj-ref-hero');
+    const grid=document.getElementById('jj-results');
+    if(!hero||!grid||hero.dataset.joy2CarouselV6==='1')return;
+    const actions=hero.querySelector(':scope > .jj-ref-actions, :scope > .jj-hero-left-v2 > .jj-ref-actions');
+    const heading=hero.querySelector(':scope > h1, :scope > .jj-hero-left-v2 > h1');
+    if(!actions||!heading)return;
+    const originals=[...grid.querySelectorAll('.jj-property-card[data-investment="true"]')];
+    if(!originals.length)return;
+    let left=hero.querySelector(':scope > .jj-hero-left-v2');
+    if(!left){
+      left=document.createElement('div');left.className='jj-hero-left-v2';
+      [...hero.children].filter(x=>!x.classList.contains('jj-hero-right-v2')).forEach(x=>left.appendChild(x));
+      hero.prepend(left);
+    }
+    let stage=hero.querySelector(':scope > .jj-hero-right-v2');
+    if(!stage){stage=document.createElement('div');stage.className='jj-hero-right-v2';hero.append(stage);}
+    stage.setAttribute('aria-label',document.documentElement.lang==='en'?'Investment offers':document.documentElement.lang==='uz'?'Investitsiya takliflari':'Инвестиционные предложения');
+    // Remove any previous carousel and its extra shells; keep a single stage.
+    stage.replaceChildren();
+    stage.classList.add('jj-hero-stage-v6');
+    const viewport=document.createElement('div');viewport.className='jj-hero-rotator-v6';stage.appendChild(viewport);
+    hero.classList.add('jj-hero-layout-v2');
+    hero.dataset.joy2CarouselV2='1';hero.dataset.joy2CarouselV6='1';
+
+    // Preserve computed styles of the original rendered cards. They are styled by
+    // #catalog-results selectors that do not normally apply outside the catalog.
+    function copyOriginalAppearance(source,clone){
+      const a=[source,...source.querySelectorAll('*')],b=[clone,...clone.querySelectorAll('*')];
+      for(let i=0;i<a.length&&i<b.length;i++){
+        const sourceStyle=getComputedStyle(a[i]);
+        let declaration='';
+        for(let n=0;n<sourceStyle.length;n++){
+          const prop=sourceStyle[n];
+          if(prop==='position'||prop==='inset'||prop==='top'||prop==='left'||prop==='right'||prop==='bottom'||prop==='z-index')continue;
+          declaration+=prop+':'+sourceStyle.getPropertyValue(prop)+';';
+        }
+        b[i].style.cssText=declaration;
+      }
+    }
+    /* JOY2_HERO_HEADING_ADDRESS_V78: preserve normal catalog card, only fix copied address in hero. */
+    const copyAppearanceV78=copyOriginalAppearance;
+    copyOriginalAppearance=function(source,clone){
+      copyAppearanceV78(source,clone);
+      const address=clone.querySelector('.jj-property-address');
+      const container=clone.querySelector('.jj-canonical-address');
+      for(const element of [container,address]){
+        if(!element)continue;
+        element.style.setProperty('text-align','left','important');
+        element.style.setProperty('justify-content','flex-start','important');
+        element.style.setProperty('align-items','flex-start','important');
+        element.style.setProperty('align-self','stretch','important');
+        element.style.setProperty('margin-left','0','important');
+        element.style.setProperty('margin-right','0','important');
+        element.style.setProperty('width','100%','important');
+      }
+    };
+
+    /* JOY2_HERO_ADDRESS_GRID_FIX_V79: fix the real address node after catalog styles have been copied. */
+    function alignHeroAddress(card){
+      const address=card.querySelector('.jj-property-address');
+      if(!address)return;
+      const wrapper=address.closest('.jj-canonical-address');
+      const nodes=wrapper&&card.contains(wrapper)?[wrapper,address]:[address];
+      for(const element of nodes){
+        const overrides={
+          'text-align':'left',
+          'justify-self':'stretch',
+          'align-self':'stretch',
+          'justify-content':'flex-start',
+          'align-items':'flex-start',
+          'margin-left':'0',
+          'margin-right':'0',
+          'margin-inline-start':'0',
+          'margin-inline-end':'0',
+          'padding-left':'0',
+          'padding-right':'0',
+          'padding-inline-start':'0',
+          'padding-inline-end':'0',
+          'text-indent':'0',
+          'width':'100%',
+          'max-width':'100%',
+          'min-width':'0',
+          'box-sizing':'border-box',
+          'direction':'ltr'
+        };
+        for(const [name,value] of Object.entries(overrides)){
+          element.style.setProperty(name,value,'important');
+        }
+        element.style.setProperty('grid-column','1 / -1','important');
+      }
+      address.style.setProperty('display','block','important');
+      address.style.setProperty('white-space','normal','important');
+      address.style.setProperty('overflow-wrap','break-word','important');
+      address.style.setProperty('transform','none','important');
+      address.style.setProperty('translate','none','important');
+    }
+    const slides=[];
+    originals.forEach((original,i)=>{
+      const slide=document.createElement('div');slide.className='jj-hero-slide-v6';slide.hidden=i!==0;
+      const clone=original.cloneNode(true);
+      copyOriginalAppearance(original,clone);
+      alignHeroAddress(clone);
+      clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
+      clone.querySelectorAll('img').forEach(img=>{img.loading='eager';img.decoding='async';});
+      // The cloned card is otherwise untouched; all content and badges come from the catalog.
+      slide.appendChild(clone);viewport.appendChild(slide);slides.push(slide);
+    });
+    let tallest=0;
+    originals.forEach(el=>{const h=el.getBoundingClientRect().height;if(h>tallest)tallest=h;});
+    viewport.style.height=Math.ceil(Math.max(tallest,380))+'px';
+    if(slides.length<2)return;
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* JOY2_HERO_CARD_DATA_SYNC_V75 */
+    // Always derive the hero data from the currently rendered catalog card.
+    // Other catalog scripts update price, labels and finance after DOMContentLoaded.
+    function syncSlide(i){
+      const source=originals[i];
+      const slide=slides[i];
+      if(!source||!slide||!source.isConnected)return;
+      const fresh=source.cloneNode(true);
+      copyOriginalAppearance(source,fresh);
+      alignHeroAddress(fresh);
+      fresh.removeAttribute('id');
+      fresh.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+      fresh.querySelectorAll('img').forEach(img=>{img.loading='eager';img.decoding='async'});
+      slide.replaceChildren(fresh);
+    }
+    slides.forEach((_,i)=>syncSlide(i));
+    let current=0,busy=false,timer;
+    function next(){
+      if(busy||document.hidden)return;
+      const old=slides[current],ni=(current+1)%slides.length,upcoming=slides[ni];
+      syncSlide(ni);
+      if(reduce){old.hidden=true;upcoming.hidden=false;current=ni;return;}
+      busy=true;upcoming.hidden=false;upcoming.classList.add('joy2-pre-v6');void upcoming.offsetWidth;
+      old.classList.add('joy2-out-v6');upcoming.classList.remove('joy2-pre-v6');upcoming.classList.add('joy2-in-v6');
+      setTimeout(()=>{old.hidden=true;old.classList.remove('joy2-out-v6');upcoming.classList.remove('joy2-in-v6');current=ni;busy=false;},760);
+    }
+    function pause(){clearInterval(timer);timer=undefined;}
+    function play(){pause();timer=setInterval(next,4000);}
+    stage.addEventListener('mouseenter',pause);stage.addEventListener('mouseleave',play);
+    stage.addEventListener('focusin',pause);
+    stage.addEventListener('focusout',()=>{if(!stage.contains(document.activeElement))play();});
+    document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();else play();});
+    play();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,80),{once:true});
+  else setTimeout(init,80);
+})();
+
+/* JOY2_FAST_HERO_SEPARATED_FILTERS_V87: hero startup delay reduced 2 time(s); no filter dependency. */

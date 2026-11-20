@@ -29,7 +29,7 @@ const joy2DetailTelegramUser=joy2DetailTelegramRaw.replace(/^https?:\/\/(?:www\.
 const joy2DetailTelegramUrl=/^[a-zA-Z0-9_]{5,32}$/.test(joy2DetailTelegramUser)?'https://t.me/'+joy2DetailTelegramUser:'';
 // JOY2 DETAIL GALLERY V25: extra photos and plans are independent from the main cover.
 const joy2ExtraPhotos=Array.isArray(rawListing.images)?rawListing.images.slice(1).filter(Boolean):[];
-const joy2PlanImages=[...(Array.isArray((rawListing as any).planImages)?(rawListing as any).planImages:[]),...(Array.isArray(rawListing.units)?rawListing.units.map(u=>u.planImage):[])].filter((x,i,a)=>typeof x==='string'&&x.trim()&&a.indexOf(x)===i);
+const joy2PlanImages=[...(Array.isArray((rawListing as any).planImages)?(rawListing as any).planImages:[]),].filter((x,i,a)=>typeof x==='string'&&x.trim()&&a.indexOf(x)===i);
 const joy2GallerySide=[...joy2ExtraPhotos.map(src=>({src,plan:false})),...joy2PlanImages.filter(src=>!joy2ExtraPhotos.includes(src)).map(src=>({src,plan:true}))].slice(0,2);
 const joy2FullGallery=[...(rawListing.images||[]),...joy2PlanImages.filter(src=>!(rawListing.images||[]).includes(src))];
 const numberLocale=lang==='en'?'en-US':lang==='uz'?'uz-UZ':'ru-RU';

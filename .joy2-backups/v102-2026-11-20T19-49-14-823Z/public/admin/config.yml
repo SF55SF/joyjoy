@@ -1,0 +1,7 @@
+# JOYJOY_REBRAND_V2
+# Legacy CMS is disabled until JoyJoy authentication is configured.
+backend:
+  name: test-repo
+media_folder: public/uploads
+public_folder: /uploads
+collections: []

@@ -41,7 +41,7 @@
       const areaNumber = new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'ru-RU', {maximumFractionDigits:0});
       const a0 = areaNumber.format(info.areaMin);
       const a1 = areaNumber.format(info.areaMax);
-      const area = (info.areaMin === info.areaMax ? a0 : a0 + '–' + a1) + ' м²';
+      const area = (info.areaMin === info.areaMax ? a0 : a0 + ' – ' + a1) + ' м²';
       const price = info.priceMode === 'perSqm'
         ? (lang === 'en' ? 'from ' : lang === 'uz' ? 'dan ' : 'от ') + nf.format(info.priceValue) + ' $/м²'
         : info.priceMode === 'total' ? '$' + nf.format(info.priceValue)
@@ -69,3 +69,5 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, { once: true });
   else mount();
 })();
+
+/* JOY2_HERO_FAST_AREA_SPACING_V88 */

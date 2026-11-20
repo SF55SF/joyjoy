@@ -87,13 +87,10 @@ if(root){
   // Computed designation. An empty or invalid model never makes the object investment-grade.
   p.insestproject=Array.isArray(p.units)&&p.units.some(u=>u.published!==false&&u.investment?.published===true&&validateInvestment(u.investment).length===0&&String(u.investment.sourceNote||'').trim()&&String(u.investment.asOf||'').trim());
   if(Array.isArray(p.units)&&p.units.length)p.investment.published=false;
-  p.tenancyStatus=field('tenancyStatus')?.value||null;
-  if(Array.isArray(p.units)){for(const selector of form.querySelectorAll('[data-unit-tenancy]')){const index=Number(selector.dataset.unitTenancy);if(p.units[index]){if(selector.value)p.units[index].tenancyStatus=selector.value;else delete p.units[index].tenancyStatus;}}}
   return p;
  }
  function preview(){const r=calculateInvestment(read().investment);root.querySelector('[data-admin-model-status]').textContent=r.ok?'Предпросмотр по введённым параметрам':'Для расчёта заполните все числовые параметры. Цена и площадь — больше нуля; заполняемость 0–100%.';for(const el of root.querySelectorAll('[data-admin-result]')){const k=el.dataset.adminResult;el.textContent=!r.ok?'—':k==='paybackYears'?(r[k]===null?'Не окупается':r[k].toLocaleString('ru-RU',{maximumFractionDigits:1})+' лет'):['yieldPercent','irrPercent'].includes(k)?(r[k]===null?'—':r[k].toLocaleString('ru-RU',{maximumFractionDigits:2})+'%'):r[k].toLocaleString('ru-RU',{style:'currency',currency:'USD',maximumFractionDigits:0});}}
  function render(p,version,creating=false){
-  queueMicrotask(()=>{ensureTenancyUI();const selected=field('tenancyStatus');if(selected)selected.value=p.tenancyStatus||'';renderUnitTenancies({...p,units:[]});});
   form.reset();field('slug').dataset.manuallyEdited='false';current=p;sha=version;isNew=creating;
   // JOY2_CONTACTS_TELEGRAM_V2: legacy contact keys remain readable.
   field('contactName').value=p.contacts?.name||p.contactName||'';
