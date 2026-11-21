@@ -1,5 +1,6 @@
+// JOY2_REMOVE_TRANSACTION_OTHER_V155: legacy fields excluded from initial cash flow.
 // One deterministic model for the website, the editor and server-side validation.
-export const investmentFields = ['purchasePrice','transactionCosts','fitOutCosts','otherCosts','lettableArea','monthlyRent','occupancy','annualExpenses','capex','holdYears','exitCapRate','annualRentGrowth'];
+export const investmentFields = ['purchasePrice','fitOutCosts','lettableArea','monthlyRent','occupancy','annualExpenses','capex','holdYears','exitCapRate','annualRentGrowth'];
 // New fields default for previously saved properties; blank CAPEX is always zero.
 export const investmentDefaults={capex:0,holdYears:8,exitCapRate:12,annualRentGrowth:0,rentCurrency:'USD',usdUzs:null,uzsDevaluation:null};
 function investmentInputs(m){return {...investmentDefaults,...m,capex:m?.capex??0,holdYears:m?.holdYears??8,exitCapRate:m?.exitCapRate??12,annualRentGrowth:m?.annualRentGrowth??0,occupancy:m?.occupancy??0,monthlyRent:m?.monthlyRent??0,annualExpenses:m?.annualExpenses??0,otherCosts:m?.otherCosts??0,fitOutCosts:m?.fitOutCosts??0,transactionCosts:m?.transactionCosts??0,mezzanineArea:m?.mezzanineArea??0,mezzanineRent:m?.mezzanineRent??0,propertyTaxRate:m?.propertyTaxRate??0,profitTaxRate:m?.profitTaxRate??0};}
@@ -43,9 +44,9 @@ export function calculateInvestment(raw) {
  const m=investmentInputs(raw);
  const errors=validateInvestment(m);if(errors.length)return {ok:false,errors,irrPercent:null};
  const purchase=Number(m.purchasePrice);
- const transactionCosts=Number(m.transactionCosts||0),fitOutCosts=Number(m.fitOutCosts||0),otherCosts=Number(m.otherCosts||0),capex=Number(m.capex||0);
+ const fitOutCosts=Number(m.fitOutCosts||0),capex=Number(m.capex||0);
  const annualExpenses=Number(m.annualExpenses||0);
- const totalInvestment=purchase+transactionCosts+fitOutCosts+otherCosts+capex;
+ const totalInvestment=purchase+fitOutCosts+capex;
  const fxRent=m.rentCurrency==='UZS'?Number(m.usdUzs):1;
  const annualRent=(Number(m.lettableArea)*Number(m.monthlyRent||0)+Number(m.mezzanineArea||0)*Number(m.mezzanineRent||0))*12*Number(m.occupancy||0)/100/fxRent;
  const effectiveAnnualGrowth=m.rentCurrency==='UZS'?((1+Number(m.annualRentGrowth)/100)/(1+Number(m.uzsDevaluation)/100)-1)*100:Number(m.annualRentGrowth||0);
@@ -166,6 +167,6 @@ export function validateProperty(p) {
   return [...new Set(errors)];
 }
 export function propertyErrorMessage(errors) {
- const labels={slug:'Адрес страницы: латинские буквы, цифры и дефисы',title:'Название',city:'Город',address:'Адрес',district:'Район',description:'Описание',area:'Общая площадь должна быть больше нуля',priceUsd:'Цена продажи должна быть больше нуля или пустой',images:'Фотографии: используйте HTTPS-ссылки или /images/…',sourceUrl:'Ссылка на источник: используйте HTTPS',features:'Характеристики',coordinates:'Укажите обе координаты или очистите обе',lat:'Широта от −90 до 90',lng:'Долгота от −180 до 180',translations:'Переводы',purchasePrice:'Цена покупки должна быть больше нуля',transactionCosts:'Расходы на сделку',fitOutCosts:'Ремонт и подготовка',otherCosts:'Прочие вложения',lettableArea:'Сдаваемая площадь должна быть больше нуля',monthlyRent:'Ставка аренды',occupancy:'Заполняемость от 0 до 100%',annualExpenses:'Годовые расходы',asOf:'Корректная дата исходных данных',currency:'Валюта модели — USD',rentBasis:'Основание ставки',sourceNote:'Источник и условия ставки','investment.incomplete':'Перед публикацией заполните всю модель, основание ставки, дату и источник',insestproject:'Для включения в инвестиционный каталог опубликуйте полную модель'};
+ const labels={slug:'Адрес страницы: латинские буквы, цифры и дефисы',title:'Название',city:'Город',address:'Адрес',district:'Район',description:'Описание',area:'Общая площадь должна быть больше нуля',priceUsd:'Цена продажи должна быть больше нуля или пустой',images:'Фотографии: используйте HTTPS-ссылки или /images/…',sourceUrl:'Ссылка на источник: используйте HTTPS',features:'Характеристики',coordinates:'Укажите обе координаты или очистите обе',lat:'Широта от −90 до 90',lng:'Долгота от −180 до 180',translations:'Переводы',purchasePrice:'Цена покупки должна быть больше нуля',fitOutCosts:'Ремонт и подготовка',lettableArea:'Сдаваемая площадь должна быть больше нуля',monthlyRent:'Ставка аренды',occupancy:'Заполняемость от 0 до 100%',annualExpenses:'Годовые расходы',asOf:'Корректная дата исходных данных',currency:'Валюта модели — USD',rentBasis:'Основание ставки',sourceNote:'Источник и условия ставки','investment.incomplete':'Перед публикацией заполните всю модель, основание ставки, дату и источник',insestproject:'Для включения в инвестиционный каталог опубликуйте полную модель'};
  return 'Проверьте: '+[...new Set(errors.map(key=>labels[key]||labels[key.replace(/^investment\./,'')]||'Параметры объекта'))].join(' · ');
 }

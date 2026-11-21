@@ -1665,7 +1665,6 @@ html body main.jj-ref-home .jj-hero-left-v2 .jj-ref-actions>a.jj-ref-cta[href="#
 /* No outer card background or frame: shadow follows the real catalog card only. */
 html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6{padding:0!important;border:0!important;background:none!important;background-image:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:visible!important;}
 html body main.jj-ref-home .jj-hero-rotator-v6{overflow:visible!important;}
-html body main.jj-ref-home .jj-hero-slide-v6>.jj-property-card{box-shadow:0 22px 44px rgba(19,22,29,.23),0 7px 15px rgba(19,22,29,.1)!important;}
 /* JOY2 HERO BUTTON & CARD V10 END */
 /* JOY2_HERO_CARD_CENTER_V12_START */
 /* Red guide in approved 1728px screenshot sits 94px left of actual card center. */
@@ -2169,15 +2168,7 @@ html body main.jj-ref-home section.jj-ref-hero > h1 > .jj-concept-highlight > sp
 }
 /* JOY2_HERO_SPACING_V46_END */
 
-/* JOY2_FINAL_HERO_90_V51_START */
-/* 90% of the original size, not 90% of the previous 75%; layout coordinates unchanged. */
-html body main.jj-ref-home .jj-ref-hero h1,
-html body main.jj-ref-home .jj-ref-hero h1 + p,
-html body main.jj-ref-home .jj-ref-hero .jj-ref-actions {
-  scale: .9 !important;
-  transform-origin: left top !important;
-}
-/* JOY2_FINAL_HERO_90_V51_END */
+/* JOY2_FINAL_HERO_90_V51_REMOVED_BY_V215: do not scale individual hero blocks */
 
 /* JOY2_HERO_CLEANUP_V59_START */
 /* Final hero only: tighter letter spacing, remove oversized gaps on the left, keep everything else intact. */
@@ -3598,14 +3589,8 @@ html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta > 
 
 /* JOY2_V126_BACKGROUND_CANONICAL: preserve final single-asset homepage background. */
 
-/* JOY2_INVEST_DRAWER_SCALE_V128 */
-/* Uniform 10% reduction of investment calculation panels, including all descendants. */
-.jj-detail .jj-unit-finance-drawer[data-jj-finance-drawer],
-.jj-detail .jj-unit-finance-drawer.joy2-v111 {
-  zoom: .9 !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
+/* JOY2_INVEST_DRAWER_SCALE_V128_REMOVED_BY_V215: browser controls the zoom */
+
 
 /* JOY2_SUBTITLE_ALIGN_N_V133 */
 html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2 > p.joy2-subtitle-aligned-v67 { left:0!important; right:auto!important; margin-left:0!important; text-align:left!important; }
@@ -3662,3 +3647,1275 @@ html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta{tr
 html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:hover{transform:translateY(-2px)!important;translate:none!important;}
 html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:active{transform:translateY(0)!important;}
 /* JOY2_CTA_LIFT_ONLY_V147_END */
+
+/* JOY2_RESPONSIVE_ZOOM_V150_FIXED */
+@media screen and (min-width:1200px){html body .jj-detail .jj-unit-finance-drawer[data-jj-finance-drawer],html body .jj-detail .jj-unit-finance-drawer.joy2-v111{zoom:.9!important}}
+@media screen and (max-width:1199px){html body .jj-detail .jj-unit-finance-drawer[data-jj-finance-drawer],html body .jj-detail .jj-unit-finance-drawer.joy2-v111{zoom:1!important}html body .jj-detail .joy2-v111-grid,html body .jj-detail .joy2-v111-center,html body .jj-detail .joy2-v111-right{min-width:0!important;max-width:100%!important}}
+@media screen and (max-width:720px){html body .jj-detail .jj-unit-details,html body .jj-detail .jj-unit-finance-drawer,html body .jj-detail .joy2-v111-shell,html body .jj-detail .joy2-v111-grid,html body .jj-detail .joy2-v111-center,html body .jj-detail .joy2-v111-graph,html body .jj-detail .joy2-v111-right{min-width:0!important;max-width:100%!important;box-sizing:border-box!important}html body .jj-detail .joy2-v111 .joy2-v111-kpis strong{font-size:clamp(19px,5vw,26px)!important;white-space:normal!important;overflow-wrap:anywhere!important}html body .jj-detail .joy2-v111 .joy2-v111-graph{height:auto!important;min-height:0!important;padding:16px!important}html body .jj-detail .joy2-v93-drawer .joy2-v90-chart{max-width:100%!important;overflow-x:auto!important}}
+@media screen and (max-width:430px){html body main.jj-ref-home .jj-hero-left-v2 .jj-ref-actions{max-width:100%!important;flex-wrap:wrap!important}html body main.jj-ref-home .jj-hero-left-v2 .jj-ref-cta{max-width:100%!important;box-sizing:border-box!important}html body .jj-detail .jj-unit-finance-drawer.joy2-v111{padding:12px!important}}
+/* JOY2_RESPONSIVE_ZOOM_V150_FIXED_END */
+
+
+/* JOY2_MOBILE_VISUAL_V152: compact hero, aligned catalog, four results per mobile page */
+.joy2-mobile-pagination-v152{display:none}
+@media screen and (max-width:700px){
+ html body main.jj-ref-home .jj-ref-panels,
+ html body main.jj-ref-home .jj-market-nav,
+ html body main.jj-ref-home .jj-hero-right-v2,
+ html body main.jj-ref-home #catalog-results .jj-view-switch,
+ html body main.jj-ref-home #catalog-results .jj-catalog-tools {display:none!important}
+ html body main.jj-ref-home > section.jj-ref-hero.jj-hero-layout-v2{min-height:0!important;height:auto!important;display:flex!important;flex-direction:column!important;gap:0!important;padding:24px 0 30px!important;width:calc(100% - 32px)!important;margin-inline:auto!important}
+ html body main.jj-ref-home .jj-hero-left-v2{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;align-items:center!important;text-align:center!important}
+ html body main.jj-ref-home .jj-hero-left-v2 > h1{font-size:clamp(34px,9vw,58px)!important;line-height:1.08!important;max-width:100%!important;overflow-wrap:normal!important;text-align:center!important;margin:8px 0 12px!important}
+ html body main.jj-ref-home .jj-hero-left-v2 > p.joy2-subtitle-aligned-v67{font-size:14px!important;line-height:1.4!important;max-width:100%!important;margin:10px 0 18px!important;text-align:center!important;left:0!important;transform:none!important}
+ html body main.jj-ref-home .jj-hero-left-v2 .jj-ref-actions{width:100%!important;max-width:100%!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;justify-items:stretch!important;margin:8px 0 0!important}
+ html body main.jj-ref-home .jj-hero-left-v2 .jj-ref-actions > a.jj-ref-cta{width:100%!important;max-width:100%!important;min-width:0!important;min-height:54px!important;padding:12px 16px!important;box-sizing:border-box!important;justify-content:space-between!important;gap:12px!important}
+ html body main.jj-ref-home #catalog-results{min-width:0!important;width:calc(100% - 32px)!important;margin-inline:auto!important}
+ html body main.jj-ref-home #catalog-results #jj-results.jj-card-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:14px!important;justify-items:stretch!important;min-width:0!important;width:100%!important}
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card{width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;box-sizing:border-box!important}
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card[data-joy2-paged-v152="yes"]{display:none!important;visibility:hidden!important}
+ html body main.jj-ref-home #catalog-results .jj-property-card-main{min-width:0!important;overflow-wrap:anywhere!important;text-align:left!important}
+ html body main.jj-ref-home #catalog-results .jj-listing-heading{align-items:center!important;gap:10px!important}
+ html body main.jj-ref-home #catalog-results .jj-catalog-toolbar{width:100%!important;min-width:0!important}
+ .joy2-mobile-pagination-v152:not([hidden]){display:flex!important;justify-content:center;align-items:center;flex-wrap:wrap;gap:7px;width:calc(100% - 32px);max-width:520px;margin:20px auto 36px;padding:0}
+ .joy2-page-v152{border:1px solid #d9dde1;border-radius:12px;min-width:40px;min-height:44px;padding:10px 12px;background:#fff;color:#16191b;font:600 13px/1.2 Inter,Arial,sans-serif;box-shadow:none;cursor:pointer}
+ .joy2-page-v152.active{background:#b8ff28;border-color:#b8ff28;color:#131713}
+ .joy2-page-v152:disabled{opacity:.42;cursor:default}
+ .joy2-page-count-v152{width:100%;color:#626970;font:500 12px Inter,Arial,sans-serif;text-align:center;padding-top:3px}
+}
+
+
+/* JOY2_MOBILE_GRID_2X2_V153: two proportional cards per row, four per page */
+.joy2-mobile-pagination-v153{display:none}
+@media screen and (max-width:900px){
+ html body main.jj-ref-home #catalog-results{width:calc(100% - 24px)!important;max-width:100%!important;margin:0 auto!important;min-width:0!important}
+ html body main.jj-ref-home #catalog-results #jj-results.jj-card-grid,
+ html body main.jj-ref-home #catalog-results .jj-workspace #jj-results.jj-card-grid{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-auto-flow:row!important;gap:12px!important;align-items:stretch!important;
+  justify-items:stretch!important;width:100%!important;max-width:100%!important;min-width:0!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > article.jj-property-card{
+  display:flex!important;flex-direction:column!important;min-width:0!important;max-width:none!important;
+  width:100%!important;min-height:0!important;height:auto!important;margin:0!important;
+  box-sizing:border-box!important;border-radius:14px!important;overflow:hidden!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > article.jj-property-card[hidden],
+ html body main.jj-ref-home #catalog-results #jj-results > article.jj-property-card[data-joy2-paged-v153="yes"]{
+  display:none!important;visibility:hidden!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card > a.jj-property-card-image{
+  display:block!important;width:100%!important;height:auto!important;aspect-ratio:10/7!important;
+  min-height:0!important;max-height:none!important;flex:0 0 auto!important;overflow:hidden!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card > a.jj-property-card-image > img{
+  display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-card-main{
+  display:flex!important;flex-direction:column!important;flex:1 1 auto!important;
+  width:100%!important;min-width:0!important;padding:11px 10px 12px!important;gap:7px!important;
+  text-align:left!important;box-sizing:border-box!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card h3{
+  font-size:clamp(12px,3.2vw,17px)!important;line-height:1.25!important;
+  min-width:0!important;overflow-wrap:anywhere!important;margin:0!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-card-overline{
+  font-size:clamp(9px,2.5vw,12px)!important;line-height:1.3!important;min-width:0!important;
+  overflow-wrap:anywhere!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-summary{
+  width:100%!important;min-width:0!important;display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;gap:7px!important;margin:0!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-summary > *{
+  width:100%!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-summary b{
+  font-size:clamp(12px,3.1vw,17px)!important;line-height:1.25!important;
+  white-space:normal!important;overflow-wrap:anywhere!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-address{
+  font-size:clamp(10px,2.5vw,13px)!important;line-height:1.35!important;
+  min-height:0!important;margin:0!important;overflow-wrap:anywhere!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-canonical-bottom{
+  margin-top:auto!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-canonical-bottom strong{
+  font-size:clamp(11px,2.8vw,15px)!important;white-space:normal!important;overflow-wrap:anywhere!important
+ }
+ html body main.jj-ref-home #catalog-results .jj-catalog-tools,
+ html body main.jj-ref-home #catalog-results .jj-view-switch{display:none!important}
+ .joy2-mobile-pagination-v153:not([hidden]){
+  display:flex!important;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:7px;width:calc(100% - 24px);max-width:560px;margin:18px auto 30px
+ }
+ .joy2-mobile-pagination-v153 button{min-width:38px;min-height:42px;padding:8px 10px;
+  border-radius:10px;border:1px solid #d9dde1;background:#fff;color:#17191b;
+  font:600 13px/1.2 Inter,Arial,sans-serif;box-shadow:none;cursor:pointer}
+ .joy2-mobile-pagination-v153 button[aria-current="page"]{background:#b8ff28;border-color:#b8ff28}
+ .joy2-mobile-pagination-v153 button:disabled{opacity:.4;cursor:default}
+ .joy2-mobile-pagination-v153 span{width:100%;text-align:center;color:#646b74;font:500 12px Inter,Arial,sans-serif}
+}
+@media screen and (max-width:380px){
+ html body main.jj-ref-home #catalog-results #jj-results.jj-card-grid{gap:8px!important}
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-card-main{padding:9px 8px!important}
+}
+/* JOY2_MOBILE_GRID_2X2_V153_END */
+
+
+/* JOY2_MOBILE_HERO_SPACING_V162_START */
+@media screen and (max-width:700px){
+ html body main.jj-ref-home>section.jj-ref-hero.jj-hero-layout-v2{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important;gap:0!important;width:calc(100% - 28px)!important;max-width:440px!important;min-height:0!important;height:auto!important;padding:10px 0 28px!important;margin:0 auto!important}
+ html body main.jj-ref-home>section.jj-ref-hero.jj-hero-layout-v2>.jj-hero-left-v2{display:contents!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>.jj-concept-kicker{display:none!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>h1{order:1!important;display:block!important;align-self:stretch!important;width:100%!important;max-width:100%!important;margin:6px 0 16px!important;padding:0!important;text-align:left!important;font-size:clamp(29px,8.4vw,43px)!important;line-height:1.16!important;overflow-wrap:normal!important;word-break:normal!important;white-space:normal!important;letter-spacing:-.04em!important;transform:none!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>h1 mark.jj-concept-highlight{display:inline-block!important;max-width:100%!important;margin:7px 0 0!important;padding:0 7px 3px!important;line-height:1.16!important;font-size:inherit!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>p.joy2-subtitle-aligned-v67{display:none!important}
+ html body main.jj-ref-home section.jj-ref-hero>.jj-hero-right-v2.jj-hero-stage-v6{order:2!important;display:block!important;align-self:center!important;position:relative!important;transform:none!important;translate:none!important;width:100%!important;max-width:100%!important;margin:0 auto 17px!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;min-width:0!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-rotator-v6,html body main.jj-ref-home section.jj-ref-hero .jj-hero-slide-v6{width:100%!important;max-width:100%!important;min-width:0!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>.jj-ref-actions{order:3!important;display:grid!important;align-self:stretch!important;width:100%!important;max-width:100%!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin:0!important;padding:0!important;justify-items:stretch!important;transform:none!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>.jj-ref-actions>a.jj-ref-cta{display:flex!important;align-items:center!important;justify-content:space-between!important;min-width:0!important;width:100%!important;max-width:100%!important;min-height:64px!important;padding:11px 9px!important;gap:6px!important;box-sizing:border-box!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>.jj-ref-actions>a.jj-ref-cta>span.joy2-hero-cta-label{font-size:clamp(11px,3.05vw,14px)!important;line-height:1.2!important;text-align:left!important;white-space:normal!important;overflow-wrap:anywhere!important;min-width:0!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>.jj-ref-actions>a.jj-ref-cta>svg{width:clamp(20px,6vw,28px)!important;height:auto!important;flex-shrink:0!important}
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header]>.jj-sitebar-in{width:calc(100% - 20px)!important;margin:0 10px!important;gap:5px!important}
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-brand-logo{width:clamp(98px,26vw,130px)!important;height:auto!important}
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang{background:#fff!important;border:1px solid #eaeaea!important;border-radius:16px!important;padding:4px!important;box-shadow:0 5px 16px #17171716!important;gap:0!important}
+}
+/* JOY2_MOBILE_HERO_SPACING_V162_END */
+
+/* V162: retain original site cards and rotator, no duplicate card markup. */
+@media screen and (max-width:700px){
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>h1 {margin-top:2px!important;margin-bottom:18px!important}
+ html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2>h1 mark.jj-concept-highlight{margin-top:6px!important}
+ html body main.jj-ref-home section.jj-ref-hero>.jj-hero-right-v2.jj-hero-stage-v6{margin-bottom:18px!important}
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang{background:#fff!important;padding:4px!important;border-radius:15px!important}
+}
+/* JOY2_V164_MOBILE_FIX_START */
+@media screen and (max-width:900px){
+html body main.jj-ref-home>.jj-ref-hero.jj-hero-layout-v2{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;min-height:0!important;height:auto!important;width:calc(100% - 28px)!important;max-width:540px!important;margin:0 auto!important;gap:0!important;padding:7px 0 20px!important}
+html body main.jj-ref-home>.jj-ref-hero>.jj-hero-left-v2{display:contents!important}
+html body main.jj-ref-home .jj-ref-hero .jj-hero-left-v2>.jj-concept-kicker,html body main.jj-ref-home .jj-ref-hero .jj-hero-left-v2>.joy2-subtitle-aligned-v67{display:none!important}
+html body main.jj-ref-home .jj-ref-hero .jj-hero-left-v2>h1{order:1!important;font-size:clamp(28px,7.6vw,48px)!important;line-height:1.16!important;margin:5px 0 16px!important;padding:0!important;text-align:left!important;width:100%!important;transform:none!important}
+html body main.jj-ref-home .jj-ref-hero>.jj-hero-right-v2.jj-hero-stage-v6{order:2!important;display:block!important;align-self:flex-start!important;margin:0!important;padding:0!important;transform:none!important;max-width:none!important;min-width:0!important;overflow:visible!important;background:transparent!important;border:0!important;box-shadow:none!important}
+html body main.jj-ref-home .jj-ref-hero .jj-hero-rotator-v6{width:390px!important;max-width:none!important;min-height:0!important;overflow:visible!important}
+html body main.jj-ref-home .jj-ref-hero .jj-hero-slide-v6{width:390px!important;max-width:none!important;left:0!important}
+html body main.jj-ref-home .jj-ref-hero .jj-hero-left-v2>.jj-ref-actions{order:3!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;width:100%!important;margin:15px 0 0!important;padding:0!important;transform:none!important}
+html body main.jj-ref-home .jj-ref-hero .jj-ref-actions>a.jj-ref-cta{width:100%!important;min-width:0!important;max-width:none!important;min-height:56px!important;height:auto!important;padding:9px 8px!important;gap:5px!important;justify-content:space-between!important;box-sizing:border-box!important}
+html body main.jj-ref-home .jj-ref-hero .jj-ref-actions .joy2-hero-cta-label{font-size:clamp(10px,2.7vw,14px)!important;line-height:1.2!important;white-space:normal!important;overflow-wrap:anywhere!important}
+html body main.jj-ref-home .jj-ref-hero .jj-ref-actions svg{width:25px!important;height:26px!important;flex:none!important}
+html body main.jj-ref-home .jj-ref-panels,html body main.jj-ref-home .jj-market-nav{display:none!important}
+html body main.jj-ref-home #catalog.jj-filter-shell{height:0!important;max-height:0!important;overflow:hidden!important;visibility:hidden!important;margin:0!important;padding:0!important;border:0!important}
+html body main.jj-ref-home #catalog-results .jj-catalog-toolbar,html body main.jj-ref-home #catalog-results .jj-map-panel{display:none!important}
+html body main.jj-ref-home #catalog-results{width:calc(100% - 28px)!important;max-width:540px!important;margin:0 auto!important;padding-top:0!important}
+html body main.jj-ref-home #catalog-results .jj-workspace{display:block!important}
+html body main.jj-ref-home #catalog-results #jj-results.jj-card-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;align-items:start!important;justify-items:start!important;width:100%!important;min-width:0!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card:not([hidden]){display:flex!important;width:390px!important;min-width:390px!important;max-width:none!important;height:auto!important;min-height:0!important;flex-direction:column!important;overflow:hidden!important;box-sizing:border-box!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card[hidden]{display:none!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card[data-joy2-paged-v151]:not([hidden]),html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card[data-joy2-paged-v152]:not([hidden]),html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card[data-joy2-paged-v153]:not([hidden]){display:flex!important;visibility:visible!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card>.jj-property-card-image{width:100%!important;height:auto!important;aspect-ratio:1.5!important;flex:0 0 auto!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card>.jj-property-card-image img{width:100%!important;height:100%!important;object-fit:cover!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card>.jj-property-card-main{width:100%!important;min-width:0!important;max-width:none!important;box-sizing:border-box!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary{display:flex!important;flex-direction:row!important;gap:8px!important;width:100%!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary>*{flex:1 1 0!important;min-width:0!important}
+html body main.jj-ref-home .joy2-mobile-pagination-v151,html body main.jj-ref-home .joy2-mobile-pagination-v152,html body main.jj-ref-home .joy2-mobile-pagination-v153{display:none!important}
+html body main.jj-ref-home #joy2-mobile-tools-v164{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;width:calc(100% - 28px)!important;max-width:540px!important;margin:0 auto 12px!important;padding:6px 0!important;box-sizing:border-box!important}
+html body main.jj-ref-home #joy2-mobile-tools-v164 label{display:flex!important;align-items:center!important;gap:7px!important;font:650 12px/1.2 Arial,sans-serif!important;color:#171717!important;min-width:0!important}
+html body main.jj-ref-home #joy2-mobile-tools-v164 input{accent-color:#b6ff00!important;width:34px!important;height:22px!important;flex:none!important}
+html body main.jj-ref-home #joy2-mobile-tools-v164 select{width:min(47%,180px)!important;min-height:42px!important;padding:8px!important;background:white!important;color:#161616!important;border:1px solid #d5d9dc!important;border-radius:11px!important;font-size:12px!important}
+html body main.jj-ref-home #joy2-mobile-tools-v163{display:none!important}
+}
+@media screen and (min-width:901px){#joy2-mobile-tools-v164{display:none!important}}
+/* JOY2_V164_MOBILE_FIX_END */
+
+/* JOY2_V167_DESKTOP_CARD_IN_LOWER_60_START */
+@media screen and (max-width:900px){
+  /* Keep the original desktop-derived card and carousel. Only the outer layout/scale changes. */
+  html body main.jj-ref-home > section.jj-ref-hero.jj-hero-layout-v2{
+    display:flex!important;flex-direction:column!important;align-items:stretch!important;
+    justify-content:flex-start!important;gap:0!important;
+    width:calc(100% - 28px)!important;max-width:600px!important;
+    min-height:calc(100svh - 78px)!important;height:auto!important;
+    margin:0 auto!important;padding:6px 0 12px!important;box-sizing:border-box!important;
+  }
+  html body main.jj-ref-home > .jj-ref-hero > .jj-hero-left-v2{display:contents!important}
+  html body main.jj-ref-home .jj-ref-hero .jj-hero-left-v2 > .jj-concept-kicker,
+  html body main.jj-ref-home .jj-ref-hero .jj-hero-left-v2 > p.joy2-subtitle-aligned-v67,
+  html body main.jj-ref-home .jj-ref-hero .jj-ref-actions{display:none!important}
+  html body main.jj-ref-home .jj-ref-hero .jj-hero-left-v2 > h1{
+    order:1!important;display:block!important;flex:none!important;position:relative!important;
+    width:100%!important;max-width:100%!important;margin:8px 0 0!important;
+    padding:0!important;text-align:left!important;line-height:1.13!important;
+    font-size:clamp(27px,7.3vw,48px)!important;transform:none!important;
+  }
+  html body main.jj-ref-home .jj-ref-hero .jj-hero-left-v2 > h1 .jj-concept-highlight{
+    margin:6px 0 0!important;line-height:1.14!important;
+  }
+  html body main.jj-ref-home > .jj-ref-hero .jj-hero-right-v2.jj-hero-stage-v6{
+    order:2!important;display:block!important;flex:none!important;align-self:center!important;
+    position:relative!important;width:390px!important;min-width:390px!important;max-width:390px!important;
+    margin:auto 0 0!important;padding:0!important;background:none!important;border:0!important;
+    transform:none!important;overflow:visible!important;box-sizing:border-box!important;
+    box-shadow:none!important;
+  }
+  html body main.jj-ref-home > .jj-ref-hero .jj-hero-rotator-v6,
+  html body main.jj-ref-home > .jj-ref-hero .jj-hero-slide-v6{
+    width:390px!important;min-width:390px!important;max-width:390px!important;
+    overflow:visible!important;box-sizing:border-box!important;
+  }
+  html body main.jj-ref-home > .jj-ref-hero .jj-hero-slide-v6 > .jj-property-card{
+    width:390px!important;min-width:390px!important;max-width:390px!important;
+    height:auto!important;min-height:0!important;box-sizing:border-box!important;
+  }
+  /* The card's picture, badges, texts, prices and investments retain their existing site CSS. */
+}
+/* JOY2_V167_DESKTOP_CARD_IN_LOWER_60_END */
+
+/* JOY2_V173_START */
+@media screen and (max-width:900px){
+/* Original card rules, copied verbatim with the parent selector changed for the hero stage. */
+/* JOY2_CARD_CANONICAL_V1_START */
+/* The six approved content blocks only; old JS card-rewriter is disconnected. */
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-card-grid{align-items:stretch!important;grid-auto-rows:auto!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card{height:100%!important;min-height:0!important;align-self:stretch!important;display:flex!important;flex-direction:column!important;font-family:'Inter',Arial,sans-serif!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-image{flex:0 0 auto!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-main.jj-canonical-main{box-sizing:border-box!important;display:grid!important;grid-template-rows:20px minmax(48px,auto) minmax(65px,auto) minmax(51px,auto) minmax(76px,auto)!important;gap:8px!important;align-content:start!important;align-items:stretch!important;flex:1 1 auto!important;padding:16px 16px 17px!important;font-family:'Inter',Arial,sans-serif!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-main .jj-card-overline{font:500 12px/20px 'Inter',Arial,sans-serif!important;margin:0!important;overflow:hidden;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-main h3{font-family:'Inter',Arial,sans-serif!important;font-size:17px!important;line-height:24px!important;letter-spacing:-.025em!important;font-weight:700!important;min-height:48px!important;margin:0!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-clamp:2!important;overflow:hidden!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-summary.jj-canonical-price-row{box-sizing:border-box!important;display:grid!important;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)!important;gap:8px!important;align-items:start!important;justify-content:stretch!important;min-width:0!important;padding:8px 0 10px!important;margin:0!important;border-top:0!important;border-bottom:1px solid #e6e8eb!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-price-row>span{min-width:0!important;display:flex!important;flex-direction:column!important;gap:5px!important;white-space:normal!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-price-row>span:last-child{text-align:right!important;align-items:flex-end!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-price-row small{font:500 11px/15px 'Inter',Arial,sans-serif!important;color:#717780!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-price-row :is(.jj-area-sign b,.jj-card-price b){font:700 clamp(12px,1.04vw,16px)/1.28 'Inter',Arial,sans-serif!important;color:#17191c!important;letter-spacing:-.025em!important;overflow-wrap:anywhere!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-address{display:flex!important;align-items:flex-start!important;padding:5px 0 0!important;min-height:0!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-address .jj-property-address{margin:0!important;min-height:0!important;padding:0!important;font:400 12px/19px 'Inter',Arial,sans-serif!important;color:#59616a!important;display:-webkit-box!important;-webkit-line-clamp:2!important;line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-bottom{box-sizing:border-box!important;min-height:76px!important;border-radius:10px!important;border:1px solid #e8ebed!important;background:#f6f7f7!important;padding:11px 12px!important;margin:0!important;font-family:'Inter',Arial,sans-serif!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-bottom small{font:500 11px/16px 'Inter',Arial,sans-serif!important;color:#6a717b!important;display:block!important;margin-bottom:6px!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-bottom strong{font:700 15px/20px 'Inter',Arial,sans-serif!important;color:#13171a!important;display:block!important;overflow-wrap:anywhere!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-invest{display:grid!important;grid-template-columns:minmax(0,.66fr) minmax(0,1.34fr)!important;gap:10px!important;align-items:center!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-invest>div+div{border-left:1px solid #dde1e5!important;padding-left:10px!important;min-width:0!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-status{display:flex!important;flex-direction:column!important;justify-content:center!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card :is(.jj-invest-ribbon,.jj-label-status,.jj-tenancy-ribbon){display:none!important;}
+@media(max-width:1px){html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-main.jj-canonical-main{padding:15px!important;}html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-canonical-price-row :is(.jj-area-sign b,.jj-card-price b){font-size:15px!important;}}
+/* JOY2_CARD_CANONICAL_V1_END */
+/* JOY2_UNIFIED_CARDS_V1 */
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-card-grid{align-items:stretch!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card{height:100%!important;min-height:0!important;display:flex!important;flex-direction:column!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-property-card-main{flex:1 1 auto!important;min-height:0!important;display:grid!important;grid-template-rows:auto minmax(47px,auto) auto minmax(43px,auto) minmax(78px,auto)!important;align-content:start!important;gap:0!important;padding:16px!important;font-family:Inter,Arial,sans-serif!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-card-overline{margin:0 0 5px!important;font-size:12px!important;line-height:18px!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card h3{min-height:0!important;margin:0 0 10px!important;line-height:1.3!important;font-size:18px!important;font-weight:700!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-property-summary{border:0!important;margin:0!important;padding:0 0 10px!important;align-self:start!important;align-items:baseline!important;flex-wrap:wrap!important;gap:6px!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-property-address{margin:0!important;padding:9px 0 12px!important;min-height:0!important;align-self:start!important;border-top:1px solid #e8e9ec!important;font-size:12.5px!important;line-height:1.4!important;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-bottom{box-sizing:border-box;align-self:stretch;display:flex;flex-direction:column;justify-content:center;gap:5px;min-height:78px;padding:12px 13px;border-radius:10px;background:#f5f6f7;color:#14171a;font-family:Inter,Arial,sans-serif;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-bottom-label,html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics span{font-size:11px;line-height:1.35;color:#717781;font-weight:500;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-status{font-size:15px;line-height:1.4;font-weight:650;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.35fr);gap:10px;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics>div{min-width:0;display:flex;flex-direction:column;gap:5px;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics strong{font-size:16px;font-weight:700;line-height:1.25;letter-spacing:-.025em;overflow-wrap:anywhere;font-variant-numeric:tabular-nums;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-bottom.jj-u-empty{background:transparent;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-property-card-image .jj-u-ribbon{position:absolute!important;z-index:5!important;top:12px!important;left:12px!important;bottom:auto!important;right:auto!important;display:inline-flex!important;align-items:center!important;max-width:calc(100% - 66px)!important;padding:7px 11px!important;background:#b6ff00!important;color:#172100!important;clip-path:none!important;box-shadow:0 2px 8px #00000016!important;border-radius:6px!important;font:650 11px/1.25 Inter,Arial,sans-serif!important;letter-spacing:0!important;text-align:left!important;}
+@media(max-width:1px){html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-property-card-main{padding:14px!important}html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics strong{font-size:15px;}}
+/* END JOY2_UNIFIED_CARDS_V1 */
+/* JOY2_CARD_MATCH_REFERENCE_V1 */
+/* Scope deliberately includes the catalog: legacy design patches must not affect cards here. */
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-card-grid { align-items:stretch!important; grid-auto-rows:auto!important; }
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card {
+  align-self:stretch!important; height:auto!important; min-height:0!important;
+  display:flex!important; flex-direction:column!important;
+  border-radius:20px!important; background:#fff!important;
+  border:1px solid #e1e5e9!important; overflow:hidden!important;
+  box-shadow:0 9px 26px rgba(22,31,46,.065)!important;
+  font-family:Inter,Arial,Helvetica,sans-serif!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-image {
+  display:block!important; width:100%!important; aspect-ratio:1.75!important;
+  flex:0 0 auto!important; overflow:hidden!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-image img { width:100%!important;height:100%!important;object-fit:cover!important; }
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-main {
+  flex:1 1 auto!important; min-height:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:22px minmax(48px,auto) 75px minmax(51px,auto) 82px!important;
+  gap:0!important; align-content:start!important; align-items:stretch!important;
+  padding:18px 19px 18px!important; margin:0!important;
+  font-family:Inter,Arial,Helvetica,sans-serif!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-main > * {min-width:0!important;box-sizing:border-box!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-card-overline {
+  grid-row:1!important; margin:0!important; padding:0!important;
+  font-size:14px!important; font-weight:400!important; color:#505762!important;
+  line-height:20px!important;letter-spacing:0!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card h3 {
+  grid-row:2!important; min-height:0!important; max-height:none!important;
+  margin:0!important; padding:3px 0 0!important;
+  font-family:Inter,Arial,Helvetica,sans-serif!important;
+  font-size:20px!important; font-weight:700!important;
+  line-height:1.27!important; letter-spacing:-.027em!important;
+  color:#111318!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-summary {
+  grid-row:3!important; display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:center!important; gap:0!important;
+  margin:0!important; padding:0 0 10px!important;
+  border-bottom:1px solid #e1e4e8!important; border-top:0!important;
+  min-height:0!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric {
+  position:relative!important; min-width:0!important;
+  display:flex!important; flex-direction:column!important;
+  justify-content:center!important; gap:5px!important;
+  padding:0 12px 0 0!important; text-align:left!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric + .jj-match-metric {
+  border-left:1px solid #d9dde2!important;
+  padding-left:18px!important; padding-right:0!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric-label {
+  display:block!important; color:#606773!important; font-size:12px!important;
+  font-weight:400!important; line-height:1.25!important;
+  letter-spacing:0!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric-value {
+  display:block!important; color:#111318!important;
+  font-size:clamp(14px,1.06vw,19px)!important;
+  font-weight:700!important; letter-spacing:-.022em!important;
+  line-height:1.24!important; overflow-wrap:anywhere!important;
+  font-variant-numeric:tabular-nums!important; white-space:normal!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-address {
+  grid-row:4!important; min-height:0!important; max-height:none!important;
+  display:flex!important; align-items:center!important;
+  margin:0!important; padding:9px 0!important;
+  border-bottom:0!important; border-top:0!important;
+  font-family:inherit!important; font-size:13px!important; font-weight:400!important;
+  line-height:1.4!important; color:#424b59!important;
+  overflow-wrap:anywhere!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-bottom {
+  grid-row:5!important; width:100%!important;
+  display:grid!important; align-items:center!important;
+  box-sizing:border-box!important; gap:0!important;
+  margin:0!important; padding:13px 15px!important;
+  background:#f2f3f5!important; border:0!important;
+  border-radius:12px!important; min-height:75px!important;
+}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-bottom-invest {grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-bottom-status {grid-template-columns:minmax(0,1fr)!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-bottom .jj-match-metric-value {font-size:18px!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-invest-ribbon.jj-match-ribbon {
+  position:absolute!important; z-index:4!important; inset:auto!important;
+  left:16px!important; top:16px!important;
+  width:max-content!important; max-width:calc(100% - 78px)!important;
+  display:inline-flex!important; align-items:center!important;
+  padding:9px 14px!important; margin:0!important;
+  border:0!important; border-radius:10px!important;
+  color:#111!important; background:#b6ff00!important;
+  font:700 12px/1.25 Inter,Arial,sans-serif!important;
+  letter-spacing:0!important; text-transform:none!important;
+  clip-path:none!important; box-shadow:none!important;
+}
+/* Remove the old angled red line and all arrows associated with the original area metric. */
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-summary::before,
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-summary::after,
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric::before,
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric::after {content:none!important;display:none!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-main > :is(.jj-card-feature,.jj-card-bottom) {display:none!important;}
+@media(max-width:649px){
+ html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card-main {padding:15px!important;grid-template-rows:21px minmax(42px,auto) 70px minmax(46px,auto) 80px!important;}
+ html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-property-card h3{font-size:18px!important;}
+ html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-summary .jj-match-metric-value {font-size:16px!important;}
+ html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-bottom .jj-match-metric-value{font-size:16px!important;}
+}
+
+/* Current unit-card markup can also be in a canonical shape until the next animation frame. */
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-bottom{display:flex!important;flex-direction:column!important;justify-content:center!important;min-height:78px!important;padding:12px 13px!important;border-radius:10px!important;background:#f5f6f7!important;box-sizing:border-box!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics{display:grid!important;grid-template-columns:minmax(0,.8fr) minmax(0,1.35fr)!important;gap:10px!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics>div{display:flex!important;flex-direction:column!important;min-width:0!important;gap:5px!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics span{font:500 11px/1.35 Inter,Arial,sans-serif!important;color:#717781!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-u-card .jj-u-metrics strong{font:700 16px/1.25 Inter,Arial,sans-serif!important;letter-spacing:-.025em!important;overflow-wrap:anywhere!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-bottom{display:grid!important;background:#f2f3f5!important;padding:13px 15px!important;border-radius:12px!important;min-height:75px!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-bottom-invest{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric{display:flex!important;flex-direction:column!important;gap:5px!important;min-width:0!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric-label{font:400 12px/1.25 Inter,Arial,sans-serif!important;color:#606773!important;}
+html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-match-metric-value{font:700 18px/1.24 Inter,Arial,sans-serif!important;overflow-wrap:anywhere!important;}
+/* Preserve the CURRENT bottom position and scaling of the carousel from V172. */
+html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-width:0!important;text-align:center!important;}
+html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2>h1{display:block!important;width:max-content!important;max-width:100%!important;font-size:clamp(39px,8.4vw,63px)!important;line-height:1.04!important;text-align:center!important;margin:12px auto 0!important;}
+html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2>h1 .jj-concept-highlight{display:table!important;margin:9px auto 0!important;}
+html body main.jj-ref-home>.jj-ref-hero .jj-ref-actions,html body main.jj-ref-home>.jj-ref-hero .jj-ref-actions>a{display:none!important;visibility:hidden!important;pointer-events:none!important;}
+/* Right-hand architectural section of the EXISTING desktop background. */
+html body:has(>main.jj-ref-home)::before{background-image:url('/images/joy2-concrete-ribs-hq.png')!important;background-position:right top!important;background-size:auto 100%!important;background-repeat:no-repeat!important;height:max(100svh,950px)!important;}
+}
+/* JOY2_V173_END */
+
+/* JOY2_V176_MOBILE_FIX */
+@media screen and (max-width:900px){
+html body main.jj-ref-home>.jj-ref-hero .jj-hero-right-v2.jj-hero-stage-v6{scale:.8!important;transform-origin:center bottom!important}
+html body>header.jj-sitebar .jj-lang,html body header.jj-sitebar .jj-lang{background:transparent!important;background-image:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;padding:0!important}
+html body header.jj-sitebar .jj-lang::before,html body header.jj-sitebar .jj-lang::after{content:none!important;display:none!important}
+html body main.jj-ref-home>.jj-ref-hero .jj-ref-actions,html body main.jj-ref-home>.jj-ref-hero .jj-ref-actions>a{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important}
+}
+/* JOY2_V176_END */
+
+/* JOY2_V177_START */
+@media screen and (max-width:900px){
+ /* Current stage is at scale .80. 0.88 is exactly 10% larger, with the same bottom anchoring. */
+ html body main.jj-ref-home>.jj-ref-hero .jj-hero-right-v2.jj-hero-stage-v6{
+   scale:.88!important;
+   transform-origin:center bottom!important;
+ }
+ /* Keep the headline in the existing upper region, centering it on the mobile viewport. */
+ html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2{
+   display:flex!important;flex-direction:column!important;align-items:center!important;
+   width:100%!important;min-width:0!important;text-align:center!important;
+ }
+ html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2>h1{
+   display:block!important;width:max-content!important;max-width:100%!important;
+   align-self:center!important;text-align:center!important;
+   font-size:clamp(42.9px,9.24vw,69.3px)!important;
+   line-height:1.04!important;margin:12px auto 0!important;
+   padding-left:0!important;padding-right:0!important;
+   transform:none!important;translate:none!important;left:auto!important;right:auto!important;
+ }
+ html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2>h1 mark.jj-concept-highlight{
+   display:table!important;margin:9px auto 0!important;
+   transform:none!important;translate:none!important;
+ }
+ /* Desktop switch, no added white/frosted container. Active language stays lime. */
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang,
+ html body header.jj-sitebar .jj-lang,
+ html body .jj-ref-header .jj-sitebar-right .jj-lang{
+   background:transparent!important;background-color:transparent!important;
+   background-image:none!important;border:0!important;outline:0!important;
+   box-shadow:none!important;backdrop-filter:none!important;
+   -webkit-backdrop-filter:none!important;border-radius:0!important;
+   padding:0!important;
+ }
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang::before,
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang::after,
+ html body header.jj-sitebar .jj-lang::before,
+ html body header.jj-sitebar .jj-lang::after{
+   display:none!important;content:none!important;box-shadow:none!important;
+ }
+ /* Keep both old hero CTA buttons hidden (not the catalog controls). */
+ html body main.jj-ref-home>.jj-ref-hero .jj-ref-actions,
+ html body main.jj-ref-home>.jj-ref-hero .jj-ref-actions>a{
+   display:none!important;visibility:hidden!important;pointer-events:none!important;
+ }
+}
+/* JOY2_V177_END */
+/* JOY2_V181_START */
+@media screen and (max-width:900px){
+/* Original Astro H1 + its original desktop lime MARK. Never replace its text. */
+html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2>h1{
+ display:block!important;position:relative!important;align-self:flex-start!important;
+ width:max-content!important;max-width:none!important;min-width:0!important;
+ margin:0!important;padding:0!important;text-align:left!important;
+ font-family:Arial,Helvetica,sans-serif!important;font-size:clamp(45px,9.3vw,74px)!important;
+ line-height:1.16!important;letter-spacing:-.04em!important;font-weight:800!important;
+ font-style:normal!important;color:#101112!important;
+ left:0!important;right:auto!important;translate:none!important;
+}
+html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2>h1 mark.jj-concept-highlight{
+ display:inline-block!important;vertical-align:baseline!important;position:relative!important;
+ padding:0 14.4px 3.2px!important;margin:8px 0 0 12px!important;
+ background:var(--joy-green,#b6ff00)!important;background-image:none!important;
+ color:#101112!important;transform:skew(-8deg)!important;translate:none!important;
+ line-height:1!important;box-decoration-break:clone!important;
+ border-radius:0!important;clip-path:none!important;
+}
+html body main.jj-ref-home>.jj-ref-hero .jj-hero-left-v2>h1 mark.jj-concept-highlight span{color:#101112!important;}
+html body main.jj-ref-home>.jj-ref-hero .jj-ref-actions{display:none!important;visibility:hidden!important;}
+}
+/* JOY2_V181_END */
+/* JOY2_V182_LOGO_RIGHT_START */
+@media screen and (max-width:900px){
+  html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-sitebar-in{
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    flex-wrap:nowrap!important;
+    gap:12px!important;
+  }
+  html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-sitebar-in > a.jj-wordmark{
+    order:2!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex:0 0 auto!important;
+    margin:0!important;
+    padding:0!important;
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+  }
+  html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-sitebar-in > .jj-sitebar-right{
+    order:1!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    flex:0 1 auto!important;
+    min-width:0!important;
+    margin:0!important;
+    gap:8px!important;
+  }
+  html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-sitebar-in > a.jj-wordmark > img.jj-brand-logo{
+    display:block!important;
+    transform:none!important;
+    position:static!important;
+    margin:0!important;
+  }
+}
+/* JOY2_V182_LOGO_RIGHT_END */
+/* JOY2_V183_SHADOW_START */
+@media(max-width:900px){
+  html body main.jj-ref-home .jj-hero-right-v2.jj-hero-stage-v6 .jj-hero-slide-v6>.jj-property-card{
+    box-shadow:0 22px 44px rgba(19,22,29,.23),0 7px 15px rgba(19,22,29,.10)!important;
+  }
+}
+/* JOY2_V183_SHADOW_END */
+/* JOY2_V190_START */
+@media screen and (max-width:900px){
+ html body main.jj-ref-home > .jj-ref-hero.jj-hero-layout-v2 .jj-hero-left-v2 > h1{
+  font-size:clamp(40.9975px,8.59625vw,66.125px)!important;
+  line-height:1.12!important;
+ }
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-left-v2 > h1 mark.jj-concept-highlight{transform:skew(-8deg)!important}
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-stage-v6,
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-rotator-v6,
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-slide-v6{overflow:visible!important;clip-path:none!important}
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-slide-v6{
+  filter:drop-shadow(0 0 13px rgba(17,22,29,.442)) drop-shadow(0 15px 24px rgba(17,22,29,.351))!important;
+ }
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-slide-v6 > .jj-property-card{
+  border-radius:22px!important;overflow:hidden!important;isolation:isolate!important;
+  box-shadow:0 0 0 1px rgba(255,255,255,.9)!important;filter:none!important;
+ }
+}
+/* JOY2_V190_END */
+
+/* JOY2_V191_START */
+@media (max-width:900px){
+/* One actual mobile toolbar. Hide the old hand-built V164 controls. */
+html body main.jj-ref-home #joy2-mobile-tools-v164,
+html body main.jj-ref-home #joy2-mobile-tools-v163,
+html body main.jj-ref-home #joy2-mobile-tools-v161{display:none!important}
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;
+ width:calc(100% - 28px)!important;max-width:540px!important;box-sizing:border-box!important;
+ margin:0 auto 14px!important;padding:8px 0!important;background:transparent!important;
+}
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-invest{
+ display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;
+ flex:1 1 auto!important;min-width:0!important;margin:0!important;padding:0!important;
+ font-family:Inter,Arial,sans-serif!important;font-size:clamp(12px,2.6vw,15px)!important;
+ font-weight:650!important;line-height:1.25!important;white-space:normal!important;color:#121416!important;
+}
+/* Keep the original desktop .jj-rf-track green switch, not a drawn mobile checkbox. */
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-track{width:51px!important;height:29px!important}
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-invest-input:checked+.jj-rf-track{background:#b6ff00!important}
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-invest-input:checked+.jj-rf-track:after{transform:translateX(22px)!important}
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-listing-actions{
+ display:flex!important;align-items:center!important;justify-content:flex-end!important;
+ flex:0 1 52%!important;min-width:0!important;max-width:52%!important;margin:0!important;padding:0!important;
+}
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-listing-actions label{
+ display:block!important;min-width:0!important;width:100%!important;margin:0!important;
+}
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-sort-label{display:none!important}
+html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 select#jj-sort{
+ display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;
+ min-height:48px!important;padding:10px 34px 10px 13px!important;
+ font:500 clamp(12px,2.9vw,16px)/1.3 Inter,Arial,sans-serif!important;
+ background-color:#fff!important;color:#101214!important;border:1px solid #e5e7e9!important;
+ border-radius:15px!important;box-shadow:0 5px 17px #2222!important;
+}
+/* Font sizes of the REAL catalog cards, after scaling the existing two-column grid. */
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-card-overline{font-size:15.6px!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3 a{font-size:27.6px!important;line-height:1.23!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-metric-label,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary small,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom small{font-size:14.4px!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-metric-value,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary b{font-size:24px!important;line-height:1.23!important;overflow-wrap:anywhere!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-address{font-size:16.8px!important;line-height:1.4!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-value,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom strong,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-metrics strong{font-size:20.4px!important;line-height:1.25!important;overflow-wrap:anywhere!important}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-metrics span,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom-label{font-size:13.2px!important}
+}
+@media(min-width:901px){html body main.jj-ref-home #joy2-mobile-desktop-controls-v191{display:none!important}}
+/* JOY2_V191_END */
+
+/* JOY2_V192_START */
+@media screen and (max-width:900px){
+ /* A smaller toolbar with the existing desktop controls. */
+ html body main.jj-ref-home #joy2-mobile-desktop-controls-v191{
+  gap:8px!important;padding:2px 0!important;margin-bottom:9px!important;
+  width:calc(100% - 24px)!important;max-width:540px!important;min-height:0!important;
+ }
+ html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-invest{
+  gap:7px!important;font-size:clamp(11px,2.35vw,13px)!important;line-height:1.2!important;
+  font-weight:600!important;
+ }
+ html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-track{
+  width:43px!important;height:25px!important;border-radius:99px!important;
+ }
+ html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-track:after{
+  width:19px!important;height:19px!important;left:3px!important;top:3px!important;
+ }
+ html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-invest-input:checked+.jj-rf-track:after{
+  transform:translateX(18px)!important;
+ }
+ html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-listing-actions{
+  flex:0 1 48%!important;max-width:48%!important;
+ }
+ html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 select#jj-sort{
+  min-height:39px!important;height:39px!important;padding:6px 27px 6px 11px!important;
+  border-radius:12px!important;font-size:clamp(11px,2.6vw,14px)!important;
+  box-shadow:0 3px 10px rgba(22,30,36,.08)!important;
+ }
+ /* Rebalance the catalog card typography without changing the 2-column grid or images. */
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-card-overline{
+  font-size:clamp(11px,2.35vw,13px)!important;line-height:1.25!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3 a{
+  font-size:clamp(16px,3.8vw,20px)!important;line-height:1.2!important;
+  overflow-wrap:anywhere!important;letter-spacing:-.025em!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-metric-label,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary small,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom small,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-metrics span,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom-label{
+  font-size:clamp(10px,2.3vw,12px)!important;line-height:1.3!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary b{
+  font-size:clamp(14px,3.2vw,18px)!important;line-height:1.24!important;
+  overflow-wrap:anywhere!important;font-variant-numeric:tabular-nums!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-address{
+  font-size:clamp(11px,2.45vw,13px)!important;line-height:1.37!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom strong,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-metrics strong{
+  font-size:clamp(13px,3vw,16px)!important;line-height:1.22!important;
+  overflow-wrap:anywhere!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-summary,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom{
+  min-width:0!important;
+ }
+ /* One punctuation-dot's visual height (roughly .18em) below the current heading position. */
+ html body main.jj-ref-home > .jj-ref-hero.jj-hero-layout-v2 .jj-hero-left-v2 > h1{
+  position:relative!important;top:.18em!important;
+ }
+}
+/* JOY2_V192_END */
+
+/* JOY2_V193_START */
+@media screen and (max-width:900px){
+ /* Only the real title, add a subtle 6px downward offset to V192. */
+ html body main.jj-ref-home > .jj-ref-hero.jj-hero-layout-v2 .jj-hero-left-v2 > h1{
+  top:calc(.18em + 6px)!important;
+ }
+ /* Typography +15% from V192; only catalog cards, never the header card. */
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-card-overline{
+  font-size:clamp(12.65px,2.7025vw,14.95px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3 a{
+  font-size:clamp(18.4px,4.37vw,23px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-metric-label,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary small,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom small,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-metrics span,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom-label{
+  font-size:clamp(11.5px,2.645vw,13.8px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary b{
+  font-size:clamp(16.1px,3.68vw,20.7px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-address{
+  font-size:clamp(12.65px,2.8175vw,14.95px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom strong,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-metrics strong{
+  font-size:clamp(14.95px,3.45vw,18.4px)!important;
+ }
+}
+/* JOY2_V193_END */
+/* JOY2_V194_BOTTOM_METRICS_START */
+@media screen and (max-width:900px) {
+ /* Only the lower financial/status tile inside TWO-COLUMN CATALOG cards. */
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-match-bottom .jj-match-metric-label,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-canonical-bottom small,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-u-bottom-label,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-u-bottom .jj-u-metrics span,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-u-bottom > span {
+   font-size:clamp(12.65px,2.9095vw,15.18px)!important;
+   line-height:1.32!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-match-bottom .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-canonical-bottom strong,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-u-bottom .jj-u-metrics strong,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-u-bottom .jj-u-status,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-u-bottom > strong {
+   font-size:clamp(16.445px,3.795vw,20.24px)!important;
+   line-height:1.25!important;
+   overflow-wrap:anywhere!important;
+ }
+}
+/* JOY2_V194_BOTTOM_METRICS_END */
+/* JOY2_V196_START */
+@media screen and (max-width:900px){
+ /* Actual desktop hero badge: lower-left corner of the photo, lime, rounded top-right. */
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6 > .jj-property-card > .jj-property-card-image{position:relative!important;overflow:hidden!important;}
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6 > .jj-property-card > .jj-property-card-image > .jj-invest-ribbon,
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6 > .jj-property-card > .jj-property-card-image > .jj-invest-ribbon.jj-u-ribbon,
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6 > .jj-property-card > .jj-property-card-image > .jj-invest-ribbon.jj-match-ribbon{
+  position:absolute!important;inset:auto auto 0 0!important;top:auto!important;left:0!important;right:auto!important;bottom:0!important;
+  transform:none!important;translate:none!important;clip-path:none!important;
+  display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;
+  width:max-content!important;max-width:100%!important;height:auto!important;
+  margin:0!important;padding:10px 16px!important;
+  background:#b6ff00!important;color:#111!important;
+  border:0!important;border-radius:0 9px 0 0!important;
+  box-shadow:none!important;opacity:1!important;visibility:visible!important;
+  font:650 13px/1.3 Inter,Arial,sans-serif!important;letter-spacing:0!important;z-index:12!important;
+ }
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-stage-v6 .jj-invest-ribbon::before,
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-stage-v6 .jj-invest-ribbon::after{display:none!important;content:none!important;}
+}
+/* JOY2_V196_END */
+/* JOY2_V197_CATALOG_TEXT_PLUS5_START */
+@media screen and (max-width:900px){
+/* Existing two-column mobile catalog only; leave hero carousel untouched. */
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-card-overline{font-size:clamp(13.2825px,2.837625vw,15.6975px)!important;}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3 a{font-size:clamp(19.32px,4.5885vw,24.15px)!important;}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-summary .jj-match-metric-label,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary small,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-price-row small{font-size:clamp(12.075px,2.77725vw,14.49px)!important;}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-summary .jj-match-metric-value,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary b{font-size:clamp(16.905px,3.864vw,21.735px)!important;}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-address{font-size:clamp(13.2825px,2.958375vw,15.6975px)!important;}
+/* Lower tile derives from V194, and also receives precisely +5%. */
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-label,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom small,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom-label,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-metrics span,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom>span{font-size:clamp(13.2825px,3.054975vw,15.939px)!important;}
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-value,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom strong,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-metrics strong,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-status,
+html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom>strong{font-size:clamp(17.26725px,3.98475vw,21.252px)!important;}
+}
+/* JOY2_V197_CATALOG_TEXT_PLUS5_END */
+
+/* JOY2_V199_DETAIL_SPACING_START */
+@media screen and (max-width:760px){
+ /* Target the real detail composition, not its legacy general wrappers. */
+ html body main.jj-detail.jj-detail-clarity{padding-top:10px!important;}
+ html body main.jj-detail .jj-detail-heading{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important;margin:0 0 9px!important;padding:0!important;}
+ html body main.jj-detail .jj-detail-heading>div:first-child{margin:0!important;padding:0!important;}
+ html body main.jj-detail .jj-detail-heading h1{margin:0 0 3px!important;padding:0!important;}
+ html body main.jj-detail .jj-detail-heading>div:first-child>p{margin:0!important;padding:0!important;line-height:1.36!important;}
+ html body main.jj-detail .jj-detail-heading .jj-detail-contact-top{display:flex!important;align-items:center!important;align-self:stretch!important;justify-content:flex-start!important;flex-wrap:wrap!important;gap:7px 10px!important;margin:3px 0 0!important;padding:0!important;max-width:none!important;}
+ html body main.jj-detail .jj-detail-heading .jj-detail-contact-person,
+ html body main.jj-detail .jj-detail-heading .jj-detail-contact-call{margin:0!important;padding:0!important;}
+ html body main.jj-detail .jj-photo-layout.jj-gallery-v25{margin:0 0 13px!important;padding:0!important;}
+ html body main.jj-detail .jj-detail-units-wide{margin-top:0!important;}
+}
+/* JOY2_V199_DETAIL_SPACING_END */
+
+/* JOY2_V200_DETAIL_MOBILE_TABLE_START */
+@media screen and (max-width:760px){
+ /* The entire page stays within the viewport; table alone can scroll. */
+ html body main.jj-detail,html body main.jj-detail .jj-detail-units-wide,html body main.jj-detail .jj-detail-units-wide .jj-units{min-width:0!important;max-width:100%!important;box-sizing:border-box!important;}
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-wrap{display:block!important;position:relative!important;width:100%!important;max-width:100%!important;min-width:0!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;scrollbar-width:thin!important;scrollbar-color:#aeb5bb #edf0f2!important;border-radius:12px!important;}
+ html body main.jj-detail .jj-unit-table-wrap .jj-unit-table-heading,html body main.jj-detail .jj-unit-table-wrap .jj-unit-data-row{width:760px!important;min-width:760px!important;max-width:none!important;grid-template-columns:minmax(155px,1.27fr) minmax(110px,.75fr) minmax(118px,.85fr) minmax(160px,.95fr) minmax(190px,1.13fr)!important;gap:12px!important;box-sizing:border-box!important;}
+ html body main.jj-detail .jj-unit-table-wrap .jj-units-list{width:760px!important;min-width:760px!important;max-width:none!important;}
+ html body main.jj-detail .jj-unit-table-wrap::-webkit-scrollbar{height:7px!important;}
+ html body main.jj-detail .jj-unit-table-wrap::-webkit-scrollbar-thumb{background:#acb3ba!important;border-radius:8px!important;}
+ html body main.jj-detail .jj-unit-table-wrap::-webkit-scrollbar-track{background:#eceff1!important;border-radius:8px!important;}
+ /* Visual cue, outside the scrolling content. The existing heading and info remain. */
+ html body main.jj-detail .jj-detail-units-wide .jj-units-intro::after{content:'  ·  Листайте таблицу вправо →';display:inline;color:#46515a;font-weight:650;white-space:normal;}
+ html:lang(uz) body main.jj-detail .jj-detail-units-wide .jj-units-intro::after{content:'  ·  Jadvalni o‘ngga suring →';}
+ html:lang(en) body main.jj-detail .jj-detail-units-wide .jj-units-intro::after{content:'  ·  Swipe table right →';}
+ /* Header only: preserve the same logo and existing actions, but avoid crowding. */
+ html body .jj-detail-sitebar .jj-sitebar-in{gap:6px!important;}
+ html body .jj-detail-sitebar .jj-brand-logo{width:clamp(80px,18vw,104px)!important;height:auto!important;}
+ html body .jj-detail-sitebar .jj-detail-back-nav{flex:0 0 auto!important;min-width:0!important;padding:8px 10px!important;gap:5px!important;white-space:nowrap!important;font-size:clamp(12px,2.4vw,15px)!important;}
+ html body .jj-detail-sitebar .joy2-dev-admin-link{flex:0 0 auto!important;padding:8px 9px!important;font-size:clamp(12px,2.3vw,14px)!important;white-space:nowrap!important;}
+ html body .jj-detail-sitebar .jj-sitebar-right{gap:3px!important;flex:0 0 auto!important;}
+ html body .jj-detail-sitebar .jj-lang{gap:0!important;}
+ html body .jj-detail-sitebar .jj-lang a{min-width:29px!important;padding:0 2px!important;font-size:clamp(11px,2vw,13px)!important;}
+}
+/* JOY2_V200_DETAIL_MOBILE_TABLE_END */
+
+/* JOY2_V201_DETAIL_START */
+@media screen and (max-width:760px){
+ /* Remove the scrolling hint introduced in V200 and show just 3 columns. */
+ html body main.jj-detail .jj-detail-units-wide .jj-units-intro::after{content:none!important;display:none!important;}
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-wrap{
+   position:static!important;display:block!important;width:100%!important;min-width:0!important;
+   max-width:100%!important;overflow:visible!important;scrollbar-width:none!important;
+   border-radius:12px!important;
+ }
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-wrap::-webkit-scrollbar{display:none!important;}
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-heading,
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row{
+   display:grid!important;grid-template-columns:minmax(0,.85fr) minmax(0,.75fr) minmax(0,1.25fr)!important;
+   column-gap:8px!important;width:100%!important;min-width:0!important;max-width:100%!important;
+   box-sizing:border-box!important;padding-left:10px!important;padding-right:10px!important;
+ }
+ html body main.jj-detail .jj-detail-units-wide .jj-units-list{min-width:0!important;max-width:100%!important;width:100%!important;}
+ html body main.jj-detail .jj-unit-table-heading> :nth-child(3),
+ html body main.jj-detail .jj-unit-table-heading> :nth-child(5),
+ html body main.jj-detail .jj-unit-data-row> :nth-child(3),
+ html body main.jj-detail .jj-unit-data-row> :nth-child(5){display:none!important;}
+ html body main.jj-detail .jj-unit-table-heading>span,
+ html body main.jj-detail .jj-unit-data-row>span{min-width:0!important;overflow-wrap:anywhere!important;}
+ html body main.jj-detail .jj-unit-data-row .jj-unit-col-price b{white-space:normal!important;overflow-wrap:anywhere!important;}
+ /* Move the actual contact elements one line upward, before the address. */
+ html body main.jj-detail .jj-detail-heading{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:5px!important;}
+ html body main.jj-detail .jj-detail-heading>div:first-child{display:contents!important;}
+ html body main.jj-detail .jj-detail-heading h1{order:1!important;margin:0!important;}
+ html body main.jj-detail .jj-detail-heading .jj-detail-contact-top{order:2!important;display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:flex-start!important;gap:6px 9px!important;max-width:100%!important;margin:1px 0!important;}
+ html body main.jj-detail .jj-detail-heading>div:first-child>p{order:3!important;margin:0!important;}
+}
+/* JOY2_V201_DETAIL_END */
+
+
+/* JOY2_V204_MOBILE_FINANCE_START */
+/* Mobile-only: compact KPI tiles, legible cash-flow chart, clean input rows. */
+@media screen and (max-width:780px){
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-grid{
+    gap:12px!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-kpis{
+    padding:7px!important;border-radius:17px!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-kpis>.jj-rinv-kpis{
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-template-rows:repeat(2,minmax(86px,auto))!important;
+    height:auto!important;min-height:0!important;max-height:none!important;
+    gap:8px!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-kpis>.jj-rinv-kpis>div,
+  html body .jj-detail .joy2-v111 .joy2-v111-kpis>.jj-rinv-kpis>div:nth-child(2){
+    height:auto!important;min-height:86px!important;padding:12px 13px!important;
+    justify-content:center!important;gap:5px!important;border-radius:13px!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-kpis .jj-rinv-kpis small{
+    font-size:clamp(12px,2.8vw,14px)!important;line-height:1.25!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-kpis .jj-rinv-kpis strong{
+    font-size:clamp(19px,4.7vw,25px)!important;line-height:1.12!important;
+    letter-spacing:-.035em!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-center{
+    gap:10px!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-graph{
+    height:auto!important;min-height:320px!important;
+    gap:9px!important;padding:17px 14px 13px!important;border-radius:17px!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-graph-head{
+    min-height:28px!important;gap:8px!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-graph-head h3{
+    font-size:clamp(17px,4vw,21px)!important;line-height:1.2!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-chart{
+    min-height:240px!important;justify-content:center!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-svg{
+    display:block!important;width:100%!important;height:auto!important;
+    max-height:none!important;overflow:visible!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-svg .tick{font-size:19px!important;}
+  html body .jj-detail .joy2-v111 .joy2-v111-svg .year{font-size:18px!important;}
+  html body .jj-detail .joy2-v111 .joy2-v111-svg .value{font-size:21px!important;}
+  html body .jj-detail .joy2-v111 .joy2-v111-right{gap:12px!important;}
+  html body .jj-detail .joy2-v111 .joy2-v111-params,
+  html body .jj-detail .joy2-v111 .joy2-v111-status{
+    padding:17px 18px!important;border-radius:17px!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-params>h3{
+    margin:0 0 12px!important;font-size:clamp(20px,4.5vw,23px)!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-params .jj-rinv-inputs>div{
+    display:flex!important;align-items:center!important;justify-content:space-between!important;
+    gap:12px!important;padding:11px 0!important;min-height:44px!important;
+    background-image:none!important;background:none!important;
+    border-bottom:1px solid #e8ebf0!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-params .jj-rinv-inputs>div:last-child{
+    border-bottom:0!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-params .jj-rinv-inputs dt{
+    min-width:0!important;flex:1 1 auto!important;margin:0!important;
+    font-size:clamp(12px,2.9vw,14px)!important;
+  }
+  html body .jj-detail .joy2-v111 .joy2-v111-params .jj-rinv-inputs dd{
+    flex:0 0 auto!important;max-width:55%!important;text-align:right!important;
+    font-size:clamp(12px,3vw,14px)!important;
+  }
+}
+/* JOY2_V204_MOBILE_FINANCE_END */
+
+/* JOY2_V205_MOBILE_YEAR_TILES_START */
+@media screen and (max-width:780px){
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111[data-joy2-v205-ready="1"] .joy2-v111-graph{
+   height:auto!important;min-height:0!important;gap:14px!important;padding:18px 15px 16px!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111[data-joy2-v205-ready="1"] .joy2-v111-graph .joy2-v111-chart{
+   display:none!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph .joy2-v205-years{
+   display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;
+   width:100%!important;min-width:0!important;margin:0!important;padding:0!important;
+ }
+ html body .jj-detail .joy2-v111 .joy2-v205-year{
+   display:flex!important;flex-direction:column!important;justify-content:center!important;
+   min-width:0!important;min-height:81px!important;gap:8px!important;padding:11px 7px!important;
+   background:#f1f3f6!important;color:#151c29!important;border:0!important;border-radius:13px!important;
+   box-sizing:border-box!important;text-align:center!important;
+ }
+ html body .jj-detail .joy2-v111 .joy2-v205-year-label{
+   display:block!important;font:500 clamp(10px,2.7vw,13px)/1.2 Inter,Arial,sans-serif!important;
+   overflow-wrap:anywhere!important;
+ }
+ html body .jj-detail .joy2-v111 .joy2-v205-year-value{
+   display:block!important;font:750 clamp(15px,4vw,22px)/1.15 Inter,Arial,sans-serif!important;
+   letter-spacing:-.03em!important;white-space:nowrap!important;font-variant-numeric:tabular-nums!important;
+ }
+ html body .jj-detail .joy2-v111 .joy2-v205-year.is-buy{background:#192c4c!important;color:#fff!important;}
+ html body .jj-detail .joy2-v111 .joy2-v205-year.is-exit{background:#eaffcd!important;color:#182610!important;}
+}
+/* JOY2_V205_MOBILE_YEAR_TILES_END */
+
+/* JOY2_V207_EXACT_SPACING_START */
+/* These are explicit dimensions, not min-height; only mobile finance cards. */
+@media screen and (max-width:780px){
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph{
+   height:auto!important;min-height:0!important;max-height:none!important;
+   padding:12px!important;gap:9px!important;border-radius:16px!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph-head{
+   margin:0!important;padding:0!important;min-height:0!important;height:auto!important;
+   gap:6px!important;align-items:center!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph-head h3{
+   margin:0!important;line-height:1.18!important;font-size:clamp(16px,3.8vw,19px)!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v205-years{
+   display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+   column-gap:6px!important;row-gap:6px!important;gap:6px!important;
+   width:100%!important;margin:0!important;padding:0!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v205-years>.joy2-v205-year{
+   height:70px!important;min-height:70px!important;max-height:70px!important;
+   width:100%!important;min-width:0!important;
+   padding:6px 3px!important;margin:0!important;gap:3px!important;
+   border-radius:11px!important;box-sizing:border-box!important;
+   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v205-year-label{
+   margin:0!important;padding:0!important;font-size:clamp(10px,2.65vw,12px)!important;
+   line-height:1.12!important;font-weight:500!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v205-year-value{
+   margin:0!important;padding:0!important;font-size:clamp(16px,4.1vw,20px)!important;
+   line-height:1.1!important;font-weight:750!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-grid{
+   gap:9px!important;row-gap:9px!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-center{
+   gap:9px!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-kpis>.jj-rinv-kpis{
+   gap:6px!important;grid-template-rows:repeat(2,90px)!important;height:auto!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-kpis>.jj-rinv-kpis>div{
+   height:90px!important;min-height:0!important;max-height:90px!important;
+   padding:9px 11px!important;gap:4px!important;
+ }
+}
+/* JOY2_V207_EXACT_SPACING_END */
+
+/* JOY2_V208_FINANCE_FOOTER_TWO_SIZES_START */
+/* Only the lower part of the mobile investment calculator: two font sizes, 16px and 13px. */
+@media screen and (max-width:780px){
+  /* Footer section headings: former 20px -> 16px (-20%). */
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-right :is(.joy2-v111-params,.joy2-v111-status)>h3,
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-right :is(.joy2-v111-params,.joy2-v111-status) h3,
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-right h4,
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v113-notes h3,
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v114-notes-wide h3 {
+    font-family:Inter,Arial,Helvetica,sans-serif!important;
+    font-size:16px!important;font-weight:750!important;line-height:1.25!important;
+    letter-spacing:-.02em!important;
+  }
+  /* All captions, parameters, values, helper copy and footer action labels share one size. */
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-right :is(dt,dd,p,small,span,label,li,strong,b),
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-right .jj-rinv-inputs :is(dt,dd),
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 :is(.joy2-v113-notes,.joy2-v114-notes-wide) :is(p,small,span,li,strong,b),
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 :is(.joy2-v111-actions,.joy2-v113-pdf-box,.joy2-v114-pdf-bottom) :is(summary,button,a,span,p,small) {
+    font-family:Inter,Arial,Helvetica,sans-serif!important;
+    font-size:13px!important;line-height:1.35!important;
+  }
+  /* Section action labels also use the small size; no third title size. */
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-right :is(summary,button,a),
+  html body .jj-detail .jj-unit-finance-drawer.joy2-v111 :is(.joy2-v111-actions,.joy2-v113-pdf-box,.joy2-v114-pdf-bottom) :is(summary,button,a) {
+    font-size:13px!important;line-height:1.35!important;
+  }
+}
+/* JOY2_V208_FINANCE_FOOTER_TWO_SIZES_END */
+
+/* JOY2_V209_KPI_EMPTY_SPACE_START */
+/* Compact only the four mobile investment KPI cards; leave other panels and typography alone. */
+@media screen and (max-width:780px){
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-grid>.joy2-v111-kpis{
+   align-self:start!important;min-height:0!important;height:auto!important;max-height:none!important;
+   padding:6px!important;margin:0!important;border-radius:15px!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-grid>.joy2-v111-kpis>.jj-rinv-kpis{
+   display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+   grid-template-rows:repeat(2,76px)!important;grid-auto-rows:76px!important;
+   height:auto!important;min-height:0!important;max-height:none!important;
+   gap:6px!important;margin:0!important;padding:0!important;align-items:stretch!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-grid>.joy2-v111-kpis>.jj-rinv-kpis>div,
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-grid>.joy2-v111-kpis>.jj-rinv-kpis>div:nth-child(2){
+   box-sizing:border-box!important;display:flex!important;flex-direction:column!important;
+   justify-content:center!important;align-items:flex-start!important;
+   height:76px!important;min-height:0!important;max-height:76px!important;
+   padding:8px 10px!important;margin:0!important;gap:3px!important;
+   border-radius:12px!important;overflow:hidden!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-kpis>.jj-rinv-kpis>div small{
+   display:block!important;margin:0!important;line-height:1.2!important;
+ }
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-kpis>.jj-rinv-kpis>div strong{
+   display:block!important;margin:0!important;line-height:1.12!important;
+ }
+}
+/* JOY2_V209_KPI_EMPTY_SPACE_END */
+
+/* JOY2_V210_UNITS_WIDTH_START */
+@media screen and (max-width:760px){
+ html body main.jj-detail .jj-detail-units-wide,
+ html body main.jj-detail .jj-detail-units-wide .jj-units,
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-wrap,
+ html body main.jj-detail .jj-detail-units-wide .jj-units-list{
+  box-sizing:border-box!important;max-width:100%!important;min-width:0!important;width:100%!important;
+ }
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-wrap{
+  overflow-x:hidden!important;overflow-y:visible!important;margin-left:0!important;margin-right:0!important;
+ }
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-heading,
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row{
+  display:grid!important;grid-template-columns:minmax(0,29fr) minmax(0,25fr) minmax(0,46fr)!important;
+  grid-template-rows:auto!important;column-gap:6px!important;row-gap:0!important;
+  width:100%!important;min-width:0!important;max-width:100%!important;
+  box-sizing:border-box!important;padding-inline:10px!important;margin-inline:0!important;
+  justify-items:stretch!important;align-items:center!important;
+ }
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-heading>span:nth-child(3),
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-heading>span:nth-child(5),
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row>span:nth-child(3),
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row>span:nth-child(5){display:none!important;}
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-heading>span,
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row>span{
+  min-width:0!important;max-width:100%!important;box-sizing:border-box!important;overflow:visible!important;
+ }
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-heading>span:nth-child(1),
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row>span:nth-child(1){text-align:left!important;justify-self:stretch!important;}
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-heading>span:nth-child(2),
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row>span:nth-child(2){text-align:center!important;justify-self:stretch!important;}
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-table-heading>span:nth-child(4),
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row>span:nth-child(4){text-align:right!important;justify-self:stretch!important;}
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row>span:nth-child(2)>b{
+  white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;
+  font-variant-numeric:tabular-nums!important;text-align:center!important;
+ }
+ html body main.jj-detail .jj-detail-units-wide .jj-unit-data-row>span:nth-child(4)>b{
+  display:block!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;
+  text-align:right!important;font-variant-numeric:tabular-nums!important;
+ }
+}
+/* JOY2_V210_UNITS_WIDTH_END */
+
+
+/* JOY2_V211_FIXED_START */
+@media screen and (max-width:780px){
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph:has(.joy2-v211-fixed){height:auto!important;min-height:0!important;max-height:none!important;display:flex!important;flex-direction:column!important;gap:12px!important;padding:16px!important;}
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph:has(.joy2-v211-fixed) .joy2-v111-chart,
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph:has(.joy2-v211-fixed) .joy2-v205-years,
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph:has(.joy2-v211-fixed) .joy2-v211-flow{display:none!important;}
+ html body .jj-detail .jj-unit-finance-drawer.joy2-v111 .joy2-v111-graph .joy2-v211-fixed{display:flex!important;flex-direction:column!important;gap:9px!important;width:100%!important;min-width:0!important;}
+ html body .jj-detail .joy2-v211-fixed-major{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;}
+ html body .jj-detail .joy2-v211-fixed-card{display:flex!important;flex-direction:column!important;justify-content:center!important;gap:6px!important;min-height:76px!important;padding:11px!important;border-radius:13px!important;box-sizing:border-box!important;}
+ html body .jj-detail .joy2-v211-fixed-card.is-buy{background:#192c4c!important;color:#fff!important;}
+ html body .jj-detail .joy2-v211-fixed-card.is-exit{background:#eaffcd!important;color:#16210c!important;}
+ html body .jj-detail .joy2-v211-fixed-label{font-size:11px!important;line-height:1.25!important;font-weight:500!important;}
+ html body .jj-detail .joy2-v211-fixed-card strong{font-size:19px!important;line-height:1.12!important;letter-spacing:-.025em!important;font-weight:750!important;white-space:nowrap!important;}
+ html body .jj-detail .joy2-v211-fixed-subtitle{font-size:13px!important;font-weight:700!important;line-height:1.3!important;color:#404952!important;margin-top:3px!important;}
+ html body .jj-detail .joy2-v211-fixed-years{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;}
+ html body .jj-detail .joy2-v211-fixed-year{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;min-width:0!important;min-height:54px!important;padding:7px 2px!important;border-radius:11px!important;box-sizing:border-box!important;background:#f0f2f5!important;text-align:center!important;}
+ html body .jj-detail .joy2-v211-fixed-year span{font-size:10px!important;font-weight:500!important;line-height:1.2!important;color:#4b5563!important;white-space:nowrap!important;}
+ html body .jj-detail .joy2-v211-fixed-year strong{font-size:14px!important;font-weight:750!important;line-height:1.2!important;color:#17202b!important;white-space:nowrap!important;}
+}
+/* JOY2_V211_FIXED_END */
+
+/* JOY2_V213_DETAIL_SPACING_START */
+@media screen and (max-width:760px){
+ /* Match the actual property heading's left edge, not the old header shell gutters. */
+ html body header.jj-detail-sitebar .jj-sitebar-in{
+  box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+  margin:0!important;padding-left:var(--joy2-v213-side,16px)!important;
+  padding-right:var(--joy2-v213-side,16px)!important;
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;
+  gap:7px!important;min-width:0!important;
+ }
+ html body header.jj-detail-sitebar .jj-sitebar-in>.jj-wordmark{
+  position:relative!important;left:auto!important;right:auto!important;
+  transform:none!important;translate:none!important;
+  margin:0!important;padding:0!important;flex:0 0 auto!important;
+ }
+ html body header.jj-detail-sitebar .jj-sitebar-in>.jj-wordmark .jj-brand-logo{
+  display:block!important;margin:0!important;padding:0!important;
+ }
+ html body header.jj-detail-sitebar .jj-sitebar-in>a.jj-detail-back-nav{
+  margin:0!important;flex:0 0 auto!important;gap:6px!important;
+  box-sizing:border-box!important;height:38px!important;min-height:38px!important;
+  padding:0 11px!important;border:1px solid #dbe2e8!important;
+  border-radius:12px!important;background:#fff!important;color:#17202a!important;
+  font:700 13px/1 Inter,Arial,sans-serif!important;white-space:nowrap!important;
+  box-shadow:0 4px 13px rgba(16,25,33,.08)!important;
+ }
+ html body header.jj-detail-sitebar .jj-sitebar-in>a.jj-detail-back-nav svg{
+  width:16px!important;height:16px!important;flex:0 0 16px!important;
+ }
+ html body header.jj-detail-sitebar .jj-sitebar-in>a.jj-detail-back-nav:hover{
+  background:#f5f8f9!important;border-color:#bfd0d5!important;
+ }
+ html body header.jj-detail-sitebar .jj-sitebar-in>a.jj-detail-back-nav:active{
+  background:#eaffc9!important;transform:translateY(1px)!important;
+ }
+ html body header.jj-detail-sitebar .jj-sitebar-in .jj-sitebar-right{
+  margin-left:auto!important;min-width:0!important;gap:5px!important;
+ }
+}
+/* JOY2_V213_DETAIL_SPACING_END */
+
+/* JOY2_V214_MOBILE_HEADER_START */
+@media screen and (max-width:760px){
+ html body header.jj-detail-sitebar .jj-sitebar-in{display:flex!important;align-items:center!important;justify-content:flex-start!important;box-sizing:border-box!important;gap:7px!important;}
+ html body header.jj-detail-sitebar .jj-sitebar-in>.jj-wordmark{flex:0 0 auto!important;position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;padding:0!important;}
+ html body header.jj-detail-sitebar .jj-sitebar-in>.jj-detail-back-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex-shrink:0!important;height:38px!important;min-height:38px!important;padding:0 11px!important;gap:6px!important;margin:0!important;border:1px solid #dce4e7!important;border-radius:12px!important;background:white!important;color:#18222c!important;box-shadow:0 3px 10px #16212b12!important;font:700 13px/1 Inter,Arial,sans-serif!important;text-decoration:none!important;}
+ html body header.jj-detail-sitebar .jj-sitebar-in>.jj-detail-back-nav svg{width:16px!important;height:16px!important;flex:0 0 16px!important;}
+ html body header.jj-detail-sitebar .jj-sitebar-in>.jj-detail-back-nav:active{background:#eaffbd!important;transform:translateY(1px)!important;}
+ html body header.jj-detail-sitebar .jj-sitebar-in .jj-sitebar-right{margin-left:auto!important;min-width:0!important;}
+}
+/* JOY2_V214_MOBILE_HEADER_END */
+
+/* JOY2_V215_RESPONSIVE_ZOOM_START */
+/* Keep native browser zoom functional. Layout dimensions stay in the flow. */
+html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+html body{ max-width:100%; }
+html body .jj-ref-home, html body main.jj-detail{ min-width:0; }
+html body .jj-ref-home .jj-ref-hero h1,
+html body .jj-ref-home .jj-ref-hero h1 + p,
+html body .jj-ref-home .jj-ref-hero .jj-ref-actions{
+  scale:1!important;
+}
+html body main.jj-detail .jj-unit-finance-drawer[data-jj-finance-drawer],
+html body main.jj-detail .jj-unit-finance-drawer.joy2-v111{
+  zoom:1!important;
+}
+@media(max-width:900px){
+ html body .jj-detail-sitebar .jj-sitebar-in,
+ html body main.jj-detail,
+ html body main.jj-ref-home,
+ html body .jj-detail .jj-detail-heading,
+ html body .jj-detail .jj-detail-units-wide,
+ html body .jj-detail .jj-unit-table-wrap{
+  box-sizing:border-box!important;max-width:100%;min-width:0;
+ }
+ html body .jj-detail .jj-detail-heading>div:first-child{min-width:0!important;max-width:100%;}
+ html body .jj-detail .jj-detail-heading p{overflow-wrap:anywhere;}
+}
+/* JOY2_V215_RESPONSIVE_ZOOM_END */
+
+/* JOY2_V216_ZOOM_DESKTOP_START */
+/* A desktop browser at high browser zoom needs a desktop layout canvas.
+   Keep native browser text/image scaling; do NOT transform or zoom the page. */
+html.joy2-desktop-zoom{overflow-x:auto!important;max-width:none!important}
+html.joy2-desktop-zoom body{width:var(--joy2-zoom-canvas,1120px)!important;min-width:var(--joy2-zoom-canvas,1120px)!important;max-width:none!important;overflow-x:visible!important}
+html.joy2-desktop-zoom body>main.jj-ref-home,
+html.joy2-desktop-zoom body>main.jj-detail{width:100%!important;max-width:none!important;min-width:0!important}
+/* Header stays on one desktop row instead of the compact mobile arrangement. */
+html.joy2-desktop-zoom body header.jj-sitebar .jj-sitebar-in,
+html.joy2-desktop-zoom body>header.jj-sitebar.jj-ref-header[data-joy2-final-header]>.jj-sitebar-in{
+ display:flex!important;flex-wrap:nowrap!important;align-items:center!important;
+ width:calc(100% - 52px)!important;max-width:none!important;min-width:0!important;
+ margin:0 26px!important;gap:16px!important
+}
+html.joy2-desktop-zoom body header.jj-sitebar .jj-wordmark{flex:none!important}
+html.joy2-desktop-zoom body header.jj-sitebar .jj-sitebar-right{flex:none!important;min-width:0!important;margin-left:auto!important}
+/* On the home page keep the hero in two columns even when CSS viewport becomes narrow. */
+html.joy2-desktop-zoom body main.jj-ref-home>.jj-ref-hero.jj-hero-layout-v2{
+ display:grid!important;flex-direction:row!important;grid-template-columns:minmax(0,1fr) 390px!important;
+ gap:32px!important;align-items:center!important;justify-content:space-between!important;
+ width:calc(100% - 100px)!important;max-width:none!important;margin-inline:50px!important;
+ padding:0!important;min-height:650px!important;text-align:left!important
+}
+html.joy2-desktop-zoom body main.jj-ref-home .jj-hero-left-v2{display:flex!important;flex-direction:column!important;align-items:flex-start!important;text-align:left!important;min-width:0!important}
+html.joy2-desktop-zoom body main.jj-ref-home .jj-hero-left-v2>h1{font-size:clamp(49px,5.4vw,79px)!important;text-align:left!important;max-width:100%!important}
+html.joy2-desktop-zoom body main.jj-ref-home .jj-hero-left-v2>.jj-ref-actions{display:flex!important;flex-direction:row!important;justify-content:flex-start!important;flex-wrap:wrap!important;max-width:100%!important}
+html.joy2-desktop-zoom body main.jj-ref-home .jj-hero-right-v2{display:block!important;width:390px!important;max-width:390px!important;justify-self:end!important;margin:0!important}
+/* Preserve a readable multi-column desktop catalog rather than a squeezed 1-column grid. */
+html.joy2-desktop-zoom body main.jj-ref-home #catalog-results .jj-card-grid,
+html.joy2-desktop-zoom body main.jj-ref-home .jj-workspace[data-jj-mode="list"] .jj-card-grid{
+ display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ gap:18px!important;min-width:0!important
+}
+html.joy2-desktop-zoom body main.jj-ref-home .jj-workspace[data-jj-mode="split"] .jj-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+html.joy2-desktop-zoom body main.jj-ref-home #jj-filters{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+/* Detail view: keep title and contacts next to each other, and picture gallery in desktop proportions. */
+html.joy2-desktop-zoom body main.jj-detail.jj-shell{width:calc(100% - 52px)!important;max-width:none!important;margin-inline:26px!important}
+html.joy2-desktop-zoom body main.jj-detail .jj-detail-heading{
+ display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;
+ flex-wrap:nowrap!important;gap:20px!important
+}
+html.joy2-desktop-zoom body main.jj-detail .jj-detail-heading>.jj-detail-contact-top{
+ display:flex!important;flex-wrap:wrap!important;max-width:52%!important;flex-shrink:0!important;justify-content:flex-end!important
+}
+html.joy2-desktop-zoom body main.jj-detail .jj-photo-layout.jj-gallery-v25:not(.is-single){
+ display:grid!important;grid-template-columns:minmax(0,1.85fr) minmax(0,.78fr)!important;
+ height:390px!important;gap:12px!important
+}
+html.joy2-desktop-zoom body main.jj-detail .jj-detail-columns{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(285px,330px)!important;gap:22px!important}
+html.joy2-desktop-zoom body main.jj-detail .jj-unit-table-heading,
+html.joy2-desktop-zoom body main.jj-detail .jj-unit-data-row{min-width:760px!important}
+/* Keep scrollability: horizontal scroll is the expected trade-off for true magnification. */
+/* JOY2_V216_ZOOM_DESKTOP_END */

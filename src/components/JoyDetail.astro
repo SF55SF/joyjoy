@@ -76,7 +76,7 @@ const mapData=coords?[{slug:listing.slug,title:listing.title,lat:listing.lat,lng
    
   </aside>
  </div>
-<div class="jj-detail-location-wide"><section><h2>{c.location}</h2>{coords?<><div class="jj-map-wrap jj-detail-map"><div id="jj-map" data-map-provider="openfreemap"></div><div id="jj-map-state" class="jj-map-empty"><p>{c.mapNote}</p></div></div><p><a href={'https://yandex.uz/maps/?ll='+listing.lng+','+listing.lat+'&z=16&pt='+listing.lng+','+listing.lat+',pm2rdm'} target="_blank" rel="noopener noreferrer">Yandex Maps ↗</a></p></>:<p>{c.mapNote}</p>}</section></div>
+<div class="jj-detail-location-wide"><section><h2>{c.location}</h2>{coords?<><div class="jj-map-wrap jj-detail-map"><div id="jj-map" data-map-provider="openfreemap"></div><div id="jj-map-state" class="jj-map-empty"><p>{c.mapNote}</p></div></div></>:<p>{c.mapNote}</p>}</section></div>
 </main>
 <footer class="jj-bottom jj-detail-bottom"><div class="jj-shell"><a href={base} class="jj-wordmark" aria-label="Joy squared"><img class="jj-brand-logo" src="/joy2-logo.svg" alt="Joy²" width="116" height="48" /></a><p class="jj-footer-disclaimer">{lang==='ru'?"Информация на сайте носит исключительно ознакомительный характер и не является финансовой или инвестиционной рекомендацией. Все расчёты основаны на индикативных параметрах и прогнозных допущениях. Фактические результаты и доходность могут отличаться от представленных значений.":lang==='en'?"The information on this website is for informational purposes only and does not constitute financial or investment advice. All calculations are based on indicative parameters and forecast assumptions. Actual results and returns may differ from the figures presented.":"Saytdagi ma’lumotlar faqat tanishish uchun taqdim etilgan bo‘lib, moliyaviy yoki investitsiyaviy tavsiya hisoblanmaydi. Barcha hisob-kitoblar indikativ parametrlar va prognoz farazlariga asoslangan. Haqiqiy natijalar va daromadlilik ko‘rsatilgan qiymatlardan farq qilishi mumkin."}</p><span>© {new Date().getFullYear()}</span></div></footer>
 {joy2FullGallery.length>0&&<dialog id="jj-gallery" class="jj-lightbox"><button type="button" id="jj-gallery-close" aria-label={lang==='ru'?'Закрыть':lang==='uz'?'Yopish':'Close'}>✕</button><button type="button" id="jj-gallery-prev" hidden={joy2FullGallery.length<2} aria-label={lang==='ru'?'Предыдущее фото':lang==='uz'?'Oldingi surat':'Previous photo'}>‹</button><img id="jj-gallery-image" src={listing.images[0]} alt={listing.title}/><button type="button" id="jj-gallery-next" hidden={joy2FullGallery.length<2} aria-label={lang==='ru'?'Следующее фото':lang==='uz'?'Keyingi surat':'Next photo'}>›</button><small id="jj-gallery-count"></small></dialog>}
@@ -84,7 +84,9 @@ const mapData=coords?[{slug:listing.slug,title:listing.title,lat:listing.lat,lng
 <script type="application/json" id="jj-gallery-data" set:html={JSON.stringify(joy2FullGallery).replace(/</g,'\\u003c')}></script>
 <!-- JOY2_PDF_CONTACT_DATA_V30 -->
 <script type="application/json" id="joy2-pdf-object-data" set:html={JSON.stringify({title:listing.title,address:[listing.city,listing.district,listing.address].filter(Boolean).join(' · '),contact:{name:String((rawListing as any).contacts?.name||(rawListing as any).contactName||(rawListing.slug==='daho-block-e'?'Санжар':'')).trim(),phone:String((rawListing as any).contacts?.phone||(rawListing as any).contactPhone||(rawListing as any).phone||(rawListing.slug==='daho-block-e'?'+998 50 590 60 59':'')).trim(),telegram:String((rawListing as any).contacts?.telegram||(rawListing as any).contactTelegram||(rawListing.slug==='daho-block-e'?'@sanjar_saymatov_cmwp':'')).trim()}}).replaceAll('<',String.fromCharCode(92)+'u003c')}></script>
+<script src="/js/joy2-mobile-flow-variant3-v211fixed.js" defer></script>
 <script src="/js/joyjoy-detail.js" defer></script>
+<script src="/js/joy2-mobile-year-tiles-v205.js" defer></script>
 <script src="/js/joy2-detail-align-real-logo-v33.js" defer></script>
 
 <script is:inline>
@@ -93,3 +95,8 @@ const mapData=coords?[{slug:listing.slug,title:listing.title,lat:listing.lat,lng
 </script>
 
 <script src="/js/joy2-detail-layout-v27.js" defer></script>
+
+<script src="/js/joy2-mobile-detail-v201.js" defer></script>
+
+<script src="/js/joy2-mobile-units-v210.js" defer></script>
+<script src="/js/joy2-mobile-logo-align-v214.js" defer></script>

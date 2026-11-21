@@ -1,5 +1,7 @@
 /* JOY2 DETAIL REAL SVG LOGO ALIGN V33 */
 (()=>{
+  /* JOY2_V214_DESKTOP_ONLY: mobile logo aligns to property title, not the reverse. */
+  if(window.matchMedia && window.matchMedia("(max-width:760px)").matches)return;
   const logo=document.querySelector('.jj-detail-sitebar .jj-brand-logo');
   const title=document.querySelector('.jj-detail .jj-detail-heading h1');
   if(!logo||!title)return;

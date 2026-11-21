@@ -81,6 +81,7 @@ if(root){
   p.translations={};for(const lang of ['uz','en']){const row={};for(const key of ['title','city','district','address','description','features']){const value=field(lang+'_'+key).value.trim();if(value)row[key]=key==='features'?lines(lang+'_'+key):value;}if(Object.keys(row).length)p.translations[lang]=row;}
   p.investment={...(current.investment||{}),currency:'USD',published:field('modelPublished').checked};
   for(const key of investmentFields)p.investment[key]=nullable(key);
+  delete p.investment.transactionCosts;delete p.investment.otherCosts; // JOY2_REMOVE_TRANSACTION_OTHER_V155
   for(const key of ['rentBasis','asOf','sourceNote','rentCurrency'])p.investment[key]=field(key).value.trim();
   for(const key of ['usdUzs','uzsDevaluation'])p.investment[key]=nullable(key);
   if(field('unitsJson'))p.units=JSON.parse(field('unitsJson').value||'[]');

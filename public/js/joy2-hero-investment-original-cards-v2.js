@@ -28,6 +28,9 @@
     // Preserve computed styles of the original rendered cards. They are styled by
     // #catalog-results selectors that do not normally apply outside the catalog.
     function copyOriginalAppearance(source,clone){
+      /* JOY2_V166_MOBILE_NO_COMPUTED_COPY: keep original card CSS, do not snapshot already-shrunk mobile styles. */
+      if(typeof matchMedia==='function'&&matchMedia('(max-width:900px)').matches){clone.style.removeProperty('zoom');return;}
+
       const a=[source,...source.querySelectorAll('*')],b=[clone,...clone.querySelectorAll('*')];
       for(let i=0;i<a.length&&i<b.length;i++){
         const sourceStyle=getComputedStyle(a[i]);
@@ -147,8 +150,8 @@
     document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();else play();});
     play();
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>init(),{once:true});
-  else init();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>requestAnimationFrame(()=>requestAnimationFrame(init)),{once:true});
+  else requestAnimationFrame(()=>requestAnimationFrame(init));
 })();
 
 /* JOY2_FAST_HERO_SEPARATED_FILTERS_V87: hero startup delay reduced 2 time(s); no filter dependency. */

@@ -1,0 +1,32 @@
+/* JOY2_MOBILE_PAGES_V151: 4 catalog cards/page, mobile-only cleanup and alignment. */
+.joy2-mobile-pagination-v151{display:none}
+@media screen and (max-width:700px){
+ html body main.jj-ref-home .jj-ref-panels,
+ html body main.jj-ref-home .jj-market-nav{display:none!important}
+ html body main.jj-ref-home #catalog-results .jj-workspace:not([data-jj-mode="map"]) #jj-results > .jj-property-card[data-joy2-page-hidden="1"]{display:none!important}
+ html body main.jj-ref-home #catalog-results #jj-results.jj-card-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;justify-items:stretch!important;align-items:stretch!important;gap:14px!important;min-width:0!important;width:100%!important}
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;margin-inline:0!important}
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-card-main{min-width:0!important;box-sizing:border-box!important;text-align:left!important}
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card h3,
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-address{overflow-wrap:anywhere!important}
+ html body main.jj-ref-home #catalog-results .jj-listing-heading{gap:10px!important;align-items:center!important}
+ html body main.jj-ref-home #catalog-results .jj-catalog-toolbar{width:100%!important;min-width:0!important}
+ html body main.jj-ref-home #catalog-results .jj-listing-actions{min-width:0!important}
+ html body main.jj-ref-home #catalog-results .jj-view-switch{display:none!important}
+ html body main.jj-ref-home #catalog-results .jj-catalog-tools{display:none!important}
+ html body main.jj-ref-home .jj-hero-left-v2{max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+ html body main.jj-ref-home .jj-hero-left-v2 .jj-ref-actions{display:flex!important;flex-wrap:wrap!important;align-items:stretch!important;justify-content:center!important;max-width:100%!important;min-width:0!important;gap:12px!important}
+ html body main.jj-ref-home .jj-hero-left-v2 .jj-ref-actions > a.jj-ref-cta{max-width:100%!important;min-width:0!important;box-sizing:border-box!important;justify-content:space-between!important}
+ .joy2-mobile-pagination-v151:not([hidden]){display:flex!important;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;width:calc(100% - 32px);max-width:580px;margin:20px auto 32px;padding:0;box-sizing:border-box}
+ .joy2-page-button-v151{font:600 14px/1.2 Inter,Arial,sans-serif;min-width:40px;min-height:44px;padding:10px 12px;border:1px solid #d8dce1;border-radius:12px;color:#121416;background:#fff;box-shadow:none;cursor:pointer}
+ .joy2-page-button-v151.is-current{background:#b8ff28;border-color:#b8ff28;color:#0e1012}
+ .joy2-page-button-v151:disabled{opacity:.4;cursor:default}
+ .joy2-page-button-v151:focus-visible{outline:2px solid #88bb1d;outline-offset:2px}
+ .joy2-page-status-v151{width:100%;text-align:center;color:#626b74;font:500 12px/1.4 Inter,Arial,sans-serif;margin-top:4px}
+}
+@media screen and (max-width:380px){
+ .joy2-mobile-pagination-v151{gap:5px!important}
+ .joy2-page-button-v151{min-width:36px;padding:9px 9px;font-size:12px}
+ html body main.jj-ref-home .jj-hero-left-v2 .jj-ref-actions > a.jj-ref-cta{width:100%!important}
+}
+/* JOY2_MOBILE_PAGES_V151_END */

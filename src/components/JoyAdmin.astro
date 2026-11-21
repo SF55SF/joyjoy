@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import {allListings as joy2DevListings} from '../data/listings';
 // JOY2_LOCAL_ADMIN_PREVIEW_V34
 const fields=[['title','Название'],['city','Город'],['district','Район'],['address','Адрес'],['area','Общая площадь, м²'],['priceUsd','Цена продажи, $ — пусто: по запросу'],['lat','Широта'],['lng','Долгота']];
-const financial=[['purchasePrice','Цена покупки, $'],['transactionCosts','Расходы на сделку, $'],['fitOutCosts','Ремонт и подготовка, $'],['otherCosts','Прочие вложения, $'],['lettableArea','Сдаваемая площадь, м²'],['monthlyRent','Аренда, за м² в месяц (USD или UZS)'],['occupancy','Заполняемость, %'],['annualExpenses','Все годовые расходы, $'],['capex','CAPEX — дополнительные капитальные затраты в начале, $'],['holdYears','Срок владения, лет'],['exitCapRate','Cap Rate продажи, %'],['annualRentGrowth','Индексация аренды, % в год']];
+const financial=[['purchasePrice','Цена покупки, $'],['fitOutCosts','Ремонт и подготовка, $'],['lettableArea','Сдаваемая площадь, м²'],['monthlyRent','Аренда, за м² в месяц (USD или UZS)'],['occupancy','Заполняемость, %'],['annualExpenses','Все годовые расходы, $'],['capex','CAPEX — дополнительные капитальные затраты в начале, $'],['holdYears','Срок владения, лет'],['exitCapRate','Cap Rate продажи, %'],['annualRentGrowth','Индексация аренды, % в год']];
 ---
 <BaseLayout lang="ru" title="JoyJoy — управление объектами" robots="noindex,nofollow">
 <div class="jj-admin" data-joyjoy-admin data-joy2-admin-local={import.meta.env.DEV ? "true" : "false"}>
@@ -37,3 +37,5 @@ const financial=[['purchasePrice','Цена покупки, $'],['transactionCos
 <link rel="stylesheet" href="/css/joy2-admin-geo-media-v35.css" />
 <script src="/js/joy2-admin-geo-media-v35.js" defer></script>
 </BaseLayout>
+
+<!-- JOY2_V158_HMR: reload the Astro admin preview -->

@@ -199,7 +199,7 @@ const joy2UnifiedCardDataV1 = sourceListings.map(p => {
    {listings.map((item,index)=><article class="jj-property-card" id={'jj-object-'+item.slug} data-slug={item.slug} data-index={index} data-investment={isPublishedProject(sourceListings[index])?"true":"false"} data-irr={investmentRanking(sourceListings[index]).irr} data-profit={investmentRanking(sourceListings[index]).profit}
     data-search={(item.title+' '+item.city+' '+item.district+' '+item.address+' '+item.description+' '+sourceListings[index].title+' '+sourceListings[index].address).toLocaleLowerCase()}
     data-type={item.type} data-status={item.status} data-area={item.units?.length?Math.min(...item.units.filter(u=>u.published!==false&&u.area>0).map(u=>u.area),item.area):item.area}
-    data-price={item.units?.length?Math.min(...item.units.filter(u=>u.published!==false).map(u=>Number(u.area)*Number(u.pricePerSqm)).filter(n=>n>0)):item.priceUsd??''}>
+    data-price={item.units?.length?((v)=>v.length?Math.min(...v):(item.priceUsd??''))(item.units.filter(u=>u.published!==false).map(u=>Number(u.area)*Number(u.pricePerSqm)).filter(n=>Number.isFinite(n)&&n>0)):item.priceUsd??''}>
     <a class="jj-property-card-image" href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{item.images?.[0]?<img src={item.images[0]} alt={item.title} width="800" height="560" loading={index<3?'eager':'lazy'}/>:<span class="jj-image-placeholder">joyjoy.</span>}{isPublishedProject(sourceListings[index])&&<span class="jj-invest-ribbon">{lang==='ru'?'Инвестиционный расчёт':lang==='uz'?'Investitsiya hisobi bor':'Investment analysis'}</span>}{item.status&&<span class="jj-label-status">{copy[item.status]}</span>}{/* JOY2_TENANCY_RIBBON_V13 */}{(sourceListings[index].tenancyStatus==='leased'||sourceListings[index].units?.some(u=>u.tenancyStatus==='leased'&&u.investment?.published===true))?<span class="jj-tenancy-ribbon">{lang==='ru'?'С арендаторами':lang==='uz'?'Ijarachilar bilan':'Tenanted'}</span>:(sourceListings[index].tenancyStatus==='preliminary'||sourceListings[index].units?.some(u=>u.tenancyStatus==='preliminary'&&u.investment?.published===true))?<span class="jj-tenancy-ribbon is-preliminary">{lang==='ru'?'Предварительные условия':lang==='uz'?'Dastlabki shartlar':'Preliminary terms'}</span>:null}</a>
     {/* JOY2_CONTACTS_TELEGRAM_V2: Telegram instead of favorites on property card. */}
     {joy2TgHref(sourceListings[index])?<a class="jj-save jj-telegram-link" href={joy2TgHref(sourceListings[index])} target="_blank" rel="noopener noreferrer" aria-label={lang==='ru'?'Написать в Telegram':lang==='uz'?'Telegram orqali yozish':'Message on Telegram'} title="Telegram" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.5 3.4c-.3-.25-.75-.29-1.2-.1L2.6 10.1c-1.1.42-1.08 1.09-.2 1.36l4.55 1.42 1.76 5.42c.2.57.34.78.68.78.28 0 .45-.13.68-.35l2.17-2.11 4.52 3.34c.86.48 1.5.22 1.72-.8l3.06-14.32c.11-.56.02-1.06-.04-1.44ZM8 12.51l10.98-6.9-8.54 8.16-.33 3.52-2.11-4.78Z"/></svg></a>:<span class="jj-save jj-telegram-unavailable" title={lang==='ru'?'Telegram не указан':lang==='uz'?'Telegram ko‘rsatilmagan':'Telegram unavailable'} aria-label="Telegram"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.5 3.4c-.3-.25-.75-.29-1.2-.1L2.6 10.1c-1.1.42-1.08 1.09-.2 1.36l4.55 1.42 1.76 5.42c.2.57.34.78.68.78.28 0 .45-.13.68-.35l2.17-2.11 4.52 3.34c.86.48 1.5.22 1.72-.8l3.06-14.32c.11-.56.02-1.06-.04-1.44ZM8 12.51l10.98-6.9-8.54 8.16-.33 3.52-2.11-4.78Z"/></svg></span>}
@@ -339,3 +339,15 @@ html body main.jj-ref-home #joy2-hero-invest-cta-v11 #joy2-invest-arrow-v11,html
 })();
 </script>
 <!-- JOY2_ALL_OBJECTS_STATIC_SHADOW_V148_END -->
+<!-- JOY2_MOBILE_GRID_2X2_V153 -->
+<script src="/js/joy2-mobile-grid-v153.js?v=153" defer></script>
+<!-- JOY2_MOBILE_VISUAL_V152 -->
+
+
+
+<!-- JOY2_V164_MOBILE_SCRIPT -->
+<script src="/js/joy2-mobile-v164.js?v=164" defer></script>
+<script src="/js/joy2-mobile-card-shadow-v183.js" defer></script>
+<script src="/js/joy2-mobile-heading-shadow-v190.js" defer></script>
+<script src="/js/joy2-mobile-desktop-controls-v191.js" defer></script>
+<script src="/js/joy2-hero-mobile-alignment-v196.js" defer></script>

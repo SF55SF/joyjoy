@@ -4,7 +4,7 @@ import {investmentFields,hasPublishedInvestment,calculateInvestment,investmentDe
 const {listing,lang='ru'}=Astro.props;
 const c=investmentCopy[lang];
 const published=hasPublishedInvestment(listing);
-const model=published?listing.investment:{currency:'USD',purchasePrice:listing.priceUsd,lettableArea:null,transactionCosts:null,fitOutCosts:null,otherCosts:null,monthlyRent:null,occupancy:null,annualExpenses:null,...investmentDefaults};
+const model=published?listing.investment:{currency:'USD',purchasePrice:listing.priceUsd,lettableArea:null,fitOutCosts:null,monthlyRent:null,occupancy:null,annualExpenses:null,...investmentDefaults};
 const result=published?calculateInvestment(model):null;
 const money=n=>new Intl.NumberFormat(lang==='ru'?'ru-RU':lang==='uz'?'uz-UZ':'en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
 ---
