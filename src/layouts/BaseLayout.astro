@@ -20,6 +20,8 @@ const image=Astro.props.image;
 <meta name="description" content={description} />
 <meta name="robots" content={Astro.props.robots??(origin?'index,follow':'noindex,follow')} />
 <meta name="theme-color" content="#ffffff" />
+<!-- JOY2_V126_PRELOAD_BACKGROUND -->
+<link rel="preload" as="image" href="/images/joy2-concrete-ribs-hq.png" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=joy2-icon-20261117" />
 <link rel="alternate icon" href="/favicon.ico?v=joy2-icon-20261117" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=joy2-icon-20261117" />
@@ -74,29 +76,7 @@ html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a[a
 
 </style>
 <!-- JOY2_FINAL_HEADER_V38_END -->
-<!-- JOY2_HERO_SINGLE_FINAL_V45_START -->
-<style is:inline>
-/* No transitional old hero: reveal only when the investment card is constructed. */
-html body > main.jj-ref-home > section.jj-ref-hero{visibility:hidden!important}
-html.joy2-hero-final-v45 body > main.jj-ref-home > section.jj-ref-hero{visibility:visible!important}
-</style>
-<script is:inline>
-(function(){
- var doc=document;
- function ready(){
-  var hero=doc.querySelector('main.jj-ref-home > .jj-ref-hero');
-  if(!hero)return false;
-  var stage=hero.querySelector('.jj-hero-right-v2');
-  if(!stage||!stage.querySelector('.jj-property-card'))return false;
-  doc.documentElement.classList.add('joy2-hero-final-v45');return true;
- }
- if(ready())return;
- var observer=new MutationObserver(function(){if(ready())observer.disconnect()});
- observer.observe(doc.documentElement,{childList:true,subtree:true});
- doc.addEventListener('DOMContentLoaded',function(){if(ready())observer.disconnect()},{once:true});
-})();
-</script>
-<!-- JOY2_HERO_SINGLE_FINAL_V45_END -->
+<!-- JOY2_V119: remove hero visibility gate; the page must remain visible even when a card fails to initialize. -->
 
 
 

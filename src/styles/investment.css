@@ -338,8 +338,8 @@
 }
 
 /* JOY2_EXACT_CONCRETE_V2: scoped to real-estate homepage ONLY; original logo unchanged */
-body:has(>main.jj-ref-home){background:#fff!important;position:relative;isolation:isolate;--joy-green:#b8ff28;}
-body:has(>main.jj-ref-home)::before{content:"";pointer-events:none;position:absolute;z-index:0;top:0;left:0;right:0;height:925px;background-image:linear-gradient(90deg,rgba(245,246,249,.83) 0%,rgba(246,247,251,.65) 41%,rgba(246,247,251,.02) 66%),url('/images/joy2-concrete-ribs-hq.png?v=hq-mwkzumvk');background-position:center,right top;background-size:100% 100%,auto 100%;background-repeat:no-repeat,repeat-x;}
+body:has(>main.jj-ref-home){background:#eceef1!important;position:relative;isolation:isolate;--joy-green:#b8ff28;}
+body:has(>main.jj-ref-home)::before{content:"";pointer-events:none;position:absolute;z-index:0;top:0;left:0;right:0;height:925px;background-image:url('/images/joy2-concrete-ribs-hq.png');background-position:center top;background-size:cover;background-repeat:no-repeat;}
 body:has(>main.jj-ref-home)::after{content:"";pointer-events:none;position:absolute;z-index:0;top:0;left:0;right:0;height:925px;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.58' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.22'/%3E%3C/svg%3E");}
 body:has(>main.jj-ref-home)>.jj-ref-header,body:has(>main.jj-ref-home)>main.jj-ref-home{position:relative;z-index:1;background:transparent!important;}
 body:has(>main.jj-ref-home)>.jj-ref-header{border:0!important;height:98px!important;box-shadow:none!important;top:0!important;}
@@ -1830,11 +1830,12 @@ body:has(main.jj-ref-home) .jj-ref-home .jj-hero-slide-v6 > .jj-property-card{
 /* JOY2 FLOATING HERO CARD SHADOW V17 END */
 
 /* JOY2_DETAIL_COMPACT_V18_START */
+/* JOY2_DETAIL_BACK_TIDY_V129 */
 /* Detail page only: remove unused vertical space while retaining the existing structure. */
 .jj-detail-sitebar .jj-sitebar-in{gap:18px!important;}
-.jj-detail-sitebar .jj-detail-back-nav{display:inline-flex!important;gap:9px!important;align-items:center!important;justify-content:center!important;flex-shrink:0!important;margin-left:14px!important;min-height:44px!important;padding:9px 17px!important;border:1px solid #cfd5d8!important;border-radius:13px!important;background:#fff!important;color:#101112!important;font:750 16px/1.2 Arial,Helvetica,sans-serif!important;box-shadow:0 4px 14px rgba(0,0,0,.10)!important;text-decoration:none!important;}
-.jj-detail-sitebar .jj-detail-back-nav:hover{background:#f3f5f5!important;box-shadow:0 7px 18px rgba(0,0,0,.14)!important;}
-.jj-detail-sitebar .jj-detail-back-nav svg{width:21px!important;height:21px!important;flex-shrink:0!important;}
+.jj-detail-sitebar .jj-detail-back-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;vertical-align:middle!important;gap:9px!important;flex:0 0 auto!important;align-self:center!important;min-height:46px!important;height:46px!important;box-sizing:border-box!important;margin:0!important;padding:0 17px!important;border:1px solid #dce1e5!important;border-radius:12px!important;background:#fff!important;color:#121417!important;font:600 15px/1 Arial,Helvetica,sans-serif!important;letter-spacing:0!important;white-space:nowrap!important;box-shadow:0 3px 12px rgba(13,22,30,.055)!important;text-decoration:none!important;transition:background .15s ease,border-color .15s ease,box-shadow .15s ease!important;}
+.jj-detail-sitebar .jj-detail-back-nav:hover{background:#f5f7f8!important;border-color:#cdd3d8!important;box-shadow:0 4px 13px rgba(13,22,30,.09)!important;}
+.jj-detail-sitebar .jj-detail-back-nav svg{display:block!important;width:18px!important;height:18px!important;flex:0 0 18px!important;stroke-width:2.2!important;}
 .jj-detail.jj-shell{padding-top:14px!important;padding-bottom:22px!important;}
 .jj-detail>.jj-crumb{margin:0 0 11px!important;font-size:12px!important;line-height:1.3!important;}
 .jj-detail .jj-detail-heading{margin:0 0 14px!important;gap:16px!important;}
@@ -1892,8 +1893,8 @@ body:has(main.jj-ref-home) .jj-ref-home .jj-hero-slide-v6 > .jj-property-card{
 .jj-detail .jj-rinv-pdf svg{width:14px!important;height:14px!important;}
 @media(max-width:760px){
  .jj-detail-sitebar .jj-sitebar-in{gap:7px!important;}
- .jj-detail-sitebar .jj-detail-back-nav{margin-left:0!important;padding:8px 11px!important;min-height:39px!important;font-size:13px!important;gap:5px!important;}
- .jj-detail-sitebar .jj-detail-back-nav svg{width:17px!important;height:17px!important;}
+ .jj-detail-sitebar .jj-detail-back-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 auto!important;align-self:center!important;gap:7px!important;min-height:40px!important;height:40px!important;box-sizing:border-box!important;margin:0!important;padding:0 12px!important;border:1px solid #dce1e5!important;border-radius:11px!important;background:#fff!important;color:#121417!important;font:600 13px/1 Arial,Helvetica,sans-serif!important;letter-spacing:0!important;white-space:nowrap!important;box-shadow:0 3px 12px rgba(13,22,30,.055)!important;text-decoration:none!important;}
+ .jj-detail-sitebar .jj-detail-back-nav svg{display:block!important;width:16px!important;height:16px!important;flex:0 0 16px!important;stroke-width:2.2!important;}
  .jj-detail.jj-shell{padding-top:10px!important;}
  .jj-detail .jj-photo-layout{height:245px!important;margin-bottom:12px!important;}
  .jj-detail .jj-detail-heading{margin-bottom:12px!important;}
@@ -2274,7 +2275,7 @@ html body main.jj-ref-home section.jj-ref-hero h1 .jj-concept-highlight{
 /* Position remains in the natural flow; x is measured from the visible headline. */
 html body main.jj-ref-home section.jj-ref-hero p.joy2-subtitle-aligned-v67{
  position:relative!important;
- left:var(--joy2-subtitle-offset-v67,0px)!important;
+ left:0px!important;
 }
 /* JOY2_HERO_SUBTITLE_ALIGN_V67_END */
 
@@ -3594,3 +3595,70 @@ html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta > 
   .jj-detail .jj-detail-columns .jj-detail-sidebar .jj-detail-location-wide p { font-size: 15px !important; }
 }
 /* JOY2_DETAIL_LOWER_COPY_V115_END */
+
+/* JOY2_V126_BACKGROUND_CANONICAL: preserve final single-asset homepage background. */
+
+/* JOY2_INVEST_DRAWER_SCALE_V128 */
+/* Uniform 10% reduction of investment calculation panels, including all descendants. */
+.jj-detail .jj-unit-finance-drawer[data-jj-finance-drawer],
+.jj-detail .jj-unit-finance-drawer.joy2-v111 {
+  zoom: .9 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* JOY2_SUBTITLE_ALIGN_N_V133 */
+html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2 > p.joy2-subtitle-aligned-v67 { left:0!important; right:auto!important; margin-left:0!important; text-align:left!important; }
+@media (max-width:999px) { html body main.jj-ref-home section.jj-ref-hero .jj-hero-left-v2 > p.joy2-subtitle-aligned-v67 { margin-inline:auto!important; text-align:center!important; } }
+
+/* JOY2_HERO_BUTTON_WHITE_BORDER_SHADOW_V140 */
+/* Same soft lifted shadow as the hero property card, on both hero CTA buttons. */
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:hover,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:focus-visible{
+  box-shadow:0 22px 44px rgba(19,22,29,.23),0 7px 15px rgba(19,22,29,.10)!important;
+}
+html body main.jj-ref-home section.jj-ref-hero #joy2-hero-invest-cta-v11{border-color:#FFFFFF!important;}
+/* JOY2_HERO_BUTTON_WHITE_BORDER_SHADOW_V140_END */
+
+/* JOY2_SUBTITLE_STABLE_V141_START */
+html body main.jj-ref-home section.jj-ref-hero p.joy2-subtitle-aligned-v67{
+ position:relative!important;left:var(--joy2-subtitle-offset-v141,0px)!important;
+ right:auto!important;transition:none!important;animation:none!important;
+}
+html body main.jj-ref-home section.jj-ref-hero p.joy2-subtitle-aligned-v67:not([data-joy2-caption-ready="yes"]){visibility:hidden!important;}
+/* JOY2_SUBTITLE_STABLE_V141_END */
+
+/* JOY2_HERO_CTA_SHADOW_DOUBLE_V142_START */
+/* Twice v140 shadow distance and blur; same alpha, no layout changes. */
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:hover,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:focus-visible {
+  box-shadow:0 44px 88px rgba(19,22,29,.23),0 14px 30px rgba(19,22,29,.10)!important;
+}
+/* JOY2_HERO_CTA_SHADOW_DOUBLE_V142_END */
+
+/* JOY2_CTA_STRONG_SHADOW_V144_START */
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:hover,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:focus-visible {
+ box-shadow:0 44px 88px rgba(19,22,29,.46),0 14px 30px rgba(19,22,29,.20)!important;
+}
+/* JOY2_CTA_STRONG_SHADOW_V144_END */
+
+
+
+
+/* JOY2_CTA_LIFT_ONLY_V147_START */
+/* Shadow remains constant; only the button lifts on hover. */
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:hover,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:focus-visible,
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:active{
+ box-shadow:0 44px 88px rgba(19,22,29,.46),0 14px 30px rgba(19,22,29,.20)!important;
+ transition:transform .15s ease,background-color .15s ease,color .15s ease!important;
+}
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta{transform:translateY(0)!important;translate:none!important;}
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:hover{transform:translateY(-2px)!important;translate:none!important;}
+html body main.jj-ref-home section.jj-ref-hero .jj-ref-actions > a.jj-ref-cta:active{transform:translateY(0)!important;}
+/* JOY2_CTA_LIFT_ONLY_V147_END */

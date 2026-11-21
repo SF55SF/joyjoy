@@ -1,3 +1,4 @@
+// JOY2_UNIT_CAPEX_V132 | CAPEX is an initial acquisition cash outflow, never an annual cost.
 // JOY2_ADMIN_UNITS_V68: one object -> independent unit investment models.
 import {validateInvestment} from './joyjoy-investment-model.js';
 const root=document.querySelector('[data-joyjoy-admin]');
@@ -6,9 +7,9 @@ if(root){
  let units=[];
  const number=(v)=>v===''?0:Number(v);
  const uid=()=> 'unit-'+(globalThis.crypto?.randomUUID?.().slice(0,12)||Math.random().toString(36).slice(2,14));
- const fresh=()=>({id:uid(),block:'',floor:'',number:'',area:0,pricePerSqm:0,published:true,images:[],rentalStatusText:'',investment:null});
- const keys=[['purchasePrice','Цена покупки, $'],['transactionCosts','Расходы на сделку, $'],['fitOutCosts','Подготовка, $'],['otherCosts','Прочие затраты, $'],['capex','CAPEX, $'],['lettableArea','Арендуемая площадь, м²'],['monthlyRent','Ставка аренды, $/м²/мес'],['mezzanineArea','Площадь мезонина, м²'],['mezzanineRent','Ставка мезонина, $/м²/мес'],['occupancy','Заполняемость, %'],['annualExpenses','Годовые расходы, $'],['propertyTaxRate','Налог на имущество, %'],['profitTaxRate','Налог на прибыль, %'],['holdYears','Срок владения, лет'],['exitCapRate','Exit Cap Rate, %'],['annualRentGrowth','Индексация, %']];
- const initial=u=>({published:true,currency:'USD',rentCurrency:'USD',purchasePrice:Number(u.area)*Number(u.pricePerSqm)||0,transactionCosts:0,fitOutCosts:0,otherCosts:0,capex:0,lettableArea:Number(u.area)||0,monthlyRent:0,mezzanineArea:0,mezzanineRent:0,occupancy:100,annualExpenses:0,propertyTaxRate:0,profitTaxRate:0,holdYears:8,exitCapRate:12,annualRentGrowth:0,rentBasis:'assumption',asOf:new Date().toISOString().slice(0,10),sourceNote:''});
+ const fresh=()=>({id:uid(),block:'',floor:'',number:'',area:0,pricePerSqm:0,capex:0,published:true,images:[],rentalStatusText:'',investment:null});
+ const keys=[['purchasePrice','Цена покупки, $'],['transactionCosts','Расходы на сделку, $'],['fitOutCosts','Подготовка, $'],['otherCosts','Прочие затраты, $'],['lettableArea','Арендуемая площадь, м²'],['monthlyRent','Ставка аренды, $/м²/мес'],['mezzanineArea','Площадь мезонина, м²'],['mezzanineRent','Ставка мезонина, $/м²/мес'],['occupancy','Заполняемость, %'],['annualExpenses','Годовые расходы, $'],['propertyTaxRate','Налог на имущество, %'],['profitTaxRate','Налог на прибыль, %'],['holdYears','Срок владения, лет'],['exitCapRate','Exit Cap Rate, %'],['annualRentGrowth','Индексация, %']];
+ const initial=u=>({published:true,currency:'USD',rentCurrency:'USD',purchasePrice:Number(u.area)*Number(u.pricePerSqm)||0,transactionCosts:0,fitOutCosts:0,otherCosts:0,capex:Number(u.capex)||0,lettableArea:Number(u.area)||0,monthlyRent:0,mezzanineArea:0,mezzanineRent:0,occupancy:100,annualExpenses:0,propertyTaxRate:0,profitTaxRate:0,holdYears:8,exitCapRate:12,annualRentGrowth:0,rentBasis:'assumption',asOf:new Date().toISOString().slice(0,10),sourceNote:''});
  const hasComplete=u=>u.published!==false&&u.investment?.published===true&&validateInvestment(u.investment).length===0&&String(u.investment.sourceNote||'').trim()&&String(u.investment.asOf||'').trim()&&['assumption','asking','contract'].includes(u.investment.rentBasis);
  const sync=()=>{
   json.value=JSON.stringify(units);
@@ -35,16 +36,20 @@ if(root){
    const grid=document.createElement('div');grid.className='jj-admin-fields';card.append(grid);
    input(grid,'Идентификатор (уникальный)','id',u);input(grid,'Блок','block',u);input(grid,'Этаж','floor',u);
    input(grid,'Номер помещения','number',u);input(grid,'Площадь, м²','area',u,'number');input(grid,'Цена за м², $','pricePerSqm',u,'number');
+   const capexWrap=document.createElement('label'),capexName=text('span','CAPEX — первоначальные расходы, $'),capexInput=document.createElement('input');
+   capexInput.type='number';capexInput.min='0';capexInput.step='any';capexInput.value=String(u.capex??u.investment?.capex??0);
+   capexInput.addEventListener('input',()=>{const n=capexInput.value===''?0:Number(capexInput.value);if(!Number.isFinite(n)||n<0)return;u.capex=n;if(u.investment)u.investment.capex=n;sync();});
+   capexWrap.append(capexName,capexInput);grid.append(capexWrap);
    const pub=document.createElement('label'),pubbox=document.createElement('input');pubbox.type='checkbox';pubbox.checked=u.published!==false;
    pubbox.addEventListener('change',()=>{u.published=pubbox.checked;sync()});pub.append(pubbox,text('span',' Публиковать помещение'));card.append(pub);
    input(grid,'Арендный статус — текст для страницы помещения','rentalStatusText',u);
    const flag=document.createElement('label'),check=document.createElement('input');check.type='checkbox';check.checked=u.investment?.published===true;
-   check.addEventListener('change',()=>{if(check.checked)u.investment={...initial(u),...(u.investment||{}),published:true};else if(u.investment)u.investment.published=false;sync();draw()});
+   check.addEventListener('change',()=>{if(check.checked)u.investment={...initial(u),...(u.investment||{}),capex:Number(u.capex)||0,published:true};else if(u.investment)u.investment.published=false;sync();draw()});
    flag.append(check,text('strong',' Инвестиционное помещение'));card.append(flag);
    if(u.investment?.published){
     const box=document.createElement('div');box.className='jj-unit-admin-model';box.append(text('h4','Финансовая модель · помещение №'+(index+1)));
     const fields=document.createElement('div');fields.className='jj-admin-fields';box.append(fields);
-    for(const [key,label] of keys)input(fields,label,key,u.investment,'number');
+    for(const [key,label] of keys){if(key==='fitOutCosts'||key==='capex')continue;input(fields,label,key,u.investment,'number');}
     select(fields,'Валюта аренды','rentCurrency',u.investment,[['USD','USD'],['UZS','UZS']]);
     select(fields,'Основание ставки','rentBasis',u.investment,[['assumption','Расчётное допущение'],['asking','Ставка предложения'],['contract','По договору']]);
     input(fields,'Дата исходных данных','asOf',u.investment,'date');
@@ -52,6 +57,9 @@ if(root){
     input(fields,'Девальвация UZS, % (для аренды в UZS)','uzsDevaluation',u.investment,'number');
     const src=document.createElement('label');src.append(text('span','Источник и условия расчёта'));const note=document.createElement('textarea');note.rows=3;note.value=u.investment.sourceNote||'';
     note.addEventListener('input',()=>{u.investment.sourceNote=note.value;sync()});src.append(note);box.append(src);
+    // /* JOY2_CAPEX_FOOTER_V137 */
+    const capexFooter=document.createElement('div');capexFooter.className='jj-admin-fields joy2-capex-footer-v137';
+    input(capexFooter,'CAPEX — первоначальные расходы, 
     const error=text('small','Инвестиционный статус объекта включится после заполнения корректной модели и сохранения.');box.append(error);
     card.append(box);
    }
@@ -67,6 +75,27 @@ if(root){
  window.addEventListener('joyjoy:units-loaded',event=>{
   const original=event.detail?.units;
   units=Array.isArray(original)&&original.length?structuredClone(original):[fresh()];
+  units.forEach(u=>{const n=Number(u.investment?.capex??u.capex??0);u.capex=Number.isFinite(n)&&n>=0?n:0;if(u.investment)u.investment.capex=u.capex;});
+  draw();sync();
+ });
+}
+,'capex',u.investment,'number');box.append(capexFooter);
+    const error=text('small','Инвестиционный статус объекта включится после заполнения корректной модели и сохранения.');box.append(error);
+    card.append(box);
+   }
+   const remove=document.createElement('button');remove.type='button';remove.textContent='Удалить помещение';remove.className='jj-admin-danger';
+   remove.addEventListener('click',()=>{
+    if(!confirm('Удалить помещение №'+(index+1)+'? Данные этого помещения и его инвестиционной модели будут удалены при сохранении объекта.'))return;
+    units.splice(index,1);if(!units.length)units.push(fresh());sync();draw();
+   });
+   card.append(remove);holder.append(card);
+  });
+ }
+ root.querySelector('[data-add-unit]')?.addEventListener('click',()=>{units.push(fresh());sync();draw();});
+ window.addEventListener('joyjoy:units-loaded',event=>{
+  const original=event.detail?.units;
+  units=Array.isArray(original)&&original.length?structuredClone(original):[fresh()];
+  units.forEach(u=>{const n=Number(u.investment?.capex??u.capex??0);u.capex=Number.isFinite(n)&&n>=0?n:0;if(u.investment)u.investment.capex=u.capex;});
   draw();sync();
  });
 }
