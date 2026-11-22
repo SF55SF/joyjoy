@@ -5156,3 +5156,44 @@ html body main.jj-ref-home .jj-listing-actions .joy2-sort-v228-option[aria-selec
 
 /* JOY2_V248_MOBILE_SINGLE_SLIDE */
 @media(max-width:900px){html body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6[hidden]{display:none!important;visibility:hidden!important;opacity:0!important}html body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6:not([hidden]){display:block!important;visibility:visible!important;opacity:1!important;animation:none!important;transition:none!important}}
+
+/* JOY2_V249_MOBILE_STABLE_HERO: one permanent card per offer, one size owner.
+   Every rule is mobile-only. Desktop composition, zoom and animation are unchanged. */
+.jj-hero-controls-v249{display:none;}
+@media(max-width:900px){
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>section.jj-ref-hero.jj-hero-layout-v2{
+  min-height:var(--joy2-v249-min-height,calc(100svh - 78px))!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-rotator-v6{
+  position:relative!important;min-height:0!important;overflow:visible!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  min-height:0!important;margin:0!important;transform:none!important;translate:none!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6>.jj-property-card{
+  height:100%!important;min-height:0!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6[data-joy2-v249-measuring] .jj-hero-slide-v6{
+  display:block!important;visibility:hidden!important;opacity:0!important;height:auto!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6[data-joy2-v249-measuring] .jj-hero-slide-v6>.jj-property-card{
+  height:auto!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  gap:16px!important;height:40px!important;margin:12px 0 0!important;padding:0!important;
+  font:500 14px/20px Arial,sans-serif!important;color:#171717!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249[hidden]{display:none!important;}
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249>button{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important;
+  margin:0!important;padding:0!important;border:1px solid #c7ccc8!important;border-radius:10px!important;
+  background:#fff!important;color:#171717!important;font:500 23px/1 Arial,sans-serif!important;
+  box-shadow:none!important;transform:none!important;cursor:pointer!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249>button:focus-visible{
+  outline:2px solid #171717!important;outline-offset:3px!important;
+ }
+}

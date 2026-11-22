@@ -13,44 +13,8 @@
   function normalize(value){
     let result=value.replace(prefix,(match,whole,decimal,offset,source)=>{
       // Never round a scaled KPI such as $7,52 млн to $8 млн.
-      if(/^\s*(?:млн|mln|million|m)(?=\s|$|[.,;:)])/i.test(source.slice(offset+match.length)))return match;
-      return '
-    result=result.replace(suffix,(match,whole,decimal,offset,text)=>{
-      // E.g. "0,25 млн $" is millions, not cents. Do not alter scaled quantities.
-      if(/(?:млн|тыс|million|thousand|mln|ming)\s*$/i.test(text.slice(0,offset).split(/\s+/).slice(-2).join(' ')))return match;
-      return format(whole,decimal)+' $';
-    });
-    return result;
-  }
-  function visit(node){
-    if(node.nodeType===3){
-      if(!node.parentElement||node.parentElement.closest(skip))return;
-      const before=node.nodeValue||'';
-      if(!before.includes('$'))return;
-      const after=normalize(before);
-      if(after!==before)node.nodeValue=after;
-      return;
-    }
-    if(node.nodeType!==1||node.matches(skip))return;
-    const walker=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
-    const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
-    for(const n of nodes)visit(n);
-  }
-  function start(){
-    if(!document.body)return;
-    visit(document.body);
-    const watcher=new MutationObserver(records=>{
-      for(const record of records){
-        if(record.type==='characterData')visit(record.target);
-        else for(const node of record.addedNodes)visit(node);
-      }
-    });
-    watcher.observe(document.body,{subtree:true,childList:true,characterData:true});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
-  else start();
-})();
-+format(whole,decimal);
+      if(/^\s*(?:млн|тыс|mln|million|thousand|ming|m|k)(?=\s|$|[.,;:)])/i.test(source.slice(offset+match.length)))return match;
+      return '$'+format(whole,decimal);
     });
     result=result.replace(suffix,(match,whole,decimal,offset,text)=>{
       // E.g. "0,25 млн $" is millions, not cents. Do not alter scaled quantities.

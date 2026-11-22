@@ -3,7 +3,7 @@
  const selector='main.jj-ref-home > .jj-ref-hero';let scheduled=false;
  const mobile=()=>matchMedia('(max-width:900px)').matches;
  function align(){
-  scheduled=false;if(!mobile())return;
+  scheduled=false;if(!mobile()||document.documentElement.hasAttribute('data-joy2-mobile-hero-v249'))return;
   const hero=document.querySelector(selector),heading=hero?.querySelector('.jj-hero-left-v2 > h1');
   if(!hero||!heading)return;
   // Reset positioning before measuring, so reruns never compound the offset.
@@ -39,8 +39,9 @@
     for(const [key,value] of Object.entries(rules))ribbon.style.setProperty(key,value,'important');
   }
  }
- function queue(){if(!scheduled){scheduled=true;requestAnimationFrame(align)}}
+ function queue(){if(document.documentElement.hasAttribute('data-joy2-mobile-hero-v249'))return;if(!scheduled){scheduled=true;requestAnimationFrame(align)}}
  function init(){
+  if(document.documentElement.hasAttribute('data-joy2-mobile-hero-v249'))return;
   queue();window.addEventListener('resize',queue,{passive:true});window.addEventListener('load',queue,{once:true});
   document.fonts?.ready?.then(queue);
   const stage=document.querySelector(selector+' .jj-hero-stage-v6');
