@@ -23,7 +23,7 @@
     });
   }
   function mobileController({hero,stage,viewport,slides,getCurrent,setCurrent}){
-    let enabled=false,lastWidth=0,pending=false,controls=null,statusText=null;
+    let enabled=false,lastWidth=0,pending=false,controls=null;
     const savedHeight={value:viewport.style.getPropertyValue('height'),priority:viewport.style.getPropertyPriority('height')};
     const savedId=viewport.getAttribute('id');
     const heading=hero.querySelector('.jj-hero-left-v2 > h1');
@@ -43,7 +43,6 @@
         slide.classList.remove('joy2-out-v6','joy2-in-v6','joy2-pre-v6');
       });
       setCurrent(next);activateMobileImages(slides[next].querySelector('.jj-property-card'),initial);
-      if(statusText)statusText.data=(next+1)+' / '+slides.length;
     }
     function alignHeading(){
       const heading=hero.querySelector('.jj-hero-left-v2 > h1'),logo=document.querySelector('header.jj-ref-header .jj-brand-logo');
@@ -82,13 +81,12 @@
       viewport.id='joy2-hero-rotator-v249';
       if(!controls){
         controls=document.createElement('div');controls.className='jj-hero-controls-v249';controls.setAttribute('role','group');controls.setAttribute('aria-label',words[2]);
-        const previous=document.createElement('button'),next=document.createElement('button'),status=document.createElement('span');
+        /* JOY2_V250_REMOVE_COUNTER */ const previous=document.createElement('button'),next=document.createElement('button');
         previous.type=next.type='button';previous.textContent='←';next.textContent='→';
         previous.setAttribute('aria-label',words[0]);next.setAttribute('aria-label',words[1]);
         previous.setAttribute('aria-controls',viewport.id);next.setAttribute('aria-controls',viewport.id);
-        status.setAttribute('aria-live','polite');status.setAttribute('aria-atomic','true');statusText=document.createTextNode('');status.append(statusText);
         previous.addEventListener('click',()=>show(getCurrent()-1));next.addEventListener('click',()=>show(getCurrent()+1));
-        controls.append(previous,status,next);stage.append(controls);
+        controls.append(previous,next);stage.append(controls);
       }
       controls.hidden=slides.length<2;
       measure();show(getCurrent(),true);

@@ -5197,3 +5197,75 @@ html body main.jj-ref-home .jj-listing-actions .joy2-sort-v228-option[aria-selec
   outline:2px solid #171717!important;outline-offset:3px!important;
  }
 }
+
+
+/* JOY2_V250_MOBILE_REFINEMENTS: scoped to <=900px; desktop untouched. */
+@media screen and (max-width:900px){
+ /* Center the two larger, more tactile navigation arrows; no counter in DOM. */
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249{
+  display:flex!important;justify-content:center!important;align-items:center!important;
+  align-self:center!important;width:100%!important;box-sizing:border-box!important;
+  gap:40px!important;height:66px!important;margin:12px auto 0!important;padding:0!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249>button{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  flex:0 0 54px!important;width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important;
+  margin:0!important;padding:0 0 3px!important;border:1px solid #cbd0d1!important;border-radius:15px!important;
+  background:linear-gradient(155deg,#fff 0%,#f5f6f6 76%,#e9ebed 100%)!important;
+  color:#111!important;font:700 30px/1 Arial,sans-serif!important;
+  box-shadow:0 7px 15px rgba(18,24,29,.19),0 2px 3px rgba(18,24,29,.12),inset 0 2px 1px #fff!important;
+  transform:none!important;cursor:pointer!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249>button:active{
+  box-shadow:0 2px 5px rgba(18,24,29,.20),inset 0 2px 4px rgba(18,24,29,.08)!important;
+ }
+ /* Catalog only: area = 40%, price = 60%. */
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary.jj-canonical-price-row{
+  display:grid!important;grid-template-columns:minmax(0,2fr) minmax(0,3fr)!important;
+  gap:0!important;align-items:start!important;min-width:0!important;width:100%!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary.jj-canonical-price-row>.jj-area-sign{
+  min-width:0!important;max-width:100%!important;flex:none!important;padding-right:8px!important;box-sizing:border-box!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary.jj-canonical-price-row>.jj-card-price{
+  min-width:0!important;max-width:100%!important;flex:none!important;padding-left:8px!important;box-sizing:border-box!important;
+ }
+ /* 15% larger relative to the existing V197 typography; type/city/address deliberately unchanged. */
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3 a{
+  font-size:clamp(22.218px,5.276775vw,27.7725px)!important;line-height:1.23!important;overflow-wrap:anywhere!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-summary .jj-match-metric-label,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary small,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-price-row small{
+  font-size:clamp(13.88625px,3.19384vw,16.6635px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-summary .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary b{
+  font-size:clamp(19.44075px,4.4436vw,24.99525px)!important;line-height:1.23!important;overflow-wrap:anywhere!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-label,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom small,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom-label,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-metrics span,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom>span{
+  font-size:clamp(15.274875px,3.51322vw,18.32985px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom strong,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-metrics strong,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-status,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom>strong{
+  font-size:clamp(19.85734px,4.58246vw,24.4398px)!important;line-height:1.25!important;overflow-wrap:anywhere!important;
+ }
+ /* Header RU/UZ/EN: increase glyph sizes, keep existing widths, spacing and logo placement. */
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a{
+  font-size:17.25px!important;
+ }
+}
+@media screen and (max-width:700px){
+ html body>header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a{
+  font-size:12.65px!important;min-width:29px!important;min-height:34px!important;
+ }
+}
+/* JOY2_V250_MOBILE_REFINEMENTS_END */
