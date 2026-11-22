@@ -5153,3 +5153,6 @@ html body main.jj-ref-home .jj-listing-actions .joy2-sort-v228-option[aria-selec
  }
 }
 /* JOY2_V236_END */
+
+/* JOY2_V248_MOBILE_SINGLE_SLIDE */
+@media(max-width:900px){html body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6[hidden]{display:none!important;visibility:hidden!important;opacity:0!important}html body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6:not([hidden]){display:block!important;visibility:visible!important;opacity:1!important;animation:none!important;transition:none!important}}

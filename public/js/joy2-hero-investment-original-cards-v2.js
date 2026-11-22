@@ -122,7 +122,7 @@
       alignHeroAddress(clone);
       joy2FluidCard(clone);
       clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
-      clone.querySelectorAll('img').forEach(img=>{img.loading='eager';img.decoding='async';});
+      clone.querySelectorAll('img').forEach(img=>{img.loading=matchMedia('(max-width:900px)').matches&&i!==0?'lazy':'eager';img.decoding='async';});
       // The cloned card is otherwise untouched; all content and badges come from the catalog.
       slide.appendChild(clone);viewport.appendChild(slide);slides.push(slide);
     });
@@ -145,7 +145,7 @@
       joy2FluidCard(fresh);
       fresh.removeAttribute('id');
       fresh.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
-      fresh.querySelectorAll('img').forEach(img=>{img.loading='eager';img.decoding='async'});
+      fresh.querySelectorAll('img').forEach(img=>{img.loading=matchMedia('(max-width:900px)').matches&&i!==0?'lazy':'eager';img.decoding='async'});
       slide.replaceChildren(fresh);
     }
     slides.forEach((_,i)=>syncSlide(i));
@@ -154,7 +154,7 @@
       if(busy||document.hidden)return;
       const old=slides[current],ni=(current+1)%slides.length,upcoming=slides[ni];
       syncSlide(ni);
-      if(reduce){old.hidden=true;upcoming.hidden=false;current=ni;return;}
+      /* JOY2_V248_MOBILE_CAROUSEL */ if(reduce||matchMedia('(max-width:900px)').matches){old.hidden=true;old.classList.remove('joy2-out-v6','joy2-in-v6','joy2-pre-v6');upcoming.classList.remove('joy2-out-v6','joy2-in-v6','joy2-pre-v6');upcoming.querySelectorAll('img').forEach(x=>x.loading='eager');upcoming.hidden=false;current=ni;return;}
       busy=true;upcoming.hidden=false;upcoming.classList.add('joy2-pre-v6');void upcoming.offsetWidth;
       old.classList.add('joy2-out-v6');upcoming.classList.remove('joy2-pre-v6');upcoming.classList.add('joy2-in-v6');
       setTimeout(()=>{old.hidden=true;old.classList.remove('joy2-out-v6');upcoming.classList.remove('joy2-in-v6');current=ni;busy=false;},760);
