@@ -26,6 +26,12 @@ export default {
  async fetch(request,env,ctx){
   const url=new URL(request.url);
   const path=url.pathname.length>1&&url.pathname.endsWith('/')?url.pathname.slice(0,-1):url.pathname;
+  // JOY2_V243_STAGE1: permanent redirect of deprecated project routes.
+  const projectLanding=path==='/projects'?'/':path==='/uz/projects'?'/uz/':path==='/en/projects'?'/en/':null;
+  if(projectLanding){
+   const target=new URL(projectLanding,url);target.search='?investment=1';target.hash='#catalog';
+   return Response.redirect(target.toString(),301);
+  }
   const route=routes[path];
   if(route){
    if(!route[request.method])return json({error:'Method not allowed'},405);
@@ -33,6 +39,16 @@ export default {
     if(!await verifySession(request,env))return json({error:'Authentication required'},401);
    }
    if(isAdminApi(path)&&request.method!=='GET'&&!sameOrigin(request,url))return json({error:'Origin mismatch'},403);
+   // JOY2_V243_STAGE1: Cloudflare's managed, approximate per-location rate-limit binding.
+   if(path==='/api/admin/login'&&request.method==='POST'){
+    if(!env.ADMIN_LOGIN_LIMITER||typeof env.ADMIN_LOGIN_LIMITER.limit!=='function')
+     return json({error:'Login protection is not configured in Cloudflare'},503);
+    try{
+     const key='joy2-login:'+String(request.headers.get('cf-connecting-ip')||'unknown');
+     const decision=await env.ADMIN_LOGIN_LIMITER.limit({key});
+     if(!decision.success)return new Response(JSON.stringify({error:'Слишком много попыток входа. Повторите через минуту.'}),{status:429,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','retry-after':'60'}});
+    }catch(error){console.error('Login limiter unavailable',error);return json({error:'Login protection unavailable'},503);}
+   }
    try{return await route[request.method]({request,env,params:{},data:{},waitUntil:ctx?.waitUntil?.bind(ctx)});}
    catch(error){console.error('Joy2 API route failed',path,error);return json({error:'Server error'},500);}
   }

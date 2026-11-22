@@ -27,9 +27,16 @@ const uz: Record<string, Translation> = {
  'sarbon-business-center':['Sarbon biznes markazi','Yangi Toshkent, bosh rejaning markaziy qismi','Yangi Toshkentdagi alohida biznes markazi loyihasi: ofislar, birinchi qavatda savdo maydoni va yerosti avtoturargohi. Bino to‘liq sotiladi.',['2028-yil (loyiha)','12 ta yerusti qavati','15 115 m² ofislar','1 653 m² tijorat maydonlari']],
  'bukhara':['Buxoro','Buxoro ko‘chasi, 1','Toshkent markazidagi to‘rtta lift, chiller-fankoyl tizimi va markaziy muhandislik tarmoqlariga ega ofis binosi.',['2014-yil','To‘rtta lift','Markaziy suv ta’minoti','Iqlim nazorati tizimlari']]
 };
+// JOY2_V243_STAGE1: preserve the real district rather than labeling everything New Tashkent.
+const joy2DistrictNames: Record<string, {uz:string;en:string}> = {
+ 'Новый Ташкент':{uz:'Yangi Toshkent',en:'New Tashkent'},
+ 'Яшнабадский район':{uz:'Yashnobod tumani',en:'Yashnabad district'},
+ 'Миробод / Минор':{uz:'Mirobod / Minor',en:'Mirobod / Minor'},
+};
+const joy2TranslateDistrict=(name:string,lang:string)=>!name?'':(joy2DistrictNames[name]?.[lang as 'uz'|'en']||name);
 export function localizeListing(item: Listing, lang: string): Listing {
  if(lang==='ru')return item;
  const override=item.translations?.[lang as 'uz'|'en']||{};
  const row=(lang==='uz'?uz:en)[item.slug];if(!row)return {...item,...override};
- return {...item,title:row[0],address:row[1],description:row[2],features:row[3],city:lang==='uz'?'Toshkent':'Tashkent',district:item.district?(lang==='uz'?'Yangi Toshkent':'New Tashkent'):'',...override};
+ return {...item,title:row[0],address:row[1],description:row[2],features:row[3],city:lang==='uz'?'Toshkent':'Tashkent',district:joy2TranslateDistrict(item.district,lang),...override};
 }
