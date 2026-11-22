@@ -5269,3 +5269,49 @@ html body main.jj-ref-home .jj-listing-actions .joy2-sort-v228-option[aria-selec
  }
 }
 /* JOY2_V250_MOBILE_REFINEMENTS_END */
+
+/* JOY2_V251_MOBILE_INVESTMENT_ROW: clearly visible before first tap. Only published investment unit rows in detail pages. */
+@media screen and (max-width:900px){
+ html body main.jj-detail .jj-units[data-jj-invest-project="yes"] .jj-unit-data-row:has(.jj-unit-col-flag .jj-unit-finance-flag):not(.is-active){
+  background:#f0ffda!important;
+  background-color:#f0ffda!important;
+  border-color:#d6edb7!important;
+  box-shadow:inset 4px 0 0 #b6ff00!important;
+  animation:none!important;
+  will-change:auto!important;
+ }
+ html body main.jj-detail .jj-units[data-jj-invest-project="yes"] .jj-unit-data-row:has(.jj-unit-col-flag .jj-unit-finance-flag):not(.is-active):hover{
+  background:#e9ffca!important;
+  background-color:#e9ffca!important;
+ }
+ html body main.jj-detail .jj-units[data-jj-invest-project="yes"] .jj-unit-data-row .jj-unit-col-flag .jj-unit-finance-flag{
+  background:#b6ff00!important;color:#101112!important;
+  animation:none!important;opacity:1!important;visibility:visible!important;
+ }
+}
+/* JOY2_V251_MOBILE_INVESTMENT_ROW_END */
+
+/* JOY2_V251_MOBILE_TWO_LINE_RESERVE: fixed two-line slots for titles and addresses.
+   Both catalogue and hero carousel; no changes to desktop and no extra DOM work. */
+@media screen and (max-width:900px){
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card h3,
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-slide-v6 > .jj-property-card h3{
+   box-sizing:border-box!important;
+   line-height:1.23!important;
+   height:2.46em!important;min-height:2.46em!important;max-height:2.46em!important;
+   overflow:hidden!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card h3 a,
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-slide-v6 > .jj-property-card h3 a{
+   display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;
+   line-height:1.23!important;max-height:2.46em!important;overflow:hidden!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results > .jj-property-card .jj-property-address,
+ html body main.jj-ref-home > .jj-ref-hero .jj-hero-slide-v6 > .jj-property-card .jj-property-address{
+   box-sizing:border-box!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;
+   -webkit-line-clamp:2!important;line-height:1.4!important;
+   height:2.8em!important;min-height:2.8em!important;max-height:2.8em!important;
+   overflow:hidden!important;overflow-wrap:anywhere!important;
+ }
+}
+/* JOY2_V251_MOBILE_TWO_LINE_RESERVE_END */
