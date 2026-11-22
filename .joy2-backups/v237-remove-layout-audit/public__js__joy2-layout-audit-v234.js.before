@@ -1,0 +1,53 @@
+/* JOY2_V234_LAYOUT_AUDIT — read-only layout measurements, no page resizing. */
+(()=>{'use strict';
+  if(window.__joy2Audit234)return; window.__joy2Audit234=true;
+  const ID='joy2-audit-v234';
+  const selector={hero:'main.jj-ref-home > .jj-ref-hero',left:'.jj-hero-left-v2',title:'.jj-hero-left-v2 > h1',subtitle:'.jj-hero-left-v2 > p:not(.jj-concept-kicker)',actions:'.jj-hero-left-v2 > .jj-ref-actions',stage:'.jj-hero-right-v2.jj-hero-stage-v6',grid:'#jj-results',filters:'#jj-filters',header:'header.jj-ref-header'};
+  function num(n){return Number.isFinite(n)?Math.round(n*10)/10:null;}
+  function data(el){if(!el)return null;const b=el.getBoundingClientRect(),cs=getComputedStyle(el);return {x:num(b.left),y:num(b.top),right:num(b.right),bottom:num(b.bottom),w:num(b.width),h:num(b.height),display:cs.display,position:cs.position,zoom:cs.zoom,transform:cs.transform==='none'?'-':cs.transform.slice(0,85)};}
+  function overlap(a,b){if(!a||!b)return 0;return Math.round(Math.max(0,Math.min(a.right,b.right)-Math.max(a.x,b.x))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.y,b.y)));}
+  function visible(el){const s=getComputedStyle(el);return s.display!=='none'&&s.visibility!=='hidden'&&el.getClientRects().length>0;}
+  function report(){
+    const w=document.documentElement.clientWidth,h=document.documentElement.clientHeight;
+    const elements={};for(const [key,sel]of Object.entries(selector))elements[key]=data(document.querySelector(sel));
+    const card=[...document.querySelectorAll('.jj-hero-slide-v6')].find(e=>!e.hidden&&visible(e));elements.heroCard=data(card?.querySelector('.jj-property-card'));
+    const cards=[...document.querySelectorAll('#jj-results > .jj-property-card')].filter(visible);
+    const first=cards.slice(0,12).map(data).filter(Boolean);
+    const cols=new Set(first.filter(r=>r.y!==null&&first[0]&&Math.abs(r.y-first[0].y)<8).map(r=>Math.round(r.x)));
+    const flags=[];
+    for(const [key,r]of Object.entries(elements)){if(!r)continue;if(r.x < -3||r.right>w+3)flags.push(key+': left '+r.x+', right '+r.right);}
+    let offenders=[];
+    document.querySelectorAll('body *').forEach(el=>{
+      if(el.closest('#'+ID))return;
+      if(offenders.length>=25)return;
+      if(!visible(el))return;
+      const r=el.getBoundingClientRect();
+      if(r.width<15||r.height<8||r.top>Math.max(1500,h*3)||r.bottom < -200)return;
+      if(r.left< -15||r.right>w+15){
+        const cs=getComputedStyle(el);
+        if(cs.position==='fixed')return;
+        const cls=typeof el.className==='string'?el.className.trim().replace(/\s+/g,'.').slice(0,65):'';
+        offenders.push({element:el.tagName.toLowerCase()+(el.id?'#'+el.id:'')+(cls?'.'+cls:''),left:num(r.left),right:num(r.right),width:num(r.width)});
+      }
+    });
+    const mode=w>=1000?'desktop':'mobile';
+    const body=getComputedStyle(document.body);
+    const title=elements.title,subtitle=elements.subtitle,actions=elements.actions,stage=elements.stage;
+    return {time:new Date().toISOString(),url:location.pathname,viewport:{width:w,height:h,windowInnerWidth:window.innerWidth,devicePixelRatio:window.devicePixelRatio,visualScale:window.visualViewport?.scale??null,scrollWidth:document.documentElement.scrollWidth,bodyZoom:body.zoom,bodyWidth:body.width},mode,hero:{titleSubtitleOverlapPx2:overlap(title,subtitle),leftStageOverlapPx2:overlap(elements.left,stage),subtitleActionsOverlapPx2:overlap(subtitle,actions)},catalog:{detectedFirstRowColumns:cols.size,visibleCards:cards.length,gridColumns:document.querySelector(selector.grid)?getComputedStyle(document.querySelector(selector.grid)).gridTemplateColumns:null},elements,offenders};
+  }
+  function ensure(){let panel=document.getElementById(ID);if(panel)return panel;
+    panel=document.createElement('section');panel.id=ID;panel.setAttribute('aria-label','Joy² аудит экранов');
+    panel.style.cssText='position:fixed!important;left:12px!important;bottom:12px!important;z-index:2147483646!important;width:min(380px,calc(100vw - 24px))!important;max-height:min(62vh,440px)!important;overflow:auto!important;background:#151b24!important;color:#fff!important;padding:12px!important;border-radius:13px!important;box-shadow:0 8px 38px #0008!important;font:12px/1.42 Arial,sans-serif!important;box-sizing:border-box!important;text-align:left!important;transform:none!important;zoom:1!important;';
+    panel.innerHTML='<div style="display:flex;gap:8px;align-items:center;justify-content:space-between"><strong style="font-size:14px">Joy² · аудит экрана №234</strong><button type="button" data-audit-close style="background:#303c4c;color:#fff;border:0;border-radius:7px;padding:5px 9px;cursor:pointer">✕</button></div><div data-audit-summary style="white-space:pre-wrap;margin:9px 0;line-height:1.5"></div><div style="display:flex;flex-wrap:wrap;gap:7px"><button type="button" data-audit-copy style="background:#b6ff00;color:#101010;border:0;border-radius:7px;padding:8px 12px;font-weight:bold;cursor:pointer">Скопировать отчёт</button><button type="button" data-audit-refresh style="background:#303c4c;color:#fff;border:0;border-radius:7px;padding:8px 12px;cursor:pointer">Измерить снова</button></div><small style="display:block;color:#becbd5;margin-top:8px">Alt+Shift+J — показать/скрыть. Не меняет дизайн.</small>';
+    document.body.append(panel);
+    panel.querySelector('[data-audit-close]').onclick=()=>{panel.hidden=true;};
+    panel.querySelector('[data-audit-refresh]').onclick=()=>paint();
+    panel.querySelector('[data-audit-copy]').onclick=()=>{const str=JSON.stringify(report(),null,2);if(navigator.clipboard?.writeText){navigator.clipboard.writeText(str).then(()=>panel.querySelector('[data-audit-copy]').textContent='Скопировано ✓').catch(()=>fallback(str));}else fallback(str);};
+    function fallback(str){const ta=document.createElement('textarea');ta.value=str;ta.style.cssText='position:fixed;inset:0;width:1px;height:1px;opacity:0';document.body.append(ta);ta.select();try{document.execCommand('copy');panel.querySelector('[data-audit-copy]').textContent='Скопировано ✓';}catch(_){panel.querySelector('[data-audit-copy]').textContent='Не удалось скопировать';}ta.remove();}
+    return panel;
+  }
+  function paint(){const p=ensure();if(p.hidden)return;const r=report();p.querySelector('[data-audit-summary]').textContent='Экран: '+r.viewport.width+' × '+r.viewport.height+'  |  '+r.mode+'\nZoom body: '+r.viewport.bodyZoom+'  |  DPR: '+r.viewport.devicePixelRatio+'\nШирина документа: '+r.viewport.scrollWidth+' px'+(r.viewport.scrollWidth>r.viewport.width+3?'  ⚠ ПЕРЕПОЛНЕНИЕ':'  ✓')+'\nКаталог: '+r.catalog.detectedFirstRowColumns+' колонок (измерено)\nНаложение заголовка/подзаголовка: '+r.hero.titleSubtitleOverlapPx2+' px²\nПерекрытие текста/карточки: '+r.hero.leftStageOverlapPx2+' px²\nЭлементов за экраном: '+r.offenders.length+' (до 25)';}
+  let pending=false;function schedule(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;paint();});}
+  function boot(){ensure();paint();window.addEventListener('resize',schedule,{passive:true});window.addEventListener('orientationchange',schedule,{passive:true});document.addEventListener('keydown',e=>{if(e.altKey&&e.shiftKey&&e.code==='KeyJ'){e.preventDefault();const p=ensure();p.hidden=!p.hidden;paint();}});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();

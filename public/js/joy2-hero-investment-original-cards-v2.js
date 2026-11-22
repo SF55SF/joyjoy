@@ -100,12 +100,27 @@
       address.style.setProperty('transform','none','important');
       address.style.setProperty('translate','none','important');
     }
+    /* JOY2_V230_FIT_CLONE */
+    function joy2FitClone(card){
+      for(const el of [card,card.querySelector('.jj-property-card-image'),card.querySelector('.jj-property-card-main')]){
+        if(!el)continue;
+        for(const p of ['width','min-width','max-width'])el.style.removeProperty(p);
+      }
+    }
+    /* JOY2_V231_FIT_CLONE */
+    function joy2FluidCard(card){
+      for(const el of [card,card.querySelector('.jj-property-card-image'),card.querySelector('.jj-property-card-main')]){
+        if(!el)continue;for(const name of ['width','min-width','max-width'])el.style.removeProperty(name);
+      }
+    }
     const slides=[];
     originals.forEach((original,i)=>{
       const slide=document.createElement('div');slide.className='jj-hero-slide-v6';slide.hidden=i!==0;
       const clone=original.cloneNode(true);
       copyOriginalAppearance(original,clone);
+      joy2FitClone(clone);
       alignHeroAddress(clone);
+      joy2FluidCard(clone);
       clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(node=>node.removeAttribute('id'));
       clone.querySelectorAll('img').forEach(img=>{img.loading='eager';img.decoding='async';});
       // The cloned card is otherwise untouched; all content and badges come from the catalog.
@@ -125,7 +140,9 @@
       if(!source||!slide||!source.isConnected)return;
       const fresh=source.cloneNode(true);
       copyOriginalAppearance(source,fresh);
+      joy2FitClone(fresh);
       alignHeroAddress(fresh);
+      joy2FluidCard(fresh);
       fresh.removeAttribute('id');
       fresh.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
       fresh.querySelectorAll('img').forEach(img=>{img.loading='eager';img.decoding='async'});

@@ -288,6 +288,7 @@ document.addEventListener('click',event=>{
 (()=>{try{const e=document.getElementById('jj-investment-sort-data');if(!e)return;for(const r of JSON.parse(e.textContent)){const c=document.getElementById('jj-object-'+r.slug);if(!c)continue;c.dataset.investment=r.active?'true':'false';c.dataset.irr=r.irr===null?'':String(r.irr);c.dataset.profit=r.profit===null?'':String(r.profit);}}catch(e){console.warn('Joy2 investment listing data:',e)}})();
 </script>
 <script src="/js/joyjoy-marketplace.js" defer></script>
+<script src="/js/joy2-sort-dropdown-v228.js" defer></script>
 <script src="/js/joy2-catalog-polish.js" defer></script>
 
 <script src="/js/joyjoy-unslop-stage1.js" defer></script>

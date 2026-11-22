@@ -14,6 +14,7 @@ const image=Astro.props.image;
 <html lang={lang}>
 <head>
 <meta charset="utf-8" />
+<!-- JOY2_V223_PREVIEW_REFRESH -->
 
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>{title}</title>
@@ -82,27 +83,31 @@ html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a[a
 
 
 <!-- JOY2_HERO_FAST_AREA_SPACING_V88: no legacy multi-component reveal gates; v45 checks only hero card -->
-<!-- JOY2_V216_ZOOM_RUNTIME -->
+<!-- JOY2_V222_PREVIEW_REFRESH_START -->
+<!-- Joy2 v222 preview reload 1795343853210 -->
+<!-- JOY2_V222_PREVIEW_REFRESH_END -->
+<!-- JOY2_V224_PREVIEW_REFRESH 1795344768752 -->
+<!-- JOY2_V233_RUNTIME_START -->
 <script is:inline>
-/* Detect zoom-induced CSS viewport shrinkage on wide pointer devices.
-   Do not interfere with tablets, phones, or narrow unzoomed windows. */
+/* Only scale the full canvas below 1760px. NEVER override the hero's native positioning. */
 (()=>{
- const root=document.documentElement;
- function check(){
-  const inner=window.innerWidth||0, outer=window.outerWidth||0;
-  const desktop=matchMedia('(pointer:fine)').matches && matchMedia('(hover:hover)').matches;
-  const zoomed=desktop && outer>=1150 && inner>0 && inner<1100 && (outer/inner)>=1.16;
-  root.classList.toggle('joy2-desktop-zoom',zoomed);
-  if(zoomed)root.style.setProperty('--joy2-zoom-canvas',Math.max(1120,Math.min(1370,Math.round(outer*.88)))+'px');
-  else root.style.removeProperty('--joy2-zoom-canvas');
+ let lastDpr=window.devicePixelRatio||1;
+ function fit(){
+  const body=document.body;if(!body)return;
+  const w=window.innerWidth||document.documentElement.clientWidth;
+  const enabled=w>=1000&&w<1760;
+  body.classList.toggle('joy2-v233-fit',enabled);
+  if(enabled)body.style.setProperty('--joy2-v233-ratio',String(Math.round(w/1760*10000)/10000));
+  else body.style.removeProperty('--joy2-v233-ratio');
  }
- let raf=0;
- function schedule(){if(raf)return;raf=requestAnimationFrame(()=>{raf=0;check()})}
- check();window.addEventListener('resize',schedule,{passive:true});
- window.addEventListener('pageshow',schedule,{passive:true});
+ function resized(){const dpr=window.devicePixelRatio||1;if(Math.abs(dpr-lastDpr)>.02){lastDpr=dpr;return;}fit();}
+ function start(){fit();window.addEventListener('resize',resized,{passive:true});}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
 </script>
+<!-- JOY2_V233_RUNTIME_END -->
 </head>
 <body><slot /><script src="/js/joyjoy-money-display.js" defer></script>
-<script is:inline>/* JOY2_SINGLE_CATALOG_INVEST_V1 site navigation */document.addEventListener('click',function(e){const a=e.target?.closest?.('a[href]');if(!a)return;let u;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin||!/^\/(?:uz\/|en\/)?projects\/?$/.test(u.pathname))return;e.preventDefault();const lang=document.documentElement.lang;location.assign((lang==='uz'?'/uz/':lang==='en'?'/en/':'/')+'?investment=1#catalog');},false);</script></body>
+<script is:inline>/* JOY2_SINGLE_CATALOG_INVEST_V1 site navigation */document.addEventListener('click',function(e){const a=e.target?.closest?.('a[href]');if(!a)return;let u;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin||!/^\/(?:uz\/|en\/)?projects\/?$/.test(u.pathname))return;e.preventDefault();const lang=document.documentElement.lang;location.assign((lang==='uz'?'/uz/':lang==='en'?'/en/':'/')+'?investment=1#catalog');},false);</script>
+</body>
 </html>
