@@ -9,6 +9,13 @@ const rawSite=import.meta.env.PROD?'https://joyjoy.uz':'';
 const origin=/^https:\/\/[^/]+\.[^/]+$/.test(rawSite)?rawSite:'';
 const canonical=origin?new URL(Astro.url.pathname,origin).toString():undefined;
 const image=Astro.props.image;
+// JOY2_V244_STAGE2: search engines receive site and property structured data.
+const seoJsonLd=Astro.props.seoJsonLd;
+const siteGraph=[
+ {'@type':'WebSite','@id':'https://joyjoy.uz/#website',url:'https://joyjoy.uz/',name:'Joy²',inLanguage:['ru','uz','en'],publisher:{'@id':'https://joyjoy.uz/#organization'}},
+ {'@type':'Organization','@id':'https://joyjoy.uz/#organization',name:'Joy²',url:'https://joyjoy.uz/',logo:'https://joyjoy.uz/joy2-logo.svg'}
+];
+const jsonLdPayload={'@context':'https://schema.org','@graph':[...siteGraph,...(Array.isArray(seoJsonLd)?seoJsonLd:seoJsonLd?[seoJsonLd]:[])]};
 ---
 <!doctype html>
 <html lang={lang}>
@@ -17,6 +24,8 @@ const image=Astro.props.image;
 <!-- JOY2_V223_PREVIEW_REFRESH -->
 
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- JOY2_V244_STAGE2_JSONLD -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLdPayload).replace(/</g,'\\u003c')} />
 <title>{title}</title>
 <meta name="description" content={description} />
 <meta name="robots" content={Astro.props.robots??(origin?'index,follow':'noindex,follow')} />

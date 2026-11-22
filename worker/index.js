@@ -25,6 +25,8 @@ const sameOrigin=(request,url)=>{const o=request.headers.get('origin');return !o
 export default {
  async fetch(request,env,ctx){
   const url=new URL(request.url);
+  // JOY2_V244_STAGE2_WWW: canonical redirect, only if www routes to this Worker.
+  if(url.hostname.toLowerCase()==='www.joyjoy.uz'){const dest=new URL(url);dest.hostname='joyjoy.uz';return Response.redirect(dest.toString(),301);}
   const path=url.pathname.length>1&&url.pathname.endsWith('/')?url.pathname.slice(0,-1):url.pathname;
   // JOY2_V243_STAGE1: permanent redirect of deprecated project routes.
   const projectLanding=path==='/projects'?'/':path==='/uz/projects'?'/uz/':path==='/en/projects'?'/en/':null;

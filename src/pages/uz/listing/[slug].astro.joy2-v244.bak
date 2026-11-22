@@ -1,0 +1,12 @@
+---
+// JOYJOY_MARKETPLACE_PROPERTY_ROUTE_V1
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import JoyDetail from '../../../components/JoyDetail.astro';
+import { listings } from '../../../data/listings';
+import { localizeListing } from '../../../data/listing-translations';
+export function getStaticPaths() {
+  return listings.map((listing)=>({params:{slug:listing.slug},props:{listing}}));
+}
+const listing = localizeListing(Astro.props.listing, 'uz');
+---
+<BaseLayout lang="uz" title={listing.title+' — JoyJoy'} description={listing.description}><JoyDetail listing={listing} lang="uz" /></BaseLayout>

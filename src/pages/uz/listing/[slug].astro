@@ -1,5 +1,7 @@
 ---
 // JOYJOY_MARKETPLACE_PROPERTY_ROUTE_V1
+// JOY2_V244_STAGE2
+import { propertySeo } from '../../../lib/joy2-seo.js';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import JoyDetail from '../../../components/JoyDetail.astro';
 import { listings } from '../../../data/listings';
@@ -8,5 +10,6 @@ export function getStaticPaths() {
   return listings.map((listing)=>({params:{slug:listing.slug},props:{listing}}));
 }
 const listing = localizeListing(Astro.props.listing, 'uz');
+const seo=propertySeo(listing,'uz');
 ---
-<BaseLayout lang="uz" title={listing.title+' — JoyJoy'} description={listing.description}><JoyDetail listing={listing} lang="uz" /></BaseLayout>
+<BaseLayout lang="uz" title={listing.title+' — JoyJoy'} description={listing.description} image={seo.image} seoJsonLd={seo.structuredData}><JoyDetail listing={listing} lang="uz" /></BaseLayout>
