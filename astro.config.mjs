@@ -1,3 +1,8 @@
-// JOYJOY_REBRAND_V2
-import { defineConfig } from "astro/config";
-export default defineConfig({ site: process.env.PUBLIC_SITE_URL || "http://localhost:4321", trailingSlash: "always" });
+/* JOY2_V239_RELEASE_CONFIG */
+import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
+export default defineConfig({
+  site: 'https://joyjoy.uz',
+  trailingSlash: 'always',
+  integrations: [sitemap({ filter: (page) => !/\/(?:admin(?:\/|$)|admin-login(?:\/|$)|api(?:\/|$))/.test(new URL(page).pathname) })],
+});

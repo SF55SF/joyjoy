@@ -5,7 +5,7 @@ import '../styles/investment.css';
 const lang=Astro.props.lang??'ru';
 const title=Astro.props.title??'JoyJoy — коммерческая недвижимость';
 const description=Astro.props.description??'Продажа коммерческой недвижимости: офисы, торговые и складские помещения в Узбекистане.';
-const rawSite=import.meta.env.PUBLIC_SITE_URL||'';
+const rawSite=import.meta.env.PROD?'https://joyjoy.uz':'';
 const origin=/^https:\/\/[^/]+\.[^/]+$/.test(rawSite)?rawSite:'';
 const canonical=origin?new URL(Astro.url.pathname,origin).toString():undefined;
 const image=Astro.props.image;
@@ -34,10 +34,18 @@ const image=Astro.props.image;
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="JoyJoy" />
 <meta property="og:title" content={title} />
+<!-- JOY2_V240_SEO_META_START -->
 <meta property="og:description" content={description} />
+<meta property="og:locale" content={lang==='uz'?'uz_UZ':lang==='en'?'en_US':'ru_RU'} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta property="og:image" content={image ? (origin ? new URL(image,origin).toString() : image) : (origin ? origin+'/images/joy2-concrete-ribs-hq.png' : '/images/joy2-concrete-ribs-hq.png')} />
+<meta name="twitter:image" content={image ? (origin ? new URL(image,origin).toString() : image) : (origin ? origin+'/images/joy2-concrete-ribs-hq.png' : '/images/joy2-concrete-ribs-hq.png')} />
+<!-- JOY2_V240_SEO_META_END -->
 {canonical&&<><link rel="canonical" href={canonical}/><meta property="og:url" content={canonical}/></>}
-{image&&<meta property="og:image" content={image}/>}
-{origin&&<><link rel="alternate" hreflang="ru" href={new URL(Astro.url.pathname.replace(/^\/(uz|en)\//,'/'),origin).toString()}/><link rel="alternate" hreflang="uz" href={new URL('/uz/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/><link rel="alternate" hreflang="en" href={new URL('/en/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/></>}
+
+{origin&&<><link rel="alternate" hreflang="ru" href={new URL(Astro.url.pathname.replace(/^\/(uz|en)\//,'/'),origin).toString()}/><link rel="alternate" hreflang="uz" href={new URL('/uz/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/><link rel="alternate" hreflang="en" href={new URL('/en/'+Astro.url.pathname.replace(/^\/(uz|en)\//,'/').replace(/^\//,''),origin).toString()}/><link rel="alternate" hreflang="x-default" href={new URL(Astro.url.pathname.replace(/^\/(uz|en)\//,'/'),origin).toString()}/></>}
 <link rel="manifest" href="/site.webmanifest?v=joy2-icon-20261117" />
 <meta name="apple-mobile-web-app-title" content="Joy²" />
 <!-- JOY2_HOME_START_TOP_V12_START -->
@@ -87,12 +95,14 @@ html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a[a
 <!-- Joy2 v222 preview reload 1795343853210 -->
 <!-- JOY2_V222_PREVIEW_REFRESH_END -->
 <!-- JOY2_V224_PREVIEW_REFRESH 1795344768752 -->
-<!-- JOY2_V233_RUNTIME_START -->
+<!-- JOY2_V238_RUNTIME_START -->
 <script is:inline>
-/* Only scale the full canvas below 1760px. NEVER override the hero's native positioning. */
+/* JOY2 V238: update the existing desktop fit on every viewport/zoom change.
+   Preserve the 1760px composition and V235/V236 hero-card positioning. */
 (()=>{
- let lastDpr=window.devicePixelRatio||1;
+ let pending=false;
  function fit(){
+  pending=false;
   const body=document.body;if(!body)return;
   const w=window.innerWidth||document.documentElement.clientWidth;
   const enabled=w>=1000&&w<1760;
@@ -100,12 +110,20 @@ html body > header.jj-sitebar.jj-ref-header[data-joy2-final-header] .jj-lang a[a
   if(enabled)body.style.setProperty('--joy2-v233-ratio',String(Math.round(w/1760*10000)/10000));
   else body.style.removeProperty('--joy2-v233-ratio');
  }
- function resized(){const dpr=window.devicePixelRatio||1;if(Math.abs(dpr-lastDpr)>.02){lastDpr=dpr;return;}fit();}
- function start(){fit();window.addEventListener('resize',resized,{passive:true});}
+ function schedule(){
+  if(pending)return;
+  pending=true;
+  requestAnimationFrame(fit);
+ }
+ function start(){
+  fit();
+  window.addEventListener('resize',schedule,{passive:true});
+  window.addEventListener('pageshow',schedule,{passive:true});
+ }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
 </script>
-<!-- JOY2_V233_RUNTIME_END -->
+<!-- JOY2_V238_RUNTIME_END -->
 </head>
 <body><slot /><script src="/js/joyjoy-money-display.js" defer></script>
 <script is:inline>/* JOY2_SINGLE_CATALOG_INVEST_V1 site navigation */document.addEventListener('click',function(e){const a=e.target?.closest?.('a[href]');if(!a)return;let u;try{u=new URL(a.href,location.href)}catch{return}if(u.origin!==location.origin||!/^\/(?:uz\/|en\/)?projects\/?$/.test(u.pathname))return;e.preventDefault();const lang=document.documentElement.lang;location.assign((lang==='uz'?'/uz/':lang==='en'?'/en/':'/')+'?investment=1#catalog');},false);</script>

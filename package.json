@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev --host 0.0.0.0 --port 4321",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "release:check": "node scripts/joy2-release-check.mjs",
+    "seo:check": "node scripts/joy2-seo-check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

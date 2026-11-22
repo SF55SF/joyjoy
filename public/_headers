@@ -1,0 +1,24 @@
+# JOY2_V239_RELEASE_HEADERS_START
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+/admin/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store
+/admin-login/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store
+/api/admin/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store
+# JOY2_V239_RELEASE_HEADERS_END
+
+# JOY2_V240_SEO_HEADERS_START
+/admin/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+/api/admin/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+/admin-login/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+# JOY2_V240_SEO_HEADERS_END

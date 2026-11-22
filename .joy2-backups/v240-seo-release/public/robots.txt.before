@@ -1,0 +1,7 @@
+# JOY2_V239_PRODUCTION_ROBOTS
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin-login/
+Disallow: /api/admin/
+Sitemap: https://joyjoy.uz/sitemap-index.xml

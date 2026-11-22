@@ -1,0 +1,21 @@
+{
+  "name": "joyjoy",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0 --port 4321",
+    "build": "astro build",
+    "preview": "astro preview",
+    "release:check": "node scripts/joy2-release-check.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "5.13.0"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

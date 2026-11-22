@@ -14,8 +14,8 @@ const projects = Astro.props.projects === true;
 const investmentText = investmentCopy[lang];
 const sourceListings = availableListings.filter(item=>projects?isPublishedProject(item):true);
 const joyCardMatchData = sourceListings.map(buildJoyCardMeta);
-const unitMinPrice=(p)=>p.units?.length?Math.min(...p.units.filter(u=>u.published!==false).map(u=>u.area*u.pricePerSqm)):p.priceUsd;
-const unitAreaRange=(p)=>p.units?.length?(()=>{const a=p.units.filter(u=>u.published!==false).map(u=>u.area);return Math.min(...a).toLocaleString('ru-RU')+' – '+Math.max(...a).toLocaleString('ru-RU')})():null;
+const unitMinPrice=(p)=>{const prices=(p.units||[]).filter(u=>u.published!==false).map(u=>Number(u.area)*Number(u.pricePerSqm)).filter(v=>Number.isFinite(v)&&v>0);return prices.length?Math.min(...prices):p.priceUsd??null;}; // JOY2_V238
+const unitAreaRange=(p)=>{const areas=(p.units||[]).filter(u=>u.published!==false).map(u=>Number(u.area)).filter(v=>Number.isFinite(v)&&v>0);return areas.length?Math.min(...areas).toLocaleString('ru-RU')+' – '+Math.max(...areas).toLocaleString('ru-RU'):null;}; // JOY2_V238
 const projectIrr=(p)=>{const m=(p.units||[]).filter(u=>u.investment?.published).map(u=>calculateInvestment(u.investment)).filter(r=>r.ok&&r.irrPercent!==null).map(r=>r.irrPercent);if(!m.length&&p.investment){const r=calculateInvestment(p.investment);if(r.ok&&r.irrPercent!==null)m.push(r.irrPercent);}return m.length?Math.min(...m).toFixed(1)+(m.length>1?'–'+Math.max(...m).toFixed(1):'')+'%':'—';};
 
 /* JOY2_SINGLE_CATALOG_INVEST_V1 */
