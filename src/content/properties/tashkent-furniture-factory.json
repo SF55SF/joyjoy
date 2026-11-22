@@ -24,5 +24,47 @@
   "order": 1,
   "published": true,
   "showCatalog": true,
-  "insestproject": false
+  "insestproject": false,
+  "contacts": {
+    "name": "",
+    "phone": "",
+    "telegram": ""
+  },
+  "planImages": [],
+  "translations": {},
+  "investment": {
+    "currency": "USD",
+    "published": false,
+    "purchasePrice": null,
+    "fitOutCosts": null,
+    "lettableArea": null,
+    "monthlyRent": null,
+    "occupancy": null,
+    "annualExpenses": null,
+    "capex": null,
+    "holdYears": null,
+    "exitCapRate": null,
+    "annualRentGrowth": null,
+    "rentBasis": "",
+    "asOf": "",
+    "sourceNote": "",
+    "rentCurrency": "USD",
+    "usdUzs": 12004.48,
+    "uzsDevaluation": 2.4038033825377942
+  },
+  "units": [
+    {
+      "id": "unit-0b4a8405-63e",
+      "block": "",
+      "floor": "1",
+      "number": "",
+      "area": 109,
+      "pricePerSqm": 1100,
+      "capex": 0,
+      "published": true,
+      "images": [],
+      "rentalStatusText": "",
+      "investment": null
+    }
+  ]
 }
