@@ -1,0 +1,36 @@
+
+name: Joy2 Weekly Backup
+
+on:
+  schedule:
+    # Sunday 03:00 Tashkent = Saturday 22:00 UTC
+    - cron: '0 22 * * 6'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create weekly backup
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          DATE=$(TZ=Asia/Tashkent date +%Y-%m-%d)
+          TAG="joy2-backup-$DATE"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Backup already exists"
+            exit 0
+          fi
+
+          gh release create "$TAG" \
+            --target "$GITHUB_SHA" \
+            --title "Joy2 Backup - $DATE" \
+            --notes "Weekly source code backup for Joy2"
+
+          echo "Backup created: $TAG"
