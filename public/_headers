@@ -22,3 +22,7 @@
 /admin-login/*
   X-Robots-Tag: noindex, nofollow, noarchive
 # JOY2_V240_SEO_HEADERS_END
+
+# JOY2_V245_PERFORMANCE: Astro content-hashed assets only. Do not cache admin/API.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
