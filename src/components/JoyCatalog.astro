@@ -208,7 +208,7 @@ const joy2UnifiedCardDataV1 = sourceListings.map(p => {
      <h3><a href={base+'listing/'+encodeURIComponent(item.slug)+'/'}>{item.title}</a></h3>
      <div class="jj-property-summary jj-canonical-price-row">
       <span class="jj-area-sign"><small>{lang==='ru'?'Площадь':lang==='uz'?'Maydon':'Area'}</small><b>{cardArea(item)}</b></span>
-      <span class="jj-card-price"><small>{lang==='ru'?'Цена':lang==='uz'?'Narx':'Price'}</small><b>{joy2V126CardPrice(item)}</b></span>
+      <span class="jj-card-price">{joy2V126CardPrice(item)===copy.price?null:<small>{lang==='ru'?'Цена':lang==='uz'?'Narx':'Price'}</small>}<b>{joy2V126CardPrice(item)}</b></span>
      </div>
      <div class="jj-canonical-address"><p class="jj-property-address">{[item.district,item.address].filter(Boolean).join(' · ')||item.city}</p></div>
      {(()=>{const financial=cardFinance(sourceListings[index]);return financial?<div class="jj-canonical-bottom jj-canonical-invest"><div><small>IRR</small><strong>{cardIrr(financial.irrPercent)}</strong></div><div><small>{lang==='ru'?'Прибыль на проект':lang==='uz'?'Loyiha foydasi':'Project profit'}</small><strong>{cardMoney(financial.netProfit)}</strong></div></div>:item.status?<div class="jj-canonical-bottom jj-canonical-status"><small>{lang==='ru'?'Статус проекта':lang==='uz'?'Loyiha holati':'Project status'}</small><strong>{copy[item.status]}</strong></div>:null;})()}
