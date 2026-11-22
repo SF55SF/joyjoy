@@ -82,7 +82,9 @@
       if(!controls){
         controls=document.createElement('div');controls.className='jj-hero-controls-v249';controls.setAttribute('role','group');controls.setAttribute('aria-label',words[2]);
         /* JOY2_V250_REMOVE_COUNTER */ const previous=document.createElement('button'),next=document.createElement('button');
-        previous.type=next.type='button';previous.textContent='←';next.textContent='→';
+        previous.type=next.type='button';/* JOY2_V252_PRO_ARROWS: crisp SVG icons, no font-glyph fallback on mobile. */
+        const arrowSvg=(right)=>'<svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="'+(right?'M5 15H25M17 7L25 15L17 23':'M25 15H5M13 7L5 15L13 23')+'" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        previous.innerHTML=arrowSvg(false);next.innerHTML=arrowSvg(true);
         previous.setAttribute('aria-label',words[0]);next.setAttribute('aria-label',words[1]);
         previous.setAttribute('aria-controls',viewport.id);next.setAttribute('aria-controls',viewport.id);
         previous.addEventListener('click',()=>show(getCurrent()-1));next.addEventListener('click',()=>show(getCurrent()+1));

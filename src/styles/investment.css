@@ -5315,3 +5315,87 @@ html body main.jj-ref-home .jj-listing-actions .joy2-sort-v228-option[aria-selec
  }
 }
 /* JOY2_V251_MOBILE_TWO_LINE_RESERVE_END */
+
+/* JOY2_V252_MOBILE_UI: only mobile. Keep desktop layout and published investment values intact. */
+@media screen and (max-width:900px){
+ /* Professional tactile SVG arrow buttons, centered in the original carousel control bar. */
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249{
+  justify-content:center!important;align-items:center!important;gap:30px!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249>button{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:58px!important;height:58px!important;min-width:58px!important;min-height:58px!important;
+  flex:0 0 58px!important;padding:0!important;border:1px solid #c6cbd0!important;
+  border-radius:17px!important;color:#12161a!important;
+  background:linear-gradient(155deg,#fff 0%,#f7f9fa 50%,#e2e6e9 100%)!important;
+  box-shadow:0 9px 17px rgba(15,25,31,.21),0 2px 4px rgba(15,25,31,.11),inset 0 2px 1px #fff,inset 0 -2px 3px rgba(40,50,60,.08)!important;
+  transition:box-shadow .18s ease,background-color .18s ease!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249>button>svg{
+  display:block!important;width:30px!important;height:30px!important;flex:none!important;stroke:currentColor!important;
+ }
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-controls-v249>button:active{
+  background:linear-gradient(150deg,#e3e7ea,#fff)!important;
+  box-shadow:inset 0 3px 7px rgba(17,26,32,.17),0 2px 4px rgba(17,26,32,.1)!important;
+ }
+ /* "Only investment" toggle: a white pill around the label + native lime switch. */
+ html body main.jj-ref-home #joy2-mobile-desktop-controls-v191 .jj-rf-invest{
+  background:#fff!important;background-color:#fff!important;
+  border:1px solid #e2e6e9!important;border-radius:13px!important;
+  box-shadow:0 3px 12px rgba(18,26,33,.09)!important;
+  box-sizing:border-box!important;padding:7px 9px!important;
+  min-height:40px!important;
+ }
+ /* +15% MORE than V250, applied only to catalogue text.
+    Object type, city and address remain unchanged. Two-line reservations remain effective. */
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3 a{
+  font-size:clamp(25.5507px,6.06829125vw,31.938375px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-summary .jj-match-metric-label,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary small,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-price-row small{
+  font-size:clamp(15.9691875px,3.672916vw,19.163025px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-summary .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-summary b{
+  font-size:clamp(22.3568625px,5.11014vw,28.7445375px)!important;
+  line-height:1.23!important;overflow-wrap:anywhere!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-label,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom small,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom-label,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-metrics span,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom>span{
+  font-size:clamp(17.56610625px,4.040203vw,21.0793275px)!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-match-bottom .jj-match-metric-value,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-canonical-bottom strong,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-metrics strong,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom .jj-u-status,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-u-bottom>strong{
+  font-size:clamp(22.835941px,5.269829vw,28.10577px)!important;
+  line-height:1.25!important;overflow-wrap:anywhere!important;
+ }
+}
+@media screen and (max-width:900px){
+/* JOY2_V252_PRICE_SHIFT: match the red guide on the supplied mobile screenshot.
+    The PRICE TEXT begins near 40% of the card row; the area track is intentionally smaller.
+    This rule wins against historical mobile flex/grid overrides. */
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-card-main .jj-property-summary.jj-canonical-price-row{
+  display:grid!important;grid-template-columns:minmax(0,36fr) minmax(0,64fr)!important;
+  align-items:start!important;justify-content:stretch!important;
+  gap:0!important;width:100%!important;min-width:0!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-card-main .jj-property-summary.jj-canonical-price-row>.jj-area-sign{
+  box-sizing:border-box!important;grid-column:1!important;width:100%!important;max-width:none!important;
+  min-width:0!important;flex:none!important;padding:0 6px 0 0!important;
+ }
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card .jj-property-card-main .jj-property-summary.jj-canonical-price-row>.jj-card-price{
+  box-sizing:border-box!important;grid-column:2!important;width:100%!important;max-width:none!important;
+  min-width:0!important;flex:none!important;padding:0 0 0 9px!important;
+  text-align:left!important;align-items:flex-start!important;justify-content:flex-start!important;
+ }
+}
+/* JOY2_V252_PRICE_SHIFT_END */
+/* JOY2_V252_MOBILE_UI_END */
