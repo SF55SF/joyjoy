@@ -47,7 +47,7 @@
         : info.priceMode === 'total' ? '$' + nf.format(info.priceValue)
         : (lang === 'en' ? 'On request' : lang === 'uz' ? 'So‘rov asosida' : 'По запросу'); /* JOY2_V254_ONLY_REQUEST */
       const summary = elem('div', 'jj-property-summary jj-match-summary');
-      summary.append(metric(t.area, area), metric(info.priceMode === 'perSqm' || info.priceMode === 'total' ? t.price : '', price));
+      summary.append(metric(t.area, area), metric(t.price, price)); /* JOY2_V255_RESTORE_PRICE_LABEL */
       const panel = elem('div', 'jj-match-bottom');
       if (info.investment && Number.isFinite(info.irr) && Number.isFinite(info.profit)) {
         panel.classList.add('jj-match-bottom-invest');
