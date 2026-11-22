@@ -1,13 +1,13 @@
 {
   "slug": "daho-block-e",
-  "title": "DAHO · Коммерческие помещения",
+  "title": "DAHO",
   "city": "Ташкент",
   "district": "",
   "address": "пересечение улиц Саида Барака и Тараса Шевченко",
   "lat": 41.296862,
   "lng": 69.281666,
   "type": "retail",
-  "status": null,
+  "status": "under_construction",
   "area": 388,
   "priceUsd": 1746000,
   "images": [
@@ -40,9 +40,7 @@
         "currency": "USD",
         "published": true,
         "purchasePrice": 2541000,
-        "transactionCosts": 0,
         "fitOutCosts": 0,
-        "otherCosts": 0,
         "capex": 0,
         "lettableArea": 363,
         "monthlyRent": 35,
@@ -56,13 +54,14 @@
         "exitCapRate": 12,
         "annualRentGrowth": 6.8627451,
         "rentCurrency": "USD",
-        "usdUzs": null,
-        "uzsDevaluation": null,
+        "usdUzs": 12004.48,
+        "uzsDevaluation": 2.3762334342036495,
         "rentBasis": "assumption",
         "asOf": "2026-11-15",
         "sourceNote": "Ставка аренды $35/м²/мес на 1 этаже и мезонине; мезонин 70% от площади 1 этажа. Из финансовой модели DAHO, скорректировано на 363 м² по презентации. Допущения: индексация в USD 6,8627%/год, налог на имущество 1,5%, на прибыль 15%, 100% заполняемость, CAPEX 0. Не подтверждённые договором арендные условия."
       },
-      "planImage": "/images/joyjoy/daho-plan-b.jpg"
+      "planImage": "/images/joyjoy/daho-plan-b.jpg",
+      "capex": 0
     },
     {
       "id": "b-1-4",
@@ -74,7 +73,8 @@
       "published": true,
       "images": [],
       "investment": null,
-      "planImage": "/images/joyjoy/daho-plan-b.jpg"
+      "planImage": "/images/joyjoy/daho-plan-b.jpg",
+      "capex": 0
     },
     {
       "id": "b-2-1",
@@ -87,7 +87,8 @@
       "images": [],
       "investment": null,
       "note": "Блок B: площадь включает входную группу 94 м² (1 этаж)",
-      "planImage": "/images/joyjoy/daho-plan-b.jpg"
+      "planImage": "/images/joyjoy/daho-plan-b.jpg",
+      "capex": 0
     },
     {
       "id": "c-1-1",
@@ -99,7 +100,8 @@
       "published": true,
       "images": [],
       "investment": null,
-      "planImage": "/images/joyjoy/daho-plan-c.jpg"
+      "planImage": "/images/joyjoy/daho-plan-c.jpg",
+      "capex": 0
     },
     {
       "id": "c-1-2",
@@ -111,7 +113,8 @@
       "published": true,
       "images": [],
       "investment": null,
-      "planImage": "/images/joyjoy/daho-plan-c.jpg"
+      "planImage": "/images/joyjoy/daho-plan-c.jpg",
+      "capex": 0
     },
     {
       "id": "c-2-1",
@@ -124,7 +127,8 @@
       "images": [],
       "investment": null,
       "note": "",
-      "planImage": "/images/joyjoy/daho-plan-c.jpg"
+      "planImage": "/images/joyjoy/daho-plan-c.jpg",
+      "capex": 0
     },
     {
       "id": "f-whole",
@@ -139,9 +143,7 @@
         "currency": "USD",
         "published": true,
         "purchasePrice": 4135500,
-        "transactionCosts": 0,
         "fitOutCosts": 0,
-        "otherCosts": 0,
         "capex": 0,
         "lettableArea": 919,
         "monthlyRent": 30,
@@ -155,13 +157,14 @@
         "exitCapRate": 12,
         "annualRentGrowth": 6.8627451,
         "rentCurrency": "USD",
-        "usdUzs": null,
-        "uzsDevaluation": null,
+        "usdUzs": 12004.48,
+        "uzsDevaluation": 2.3762334342036495,
         "rentBasis": "assumption",
         "asOf": "2026-11-15",
         "sourceNote": "Инвестиционный сценарий: аренда 919 м² по $30/м²/мес; дополнительный мезонин 0 м². Остальные исходные предположения приняты из модели DAHO: 100% заполняемость, индексация USD 6,8627%, налоги 1,5% и 15%, CAPEX 0. Не подтверждено договором аренды."
       },
-      "planImage": "/images/joyjoy/daho-plan-f.jpg"
+      "planImage": "/images/joyjoy/daho-plan-f.jpg",
+      "capex": 0
     },
     {
       "id": "e-12-1",
@@ -173,22 +176,11 @@
       "published": true,
       "images": [],
       "investment": null,
-      "planImage": "/images/joyjoy/daho-plan-e.jpg"
+      "planImage": "/images/joyjoy/daho-plan-e.jpg",
+      "capex": 0
     }
   ],
   "translations": {
-    "en": {
-      "title": "DAHO · Commercial premises",
-      "description": "Mixed-use DAHO complex in central Tashkent, with eight commercial units in blocks B, C, F and E. Prices exclude VAT. Please confirm availability.",
-      "features": [
-        "517 apartments in blocks B and C",
-        "114,000 m² of total premises",
-        "More than 700 parking spaces",
-        "Residential, offices and street retail",
-        "Eight offered units",
-        "Prices exclude VAT"
-      ]
-    },
     "uz": {
       "title": "DAHO · Tijorat binolari",
       "description": "Toshkent markazidagi DAHO majmuasining B, C, F va E bloklarida sakkizta tijorat xonasi sotuvga taklif etilgan. Narxlar QQSsiz. Mavjudligini aniqlashtiring.",
@@ -200,6 +192,18 @@
         "8 ta taklif",
         "Narxlar QQSsiz"
       ]
+    },
+    "en": {
+      "title": "DAHO · Commercial premises",
+      "description": "Mixed-use DAHO complex in central Tashkent, with eight commercial units in blocks B, C, F and E. Prices exclude VAT. Please confirm availability.",
+      "features": [
+        "517 apartments in blocks B and C",
+        "114,000 m² of total premises",
+        "More than 700 parking spaces",
+        "Residential, offices and street retail",
+        "Eight offered units",
+        "Prices exclude VAT"
+      ]
     }
   },
   "insestproject": true,
@@ -207,5 +211,26 @@
     "name": "Санжар",
     "phone": "+998 50 590 60 59",
     "telegram": "@sanjar_saymatov_cmwp"
+  },
+  "planImages": [],
+  "investment": {
+    "currency": "USD",
+    "published": false,
+    "purchasePrice": null,
+    "fitOutCosts": null,
+    "lettableArea": null,
+    "monthlyRent": null,
+    "occupancy": null,
+    "annualExpenses": null,
+    "capex": null,
+    "holdYears": null,
+    "exitCapRate": null,
+    "annualRentGrowth": null,
+    "rentBasis": "",
+    "asOf": "",
+    "sourceNote": "",
+    "rentCurrency": "USD",
+    "usdUzs": 12004.48,
+    "uzsDevaluation": 2.3762334342036495
   }
 }
