@@ -31,7 +31,8 @@ const jsonLdPayload={'@context':'https://schema.org','@graph':[...siteGraph,...(
 <meta name="robots" content={Astro.props.robots??(origin?'index,follow':'noindex,follow')} />
 <meta name="theme-color" content="#ffffff" />
 <!-- JOY2_V126_PRELOAD_BACKGROUND -->
-<link rel="preload" as="image" href="/images/joy2-concrete-ribs-hq.png" fetchpriority="high" />
+<!-- JOY2_V247_TARGETED_PRELOAD: no homepage background preload on property/admin pages -->
+{ /^\/(?:uz\/|en\/)?$/.test(Astro.url.pathname) && <link rel="preload" as="image" href="/images/joy2-concrete-ribs-hq.png" fetchpriority="high" /> }
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=joy2-icon-20261117" />
 <link rel="alternate icon" href="/favicon.ico?v=joy2-icon-20261117" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=joy2-icon-20261117" />
