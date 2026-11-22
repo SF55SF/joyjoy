@@ -22,7 +22,7 @@
     };
     const metric = (label, value) => {
       const e = elem('div', 'jj-match-metric');
-      e.append(elem('span', 'jj-match-metric-label', label), elem('strong', 'jj-match-metric-value', value));
+      if(label)e.append(elem('span', 'jj-match-metric-label', label));e.append(elem('strong', 'jj-match-metric-value', value));
       return e;
     };
     const nf = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
@@ -45,9 +45,9 @@
       const price = info.priceMode === 'perSqm'
         ? (lang === 'en' ? 'from ' : lang === 'uz' ? 'dan ' : 'от ') + nf.format(info.priceValue) + ' $/м²'
         : info.priceMode === 'total' ? '$' + nf.format(info.priceValue)
-        : (lang === 'en' ? 'Price on request' : lang === 'uz' ? 'Narx so‘rov asosida' : 'Цена по запросу');
+        : (lang === 'en' ? 'On request' : lang === 'uz' ? 'So‘rov asosida' : 'По запросу'); /* JOY2_V254_ONLY_REQUEST */
       const summary = elem('div', 'jj-property-summary jj-match-summary');
-      summary.append(metric(t.area, area), metric(t.price, price));
+      summary.append(metric(t.area, area), metric(info.priceMode === 'perSqm' || info.priceMode === 'total' ? t.price : '', price));
       const panel = elem('div', 'jj-match-bottom');
       if (info.investment && Number.isFinite(info.irr) && Number.isFinite(info.profit)) {
         panel.classList.add('jj-match-bottom-invest');
