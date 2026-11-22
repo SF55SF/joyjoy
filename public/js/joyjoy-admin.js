@@ -169,12 +169,20 @@ if(root){
   const state=root.querySelector('[data-media-status]');mediaInput.disabled=true;
   try{for(const file of files){
    if(!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('Поддерживаются JPG, PNG и WebP.');
-   const bitmap=await createImageBitmap(file),canvas=document.createElement('canvas');canvas.width=1200;canvas.height=675;
+   // JOY2_V246_UPLOAD: compress before upload, preserve full photo/plan proportions.
+   const bitmap=await createImageBitmap(file),canvas=document.createElement('canvas');
+   const mode=root.querySelector('[data-joy-upload-kind]')?.value||'photo';
+   const limit=mode==='plan'?2000:1600;
+   const ratio=Math.min(1,limit/Math.max(bitmap.width,bitmap.height));
+   canvas.width=Math.max(1,Math.round(bitmap.width*ratio));
+   canvas.height=Math.max(1,Math.round(bitmap.height*ratio));
    const ctx=canvas.getContext('2d');if(!ctx){bitmap.close();throw Error('Canvas недоступен');}
-   ctx.fillStyle='#fff';ctx.fillRect(0,0,1200,675);
-   const mode=root.querySelector('[data-joy-upload-kind]')?.value||'photo';const k=(mode==='plan'?Math.min:Math.max)(1200/bitmap.width,675/bitmap.height),w=bitmap.width*k,h=bitmap.height*k;
-   ctx.drawImage(bitmap,(1200-w)/2,(675-h)/2,w,h);bitmap.close();
-   const dataUrl=canvas.toDataURL('image/jpeg',0.82);state.textContent='Загружаем '+file.name+'…';
+   ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+   ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+   const dataUrl=canvas.toDataURL('image/jpeg',0.78);
+   if(!dataUrl.startsWith('data:image/jpeg;base64,')||dataUrl.length>6200000)throw Error('Изображение слишком большое после сжатия: '+file.name);
+   const savedPercent=file.size>0?Math.round(100*(1-(dataUrl.length*0.75)/file.size)):0;
+   state.textContent='Загружаем '+file.name+'…'+(savedPercent>0?' Сжатие: −'+savedPercent+'%.':'');
    const result=await api('/api/admin/property-media',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({slug:current.slug,dataUrl})});
    const destination=mode==='plan'?'planImages':'images';const all=lines(destination);if(!all.includes(result.path))all.push(result.path);
    field(destination).value=all.join('\n');dirty=true;refreshMedia();refreshPlanMedia();

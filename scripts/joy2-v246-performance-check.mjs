@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const admin=fs.readFileSync('public/js/joyjoy-admin.js','utf8');
+const layout=fs.readFileSync('src/layouts/BaseLayout.astro','utf8');
+const built=fs.readFileSync('dist/index.html','utf8');
+assert.match(admin,/JOY2_V246_UPLOAD/);
+assert.match(admin,/canvas\.width=Math\.max/);
+assert.match(admin,/canvas\.height=Math\.max/);
+assert.match(admin,/toDataURL\('image\/jpeg',0\.78\)/);
+assert.match(layout,/JOY2_V246_FONT/);
+assert.match(built,/rel=[\"']preload[\"'] as=[\"']style/);
+assert.match(built,/joy2-concrete-ribs-hq\.png[^>]*fetchpriority=[\"']high/);
+console.log('JOY2 V246 PERFORMANCE CHECK OK');
