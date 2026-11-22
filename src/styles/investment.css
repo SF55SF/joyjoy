@@ -5399,3 +5399,29 @@ html body main.jj-ref-home .jj-listing-actions .joy2-sort-v228-option[aria-selec
 }
 /* JOY2_V252_PRICE_SHIFT_END */
 /* JOY2_V252_MOBILE_UI_END */
+
+/* JOY2_V253_REAL_SIZES: calibrated from live project rules, NOT the concept image.
+   Hero 390px mobile card: 700 -> 650 title weight, 12/19 -> 13.2/20.9
+   address font/line, investment figures remain in their existing grid tracks.
+   Existing V251 two-line text reservations and V252 36/64 catalog split are retained. */
+@media screen and (max-width:900px){
+ /* Hero: soften the title weight, preserve the actual 20px size and two-line slot. */
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6>.jj-property-card h3,
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6>.jj-property-card h3 a{
+  font-weight:650!important;
+ }
+ /* The approved 2-line address slot stays 2.8em; only the live 12px/19px text grows exactly 10%. */
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6>.jj-property-card .jj-property-address{
+  font-size:13.2px!important;line-height:1.4!important;
+ }
+ /* Investment panel: green emphasis on IRR only, same existing panel dimensions. */
+ html[data-joy2-mobile-hero-v249] body main.jj-ref-home>.jj-ref-hero .jj-hero-stage-v6 .jj-hero-slide-v6>.jj-property-card .jj-canonical-invest>div:first-child strong{
+  color:#087a28!important;
+ }
+ /* Catalogue title gets the same softer weight; font-size remains whatever V252 specifies. */
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3,
+ html body main.jj-ref-home #catalog-results #jj-results>.jj-property-card h3 a{
+  font-weight:650!important;
+ }
+}
+/* JOY2_V253_REAL_SIZES_END */
